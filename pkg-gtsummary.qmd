@@ -1,0 +1,508 @@
+---
+title: "`gtsummary`"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(gtsummary)
+```
+
+# Reading in the data
+
+```{r comment=NA}
+df_cint_all <- dget("C:/Dataset/cint_data_clean")
+df_mbu <- readxl::read_xlsx("C:/Dataset/mbu.xlsx")
+```
+
+# Formatting and cleaning the cint data
+
+```{r comment=NA}
+df_cint <- 
+    df_cint_all %>%
+    select(sex, bulb_0, bulb_12, bmi, sbp, dbp) %>% 
+    mutate(
+      bmicat = case_when(bmi < 25 ~ "Normal", bmi > 25 ~ "High") %>% 
+        factor(levels = c("Normal", "High")),
+      hpt = case_when(
+        sbp > 120 | dbp > 80 ~ "Yes", sbp <= 120 & dbp <= 80 ~ "No" ) %>% 
+        factor()) %>% 
+    labelled::set_variable_labels(
+        sex = "Sex",
+        bulb_0 ="Bulb diameter at time 0",
+        bulb_12 ="Bulb diameter at 12 months",
+        bmicat = "Categorized BMI",
+        sbp = "Systolic Blood Pressure",
+        dbp = "Diastolic Blood Pressure",
+        bmi = "Body Mass Index",
+        hpt = "Hypertension present")
+```
+
+# Formatting and cleaning the MBU data
+
+Yes it is here, and maybe here too
+
+```{r}
+df_mbu_clean <-
+    df_mbu %>% 
+    select(-c(pt_name, starts_with("diag"), address, Field1, ip, disweight)) %>% 
+    mutate(wt = ifelse(wt > 8, NA, wt),
+           age = ifelse(age > 60, NA, age),
+           sex = ifelse(sex == "Missing", NA, sex) %>% factor(),
+           place = ifelse((place == "Missing" | place == "Self"), NA, place),
+           apgar1 = ifelse(apgar1 >10, NA, apgar1),
+           apgar5 = ifelse(apgar2 >10, NA, apgar2), 
+           dura_adm = difftime( disDateTime, admDateTime,units = "days"),
+           dura_adm = ifelse((dura_adm <=0 | dura_adm > 90), NA, dura_adm),
+           died = case_when(outcome == "Discharged" ~ "No",
+                            outcome == "Died" ~ "Yes") %>% factor(),
+           gestage = ifelse(gestage < 26 |gestage > 48, NA, gestage),
+           del = case_when(del == "SVD" ~ "SVD",
+                           del == "C/S" ~ "C/S",
+                           del == "Forceps" ~ "Vacuum",
+                           del == "Vacuum" ~ "Vacuum"))%>% 
+    select(-c(apgar2, admDateTime, disDateTime, delDateTime, outcome)) %>% 
+    drop_na() %>% 
+    labelled::set_variable_labels(
+      wt = "Weight (kgs)",
+      sex = "Sex",
+      age = "Age (days)",
+      apgar1 = "APGAR (min 1)",
+      apgar5 = "APGAR (min 5)",
+      gestage = "Gestational Age",
+      place = "Place of birth",
+      del = "Mode of delivery",
+      dura_adm = "Admission duration",
+      died = "mortality")
+
+df_mbu_clean %>% 
+  summarytools::dfSummary(graph.col = F)
+```
+
+# Summarizing data
+
+```{r comment=NA}
+df_cint %>% 
+  summarytools::dfSummary(graph.col = F, labels.col = F)
+```
+
+# Summary statistics tables
+
+## Table 1
+
+```{r comment=NA}
+df_cint %>% 
+    tbl_summary(
+        by = sex,                    # aggregate table by sex
+        missing_text = "(Missing)",  # Label missing data as such
+        type = sbp ~ "continuous2",  # Report sbp with 2 or more statistics
+        statistic = list(sbp ~ c("{mean},({sd})",
+                                 "({min},{max})"),
+                         bmicat ~ "{n}/{N} ({p}%)",
+                         bulb_0 ~ c("{mean} ({sd})")),
+        label = bmi ~ "BMI (Kg/m sq.)",   # To modify labels
+        digits = dbp ~ 1) %>%         # Force dbp to have one decimal
+    add_overall(last = T) %>%           # Add overall column
+    modify_spanning_header(all_stat_cols() ~ "**Sex of Participants**") %>% 
+    add_p(pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>%    # Adds p-value column
+    add_q(method = "fdr",                   #Add p-value for multiple comparison
+          pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>% 
+    add_stat_label() %>%        # Add specific stats to each variable
+    add_n() %>%                     # Add valid observation to each variable
+    bold_p() %>%       # Bold significant p-values
+    add_significance_stars()   # add significance stars
+```
+
+## Table 2
+
+```{r comment=NA}
+df_mbu_clean %>% 
+    tbl_summary(by = died) %>% 
+    add_overall(last = T) %>%
+    add_p() %>% 
+    modify_spanning_header(all_stat_cols() ~ "**Mortality**") %>% 
+    modify_caption(caption = "**Table 2**: MBU data by outcome") %>% 
+    bold_labels()
+```
+
+## Table 3
+
+This is table 3 of many😉
+
+[^gt-summary-tables-1]
+
+[^gt-summary-tables-1]: Need to insert this k3k3
+
+```{r comment=NA}
+df_cint %>% 
+    tbl_summary(
+        by = sex,                    # aggregate table by sex
+        statistic = all_continuous() ~ "{mean} ({sd})") %>% # Stats touse for all continuous variables
+    add_stat_label(label = all_continuous()~ "Mean(StD)") %>% # Label to give statistics
+    add_difference() %>%    # Add a difeference, ci and p-value column
+    modify_spanning_header(all_stat_cols()~ "**Sex**") %>%  # Add spanning header
+    modify_caption("**Table 1. Patient Characteristics**") %>% # Add table title
+    italicize_levels() %>%  # Italics for the levels
+    bold_labels()   # Bold fo rhe labels
+
+```
+
+## Stratified table
+
+```{r}
+df_cint %>% 
+    drop_na(bmicat) %>% 
+    tbl_strata(
+        strata = bmicat, ~.x %>%      # Add a strata to the table
+            tbl_summary(
+                by = sex
+            ) %>% 
+            add_p()      # P value for each strata
+    ) 
+
+```
+
+## Specifying tables tests
+
+```{r}
+df_cint %>% 
+    tbl_summary(by = sex,
+                statistic = list(all_continuous() ~ "{mean} ({sd})")
+    ) %>% 
+    add_p(
+        test = list(
+            all_continuous()~ "t.test",     # Specify T test for all continuous variables
+            all_categorical() ~ "fisher.test"     # Specify fisher's text for all categorical variables
+        )
+    ) %>% 
+    separate_p_footnotes()     # Specific p-value labelled
+
+```
+
+## Customised tables
+
+```{r comment=NA}
+df_cint %>% 
+    select(bmi, hpt, bulb_0, sbp, bmicat) %>% 
+    tbl_summary(
+        by = hpt,
+        statistic = list(
+            bmi ~ "{mean} ({sd})",
+            all_categorical() ~ "{n} ({p})",
+            sbp ~ "{median} ({p25}, {p75})",
+            bulb_0 ~ "{mean} ({sd})"),
+         missing_text = "(Missing",
+        digits = list(all_categorical() ~ c(0, 1))
+    ) %>% 
+    add_stat_label(label = list(
+        bmi = "Mean(SD)",
+        bulb_0 = "Mean(SD)",
+        all_categorical() ~ "n(%)",
+        sbp = "Median(IQR)"
+    )) %>% 
+    add_p(
+        test = list(
+            bmi ~ "t.test",
+            bulb_0 ~ "t.test",
+            all_categorical() ~ "fisher.test",
+            sbp ~ "wilcox.test"
+        )
+    ) %>% 
+    separate_p_footnotes()
+```
+
+## Creating data for the paired table
+
+```{r}
+df_paired_cint <- 
+    df_cint_all %>% 
+    select(sid, cart, cca_0, cca_12, ica_0, ica_12) %>%
+    mutate(
+        ica_12 = case_when(ica_12 > median(ica_12, na.rm=T) ~ "High",
+                               ica_12 <= median(ica_12, na.rm=T) ~ "Low") %>% 
+            factor(),
+        ica_0 = case_when(ica_0 > median(ica_0, na.rm=T) ~ "High",
+                               ica_0 <= median(ica_0, na.rm=T) ~ "Low") %>% 
+            factor()
+    ) %>% 
+    select(sid, cart, cca_0, cca_12, ica_0, ica_12)
+
+df_A <-
+    df_paired_cint %>% 
+    pivot_longer(cols =  c(cca_0, cca_12), 
+                 names_to = c("cca", "period"), 
+                 names_sep = "_", 
+                 values_to  = "cca_measure") %>% 
+    select(sid, cart, period, cca_measure)
+
+df_paired_long <-
+    df_paired_cint %>%
+    pivot_longer(cols =  c(ica_0, ica_12), 
+                 names_to = c("ica", "period"), 
+                 names_sep = "_", 
+                 values_to  = "ica_measure") %>% 
+    select(sid, cart, period, ica_measure) %>% 
+    full_join(df_A, by = c("sid", "period", "cart"))
+```
+
+## Paired table
+
+```{r}
+df_paired_long %>% 
+    mutate(period = case_when(period == "0" ~ "Month 0",
+                              period == "12" ~ "Month 12")) %>% 
+    filter(complete.cases(.)) %>% 
+    group_by(sid) %>% 
+    filter(n()==2) %>% 
+    ungroup() %>%
+    tbl_strata(strata = cart, ~.x %>%
+        tbl_summary(by = period, 
+                    include = -sid,
+                    statistic = list(cca_measure ~ "{mean} ({sd})",
+                                     ica_measure ~ "{n} ({p})"),
+                    label = list(ica_measure = "ICA",
+                                 cca_measure = "CCA(mm)"),
+                    digits = list(all_categorical() ~ c(0, 1)))%>% 
+            add_p(test = list(ica_measure ~ "mcnemar.test",
+                              cca_measure ~ "paired.t.test"),
+                              group = sid,
+                  pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>% 
+            separate_p_footnotes() %>% 
+            add_stat_label(label = list(ica_measure = "n(%)",
+                                        cca_measure = "mean(SD)"))
+    ) %>% 
+    modify_caption("**Table 2: Comparative month 0 and 12 measures**")
+```
+
+# Cross table
+
+```{r}
+df_cint %>% 
+    gtsummary::tbl_cross(row = bmicat, 
+                         col = sex, 
+                         percent = "row", 
+                         digits = c(0,1),
+                         missing = "ifany",
+                         missing_text = "[Missing]") %>% 
+    add_p() %>% 
+    modify_caption(caption = "**Table X: tbl_cross Example**")
+```
+
+# Regression models
+
+Univariate regression
+
+### Univariate linear regression
+
+```{r comment=NA}
+tbl1 <- 
+    df_cint %>% 
+    tbl_uvregression(y = sbp, method = lm) %>% 
+    modify_header(update = list(estimate ~ "**Estimate**",
+                                label ~ "**Variable**")) %>% 
+    modify_caption(caption = "**Table XI:** Univariate linear regression")
+
+tbl1 %>% show_header_names() # Show header names of table
+
+tbl1
+```
+
+### Univariate logistic regression
+
+```{r comment=NA}
+df_mbu_clean %>% 
+    select(-dura_adm) %>% 
+    tbl_uvregression(
+        method = glm,
+        y = died,
+        method.args = family(binomial),
+        exponentiate = TRUE,
+        pvalue_fun = function(x) style_pvalue(x, digits = 3)
+    ) %>% 
+    modify_header(update = list(estimate ~ "**Estimate**",
+                                label ~ "**Variable**"))
+```
+
+### Univariate survival analysis
+
+```{r comment=NA}
+library(survival)
+
+df_mbu_clean %>% 
+    tbl_uvregression(
+        method = coxph,
+        y = Surv(dura_adm, died=="Yes"),
+        exponentiate = TRUE,
+        pvalue_fun = function(x) style_pvalue(x, digits = 3)
+    ) %>% 
+    modify_caption(caption = "**Table 10**: Univariate Cox's Proportional Model")
+```
+
+## Multivariate regression
+
+### Multiple liner regreession
+
+```{r comment=NA}
+df_cint %>% 
+    lm(sbp ~ ., data = .) %>% 
+    tbl_regression(pvalue_fun = function(x) style_pvalue(x, digits = 3)) %>% 
+    modify_header(update = list(estimate ~ "**Estimate**",
+                                label ~ "**Variable**")) %>% 
+    modify_caption(caption = "**Table XI:** Multivariate linear regression") %>%
+    bold_labels() %>% 
+    as_gt() %>% 
+    gt::tab_options(
+        table.font.size = 14,
+        table.font.names = "Times New Roman",
+        data_row.padding = 1
+    ) 
+```
+
+### Multiple variable logistic regression
+
+```{r}
+df_mbu_clean %>% 
+    glm(died ~ ., data = ., family = binomial) %>% 
+    tbl_regression(exponentiate = T, include = -dura_adm) %>% 
+    add_n(location = "level") %>% 
+    add_nevent(location = "level") %>% 
+    add_global_p() %>% 
+    add_q() %>% 
+    add_significance_stars(
+        hide_p = FALSE,
+        hide_ci = FALSE,
+        hide_se = TRUE
+    ) %>% 
+    add_vif() %>% 
+    modify_header(label = "**Predictor**") %>% 
+    modify_caption(caption = "**Table 5: Highly customised logistic regression**") %>% 
+    modify_footnote(ci = "CI = My 95%CI", abbreviation = TRUE) %>% 
+    sort_p() %>% 
+    bold_p(t=0.1, q=TRUE) %>% 
+    bold_labels() %>% 
+    italicize_levels()
+    
+
+```
+
+### Cox proportional hazard regression
+
+```{r}
+df_mbu_clean %>% 
+    coxph(Surv(dura_adm, died == "Yes")~., data = .) %>% 
+    tbl_regression(exponentiate = T)
+```
+
+# Combining tables
+
+## Merging
+
+## Stacking
+
+## Multiple comparison table
+
+```{r}
+library(titanic)
+library(plotrix) #has a std.error function
+
+# create smaller version of the dataset
+df <- 
+  titanic_train %>%
+  select(Sex, Embarked, Age, Fare) %>%
+  filter(Embarked != "") # deleting empty Embarked status
+
+# first, write a little function to get the 2-way ANOVA p-values in a table
+# function to get 2-way ANOVA p-values in tibble
+twoway_p <- function(variable) {
+  paste(variable, "~ Sex * Embarked") %>%
+    as.formula() %>%
+    aov(data = df) %>% 
+    broom::tidy() %>%
+    select(term, p.value) %>%
+    filter(complete.cases(.)) %>%
+    pivot_wider(names_from = term, values_from = p.value) %>%
+    mutate(
+      variable = .env$variable,
+      row_type = "label"
+    )
+}
+
+# add all results to a single table (will be merged with gtsummary table in next step)
+twoway_results <-
+  bind_rows(
+    twoway_p("Age"),
+    twoway_p("Fare")
+  )
+twoway_results
+
+
+
+tbl <-
+  # first build a stratified `tbl_summary()` table to get summary stats by two variables
+  df %>%
+  tbl_strata(
+    strata =  Sex,
+    .tbl_fun =
+      ~.x %>%
+      tbl_summary(
+        by = Embarked,
+        missing = "no",
+        statistic = all_continuous() ~ "{mean} ({std.error})",
+        digits = everything() ~ 1
+      ) %>%
+      modify_header(all_stat_cols() ~ "**{level}**")
+  ) %>%
+  # merge the 2way ANOVA results into tbl_summary table
+  modify_table_body(
+    ~.x %>%
+      left_join(
+        twoway_results,
+        by = c("variable", "row_type")
+      )
+  ) %>%
+  # by default the new columns are hidden, add a header to unhide them
+  modify_header(list(
+    Sex ~ "**Sex**", 
+    Embarked ~ "**Embarked**", 
+    `Sex:Embarked` ~ "**Sex * Embarked**"
+  )) %>%
+  # adding spanning header to analysis results
+  modify_spanning_header(c(Sex, Embarked, `Sex:Embarked`) ~ "**Two-way ANOVA p-values**") %>%
+  # format the p-values with a pvalue formatting function
+  modify_fmt_fun(c(Sex, Embarked, `Sex:Embarked`) ~ style_pvalue) %>%
+  # update the footnote to be nicer looking
+  modify_footnote(all_stat_cols() ~ "Mean (SE)")
+```
+
+# hh
+
+```{r}
+# standardized difference
+tbl1 <- 
+  trial %>% 
+  select(trt, age, marker) %>%
+  tbl_summary(by = trt, missing = "no",
+              statistic = all_continuous() ~ "{mean} ({sd})") %>%
+  add_difference(all_continuous() ~ "cohens_d")
+
+# table with p-value and corrected p-values
+tbl2 <- 
+  trial %>% 
+  select(trt, age, marker) %>%
+  tbl_summary(by = trt, missing = "no") %>%
+  add_p(all_continuous() ~ "t.test") %>%
+  add_q(method = "bonferroni") %>%
+  modify_column_hide(all_stat_cols())
+
+# merge tbls together
+tbl_final <- 
+  tbl_merge(list(tbl1, tbl2)) %>%
+  # remove spanning headers
+  modify_spanning_header(everything() ~ NA)
+
+tbl1
+tbl2
+tbl_final
+```
+
+## References

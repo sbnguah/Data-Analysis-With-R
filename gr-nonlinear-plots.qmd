@@ -1,0 +1,47 @@
+---
+title: "Nonlinear Plots"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+
+df_babies <- 
+    readxl::read_xlsx("C:\\Dataset\\babies.xlsx") %>% 
+    mutate(outc = outcome == "Died") 
+
+df_babies2 <- 
+    df_babies %>%  
+    group_by(apgar2) %>% 
+    summarize(outc2 = mean(outc))
+
+df_babies %>% summary()
+    
+```
+
+```{r}
+df_babies2 %>% 
+    ggplot(aes(x = apgar2, y = outc2)) +
+    geom_col(color = "red", fill = "white", alpha = 0.1) +
+    geom_col(
+      data = function(x){filter(x, apgar2 == 5)}, 
+      fill = "dodgerblue", 
+      width = 1,
+      alpha = 0.3) +
+    geom_smooth(method = "loess", formula = "y ~ x") +
+    labs(x = "APGAR Score", y = "Probablity of Death") +
+    theme_bw()
+```
+
+```{r}
+df_babies %>% 
+    group_by(wt) %>% 
+    summarize(outc2 = mean(outc)) %>% 
+    ggplot(aes(wt, outc2)) +
+    geom_col(aes(fill = wt == 3.5), color = "blue") +
+    scale_fill_manual(values = c("white", "red")) +
+    guides(fill = "none") +
+    geom_smooth(method = "loess", formula = "y ~ x", color = "maroon") +
+    labs(x = "APGAR Score", y = "Probablity of Death") +
+    theme_bw()
+```

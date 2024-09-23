@@ -1,0 +1,343 @@
+---
+title: "Survival Analysis"
+---
+
+```{r}
+#| include: false
+
+library(tidyverse)
+```
+
+# Reading and cleaning data
+
+```{r comment=NA}
+df_mbu <-
+    readxl::read_xlsx("C:/Dataset/mbu.xlsx") %>% 
+    janitor::clean_names() %>% 
+    select(
+        -c(pt_name, ip, diag1, diag2, diag3, address, 
+              disweight, field1, del_date_time)) %>% 
+    filter(
+        (outcome %in% c("Died", "Discharged")) & 
+        (wt < 8 & wt >= 1) & 
+        (age < 29) & 
+        (sex != "Missing") & 
+        (place != "Missing") &
+        (apgar1 < 11) &
+        (apgar2 < 11) & 
+        (!is.na(adm_date_time)) & 
+        (!is.na(dis_date_time)) &
+        (del != "Missing")) %>% 
+    rename(apgar5 = apgar2,
+           del_mode = del) %>% 
+    mutate(gestage = ifelse(gestage > 50 | gestage < 26, NA, gestage),
+           place = ifelse(place == "Self", "Home", place),
+           place = ifelse(
+               place == "Maternity Home", "Clinic/Hospital", place),
+           across(c(sex, place), ~as.factor(.)),
+           place = fct_relevel(
+               place, c("KATH", "Clinic/Hospital", "Home")),
+           died = outcome == "Died",
+           adm_dura_hrs = difftime(
+               dis_date_time, adm_date_time, units = "hours") %>% 
+               as.numeric(),
+           adm_dura_hrs = ifelse(
+               adm_dura_hrs < 0 | adm_dura_hrs > 1040, NA, adm_dura_hrs),
+           adm_year = format(adm_date_time, "%Y"),
+           outcome = factor(outcome, levels = c("Discharged","Died")),
+           del_mode = ifelse(
+               del_mode %in% c("Forceps", "Vacuum"), 
+               "Assisted VD", del_mode) %>% 
+               factor(levels = c("SVD", "C/S", "Assisted VD"))) %>% 
+    select(-c(adm_date_time, dis_date_time)) %>% 
+    filter(adm_year != "2012" & !is.na(adm_dura_hrs))
+```
+
+# Labelling data
+
+```{r comment=NA}
+labelled::var_label(df_mbu) <-
+    list(
+        wt = "Weight in kgs",
+        age = "Age in days",
+        sex = "Sex",
+        place = "Place of delivery",
+        apgar1 = "First minute APGAR",
+        apgar1 = "First minute APGAR",
+        apgar5 = "Fifth minute APGAR",
+        outcome = "Outcome",
+        del_mode = "Mode of delivery",
+        gestage = "Gestational age",
+        died = "Baby died",
+        adm_dura_hrs = "Duration of admission",
+        adm_year = "Year of admission"
+    )
+```
+
+# Summarizing data
+
+```{r comment=NA}
+df_mbu %>% 
+    summarytools::dfSummary(graph.col = F, labels.col = FALSE)
+```
+
+# Summarizing by outcome
+
+```{r comment=NA}
+# gtsummary::theme_gtsummary_compact()
+df_mbu %>% 
+    gtsummary::tbl_summary(
+        by = outcome,
+        percent = "row",
+        digits = list(gtsummary::all_categorical()~ c(0,1),
+                      gtsummary::all_continuous()~0,
+                      wt ~ 1)
+    ) %>% 
+    gtsummary::modify_spanning_header(
+        gtsummary::all_stat_cols() ~ "Outcome"
+        ) %>% 
+    gtsummary::add_overall() %>%   
+    gtsummary::add_p(
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>% 
+    gtsummary::bold_p() %>% 
+    gtsummary::bold_labels()
+```
+
+# Overall Kaplan-Meier survival
+
+```{r comment=NA}
+km1 <- 
+    df_mbu %>% 
+    survival::survfit(
+        survival::Surv(event = died, time = adm_dura_hrs) ~ 1, 
+        data = .)
+km1
+```
+
+```{r comment=NA}
+km1 %>% broom::tidy()
+```
+
+```{r comment=NA}
+km1 %>% 
+    survminer::ggsurvplot(
+        data = df_mbu,
+        pval = T,
+        risk.table = T, 
+        censor = F,
+        font.x = c(10, "bold.italic", "red"),
+        font.y = c(10, "bold.italic", "darkred"),
+        font.tickslab = c(10, "plain", "darkgreen"),
+        tables.theme = survminer::theme_cleantable())
+```
+
+# Kaplan-Meier survival by sex
+
+```{r comment=NA}
+km_by_sex <- 
+    df_mbu %>% 
+    survival::survfit(
+        survival::Surv(
+            event = died, time = adm_dura_hrs) ~ sex, data = .)
+
+km_by_sex
+```
+
+```{r comment=NA}
+km_by_sex %>% broom::tidy() %>% arrange(time)
+```
+
+## Weekly survival
+
+```{r}
+summary(km_by_sex, times = seq(0, 1040, by = 24*7))
+```
+
+```{r comment=NA}
+km_by_sex %>% 
+    survminer::ggsurvplot(
+        data = df_mbu,
+        pval = T,
+        risk.table = T, 
+        censor = F,
+        font.x = c(10, "bold.italic", "red"),
+        font.y = c(10, "bold.italic", "darkred"),
+        font.tickslab = c(10, "plain", "darkgreen"),
+        tables.theme = survminer::theme_cleantable(),
+        conf.int=T,
+        tables.height = 0.2,
+        break.x.by = 24*7,
+        legend.title = "",
+        surv.scale = "percent")
+```
+
+# Cox's regression
+
+```{r comment=NA}
+cox_by_sex <- 
+    df_mbu %>% 
+    survival::coxph(
+        survival::Surv(
+            event = died, time = adm_dura_hrs) ~ sex, data = .)
+
+summary(cox_by_sex)
+```
+
+# Univariate Cox regression
+
+```{r comment=NA}
+cox_by_sex %>% 
+    gtsummary::tbl_regression(
+    exponentiate = TRUE,
+    pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)
+) %>% 
+    gtsummary::bold_labels() %>% 
+    gtsummary::bold_p() %>% 
+    gtsummary::modify_caption("Univariate Cox regression with sex")
+```
+
+# Univariate Cox regression multiple variables at a time
+
+```{r}
+df_mbu %>% 
+    gtsummary::tbl_uvregression(
+        include = -outcome,
+        method = survival::coxph, 
+        y = survival::Surv(event = died, time = adm_dura_hrs),
+        exponentiate = TRUE, 
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>% 
+    gtsummary::bold_p() %>% 
+    gtsummary::bold_labels()
+```
+
+# Multivariate Cox regression
+
+```{r comment=NA}
+cox_1 <- 
+    df_mbu %>% 
+    select(-c(outcome, gestage)) %>% 
+    survival::coxph(
+        survival::Surv(event = died, time = adm_dura_hrs) ~ ., 
+        data = .)
+
+cox_2 <- 
+    df_mbu %>% 
+    select(-c(outcome)) %>% 
+    survival::coxph(
+        survival::Surv(event = died, time = adm_dura_hrs) ~ ., 
+        data = .)
+```
+
+## Checking the model
+
+```{r comment=NA}
+performance::performance(cox_1)
+performance::performance(cox_2)
+```
+
+## Compare two multivariate models: Obviously second is better than first
+
+```{r comment=NA}
+performance::compare_performance(cox_1, cox_2)
+```
+
+## Checking for proportional hazard assumption
+
+Significant p-values indicates Proportional Hazard assumption violated
+
+```{r comment=NA}
+cox_1 %>% survival::cox.zph()
+```
+
+Residuals falling outside the standard error margins indicates Proportional Hazard assumption
+violated. These violations will have to be dealt with.
+
+```{r comment=NA}
+cox_1 %>% survival::cox.zph() %>% survminer::ggcoxzph()
+```
+
+# Combining Univariate and multivariate Cox regression
+
+## Without gestational age
+
+```{r comment=NA}
+cox_1A <-
+    df_mbu %>% 
+    select(-c(outcome, gestage)) %>%
+    gtsummary::tbl_uvregression(
+        method = survival::coxph, 
+        y = survival::Surv(event = died, time = adm_dura_hrs),
+        exponentiate = TRUE, 
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>% 
+    gtsummary::bold_labels() %>% 
+    gtsummary::bold_p()
+
+cox_1B <- 
+    df_mbu %>% 
+    select(-c(outcome, gestage)) %>% 
+    survival::coxph(
+        survival::Surv(
+            event = died, time = adm_dura_hrs) ~ ., data = .) %>% 
+    gtsummary::tbl_regression(
+        exponentiate = TRUE,
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>% 
+    gtsummary::bold_labels() %>% 
+    gtsummary::bold_p()
+
+gtsummary::tbl_merge(
+    tbls = list(cox_1A, cox_1B),
+    tab_spanner = c("Univariate", "Multivariate")) %>% 
+    gtsummary::modify_caption(
+        "Combined Univariate and Multivariate Cox regression with sex")
+```
+
+## With gestational age
+
+```{r comment=NA}
+cox_2A <-
+    df_mbu %>% 
+    select(-c(outcome)) %>%
+    gtsummary::tbl_uvregression(
+        method = survival::coxph, 
+        y = survival::Surv(event = died, time = adm_dura_hrs),
+        exponentiate = TRUE, 
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)) %>% 
+    gtsummary::bold_labels() %>% 
+    gtsummary::bold_p()
+
+cox_2B <- 
+    df_mbu %>% 
+    select(-c(outcome)) %>% 
+    survival::coxph(
+        survival::Surv(
+            event = died, time = adm_dura_hrs) ~ ., data = .) %>% 
+    gtsummary::tbl_regression(
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3),
+        exponentiate = TRUE) %>% 
+    gtsummary::bold_labels() %>% 
+    gtsummary::bold_p()
+
+gtsummary::tbl_merge(
+    tbls = list(cox_2A, cox_2B),
+    tab_spanner = c("Univariate", "Multivariate")) %>% 
+    gtsummary::modify_caption(
+        "Combined Univariate and Multivariate Cox regression with sex")
+```
+
+## Plotting coefficients
+
+```{r}
+df_mbu %>% 
+    select(-c(outcome)) %>% 
+    survival::coxph(
+        survival::Surv(event = died, time = adm_dura_hrs) ~ ., 
+        data = .) %>% 
+    sjPlot::plot_model(
+        value.offset = 0.4,show.values = T, show.p = T) +
+    geom_hline(yintercept = 1, alpha =.5, color = 'grey45') +
+    labs(
+        title = "Coefficients Plot of Hazard Ratios", 
+        y = "Hazard ratio (95%CI)") +
+    theme_minimal() +
+    scale_y_log10(limits = c(0.4, 5))
+```

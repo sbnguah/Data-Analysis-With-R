@@ -1,0 +1,102 @@
+---
+title: "Density Plot"
+---
+
+### Import dataset
+
+```{r}
+#| inlcude: false
+#| message: false
+
+library(tidyverse)
+
+```
+
+```{r}
+#| warning: false
+#| message: false
+df_bp <- 
+    readstata13::read.dta13("C:/Dataset/BP.dta") %>% 
+    select(sex, sbp, dbp, saltadd) %>% 
+    pivot_longer(
+        cols = c(sbp, dbp), 
+        values_to = "pressure", 
+        names_to = "bp_type")
+
+dataF <- readstata13::read.dta13("C:/Dataset/olivia_data_wide.dta")
+```
+
+### Primary density plot
+
+```{r}
+#| label: fig-one
+#| fig-cap: "Density plot of the Systolic blood pressures"
+#| fig-width: 5
+#| fig-height: 3
+
+df_bp %>% 
+    filter(bp_type == "sbp") %>% 
+    ggplot(aes(x = pressure)) +
+    geom_density(
+        color = "blue", 
+        fill = 'red', 
+        linetype = "dashed", 
+        alpha = 0.2) +
+    theme_light()
+```
+
+### Density with separate colors
+
+```{r}
+#| label: fig-two
+#| fig-cap: "Density plot of the Systolic blood pressures"
+#| fig-width: 5
+#| fig-height: 3.5
+
+df_bp %>% 
+    filter(bp_type == "sbp") %>% 
+    drop_na(saltadd) %>% 
+    ggplot(aes(x = pressure, color = saltadd, fill = saltadd)) +
+    geom_density(
+        linetype = "dashed", alpha = 0.2) +
+    theme_light()+
+    scale_color_brewer(palette = "Dark2")
+```
+
+### Densityplot with facets
+
+```{r}
+#| label: fig-three
+#| fig-cap: "Density plot of the Systolic blood pressures"
+#| fig-width: 7
+#| fig-height: 5
+
+df_bp %>% 
+    drop_na(saltadd) %>% 
+    ggplot(aes(x = pressure, color = saltadd)) +
+    geom_density(aes(fill = saltadd), linetype = "dashed", alpha = 0.2) +
+    theme_light()+
+    scale_color_brewer(palette = "Dark2") +
+    facet_grid(bp_type ~ sex)
+```
+
+### ggridges plot
+
+```{r}
+#| label: fig-four
+#| fig-cap: "Comparative Systolic and Diastolic Blood Pressue for salt addiotin and sex"
+#| fig-width: 7
+#| fig-height: 5 
+
+df_bp %>% 
+    drop_na(saltadd) %>% 
+    ggplot(aes(x = pressure, fill = bp_type)) +
+    ggridges::geom_density_ridges(aes(y = saltadd), alpha = .3) +
+    labs(x = "Pressure", 
+         y = "Salt added to diet") +
+    ggridges::theme_ridges(font_size = 12) +
+    scale_fill_discrete(
+        name = "Blood Pressure Type", 
+        labels = c("sbp" = "Systolic", "dbp" = "Diastolic")) +
+    theme(legend.position = "right")
+```

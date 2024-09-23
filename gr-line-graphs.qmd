@@ -1,0 +1,73 @@
+---
+title: "Line Graphs"
+---
+
+```{r}
+#| include: false
+
+rm(list=ls(all.names=TRUE))
+library(tidyverse)
+```
+
+```{r}
+#| label: fig-one
+#| fig-cap: "Cumulative rainfall pattern in Kumasi, Ghana (2000 - 2004)"
+dataD <- readxl::read_excel("C:/Dataset/rainfall.xlsx")
+
+the_year <- 2001
+dataD %>% 
+    janitor::clean_names() %>% 
+    rename(date_1 = time) %>% 
+    arrange(date_1) %>% 
+    mutate(
+        year_1 = lubridate::year(date_1),
+        day = lubridate::day(date_1), 
+        mth = lubridate::month(date_1),
+        the_year = year_1 == the_year) %>%
+    group_by(year_1) %>% 
+    mutate(cum_rainfall = cumsum(rainfall)) %>% 
+    ungroup() %>% 
+    mutate(new_date = lubridate::ymd(str_glue("2000-{mth}-{day}"))) %>% 
+    ggplot(
+        aes(x = new_date, y = cum_rainfall, 
+            group = year_1, 
+            size = the_year)) +
+    geom_line(aes(col = the_year)) +
+    labs(
+        y = "cumulative Rainfall (mm)")+
+    scale_x_date(name = NULL, date_breaks = "1 month", date_labels = "%b") +
+    scale_color_manual(
+        name = "Year", 
+        labels = c("Others", the_year), 
+        values = c("grey","red"))+
+    scale_size_manual(breaks = c(F,T), values = c(0.5,0.7), guide = "none")+
+    scale_y_continuous(breaks = seq(0,1500, 250), expand = c(0,50)) +
+    theme_classic()
+```
+
+```{r}
+
+dataF <- 
+    readstata13::read.dta13(
+        "C:/Dataset/olivia_data_wide.dta",
+        nonint.factors = TRUE)
+
+dataF %>% 
+    group_by(educ) %>% 
+    summarize(across(c(mcv1, mcv2, mcv3, mcv4, mcv5), mean)) %>% 
+    pivot_longer(col = mcv1:mcv5) %>% 
+    mutate(
+        illitrate = ifelse(educ=="None", "Illitrate","Educated") %>% 
+            factor()) %>% 
+    ggplot(aes(x = name, y = value, col = illitrate, group = educ)) +
+    geom_line(aes(size=illitrate)) +
+    geom_point(size = 1.5)+
+    labs(title = "Evolution of mean platelets count over the five measurements",
+         y = "Count",x = NULL)+
+    scale_color_manual(name = "Educational Status", values = c("grey50","red"), 
+                       label = c("Educated","Illitrate")) +
+    scale_size_manual(name = "Educational Status", values = c(0.5, 1)) +
+    scale_y_continuous(limits = c(70, 120)) +
+    theme_bw()+
+    theme(legend.position = "bottom")
+```

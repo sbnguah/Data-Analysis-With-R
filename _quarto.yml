@@ -1,0 +1,75 @@
+project:
+  type: book
+
+book:
+  title: "Data Analysis With R"
+  author: "Samuel Blay Nguah"
+  date: today
+  cover-image: R-Logo.jpg
+  favicon: R-logo.jpeg
+  reader-mode: false
+  page-navigation: true
+  cover-image-alt: "Logo"
+  sidebar: 
+    title: Contents
+    search: true
+    style: docked
+  page-footer:
+    background: light
+    center: "Compiled by: Dr Samuel Blay Nguah"
+  chapters:
+    - index.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Missiing Data</span>"
+      chapters: 
+        - missing-data.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Correlation</span>"
+      chapters: 
+        - correlation.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Linear Regression</span>"
+      chapters: 
+        - linear-regression.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Analysis of Variance</span>"
+      chapters: 
+        - anova-oneway.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Logistic Regression</span>"
+      chapters: 
+        - logistic-regression.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Survival Analysis</span>"
+      chapters: 
+        - survival-analysis.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Specific Packages</span>"
+      chapters: 
+        - pkg-dplyr.qmd
+        - pkg-gtsummary.qmd
+        - pkg-nlme.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Sample Size</span>"
+      chapters: 
+        - ss-matched-case-control.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Graphics</span>"
+      chapters: 
+        - gr-histogram.qmd
+        - gr-densityplot.qmd
+        - gr-boxplot.qmd
+        - gr-barplot.qmd
+        - gr-scatter.qmd
+        - gr-line-plot.qmd
+        - gr-forest-plot.qmd
+        - gr-population-pyramid.qmd
+        - gr-miscellaneous.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    mainfont: Times New Roman
+    code-fold: true
+    theme: 
+        - cosmo
+        - BookTheme.scss
+        
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

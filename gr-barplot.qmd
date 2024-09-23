@@ -1,0 +1,286 @@
+---
+title: "Barplot"
+---
+
+```{r}
+#| include: false
+
+rm(list=ls(all.names=TRUE))
+library(tidyverse)
+```
+
+To start we create a fictitious data
+
+```{r comment = NA}
+df <- 
+  data.frame(
+      dose = c("D0.5", "D1", "D2"), 
+      len = c(4.2, 10, 29.5))
+df
+```
+
+## Basic barplot
+
+Next, we make the basic Barplot
+
+```{r}
+p <- 
+  df %>% 
+  ggplot(aes(x = dose, y = len)) 
+
+p + geom_bar(stat="identity")
+```
+
+Next we flip the barlot horizontal, change the size of the bar width and change the theme
+
+```{r comment = NA}
+p + 
+  geom_bar(
+      stat = "identity", 
+      width = 0.8, 
+      color = "blue", 
+      fill = "grey90") +
+  coord_flip() +
+  theme_bw()
+```
+
+Next we limit the observations to just two
+
+```{r comment = NA}
+p + 
+  geom_bar(
+      stat = "identity", 
+      width = 0.8, 
+      color = "black", 
+      fill = "steelblue") +
+  scale_x_discrete(limits=c("D0.5", "D2"))
+```
+
+Next we put labels on the bars at the outside and inside
+
+```{r comment = NA}
+p +
+    geom_bar(stat="identity", fill="steelblue")+
+    geom_text(
+        aes(label=len), 
+        vjust=-0.5, 
+        size=4, 
+        col = "black")+
+    theme_minimal()
+```
+
+```{r comment = NA}
+# Change barplot line colors by groups
+p <- 
+    ggplot(df, aes(x = dose, y = len, color = dose)) + 
+    geom_bar(stat = "identity", fill = "white") + 
+    geom_text(aes(label=len), vjust=1.5, size=5, col = "red")
+p
+```
+
+## Use custom color palettes
+
+```{r comment = TRUE}
+p + scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+Use brewer color palettes
+
+```{r comment = TRUE}
+p + scale_color_brewer(palette="Dark2")
+```
+
+```{r comment = TRUE}
+p + scale_color_grey() + theme_classic()
+```
+
+Change barplot fill colors by groups
+
+```{r comment = TRUE}
+# 
+p <- 
+  ggplot(df, aes(x=dose, y=len, fill=dose)) +
+  geom_bar(stat="identity")+theme_minimal()
+p
+```
+
+Use custom color palettes
+
+```{r comment = NA}
+p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+```
+
+```{r comment = NA}
+p + 
+  scale_fill_brewer(palette="Dark2")
+```
+
+Use grey scale
+
+```{r comment = TRUE}
+p + scale_fill_grey()
+```
+
+```{r comment = NA}
+ggplot(df, aes(x=dose, y=len, fill=dose))+
+	geom_bar(stat="identity", color="black")+
+	scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))+
+  theme_minimal()
+```
+
+Change bar fill colors to blues
+
+```{r comment = TRUE}
+p + scale_fill_brewer(palette="Blues")
+	p + theme(legend.position="top")
+	p + theme(legend.position="bottom")
+	p + theme(legend.position="none")
+```
+
+Change position of bars
+
+```{r comment = TRUE}
+p + 
+  scale_x_discrete(limits=c("D2", "D0.5", "D1"))
+```
+
+```{r comment = NA}
+dat <- foreign::read.dta("C:/dataset/bea_organ_damage_28122013.dta")
+BC <- 
+  dat %>% 
+  select(q2idtype, q3sex) %>% 
+  na.omit() %>% 
+  group_by(q2idtype, q3sex) %>% 
+  summarize(Freq = n()) %>% 
+  ggplot(aes(x=q2idtype, y=Freq, fill=q3sex))
+```
+
+Next we draw the barplot using the economist theme from the `ggthemes` package
+
+```{r comment = NA}
+BC +  
+  geom_bar(stat="identity", position= position_dodge()) +
+	geom_text(aes(label=Freq), vjust=1.6, color="black", 
+	          size=4, position = position_dodge(0.9)) +
+	scale_fill_brewer(palette="Reds") + 
+	labs(title="My Barplot", x="Case or Control", y="Frequency") +
+	scale_color_discrete(name="Sex") + 
+	ggthemes::theme_stata()
+```
+
+Next we plot a baroplot with error bars. To do that we first we form the `ggplot` object that we
+call *BC*.
+
+```{r comment = NA}
+BC <-
+  dat %>% 
+  select(Type = q2idtype, Sex = q3sex, q12weight) %>% 
+  na.omit() %>% 
+  group_by(Type, Sex) %>% 
+  summarize(Mean.wgt = mean(q12weight), SD.wgt = sd(q12weight)) %>% 
+  ggplot(aes(x=Type, y=Mean.wgt, fill=Sex))
+```
+
+And then plot the graph
+
+```{r comment = NA}
+BC +  
+  geom_bar(stat="identity", position=position_dodge()) +
+	geom_errorbar(aes(ymin=Mean.wgt-SD.wgt, ymax=Mean.wgt+SD.wgt), 
+	              width=.2, size=0., position=position_dodge(.9)) +
+	labs(title="Mean weight with error bars", 
+	     x="Case or Control", 
+	     y="Mean(kgs)") +
+	scale_fill_brewer(palette="Paired") + 
+	ggthemes::theme_stata()
+```
+
+```{r comment = TRUE}
+
+df2 <- data.frame(supp=rep(c("VC", "OJ"), each=3),
+                dose=rep(c("D0.5", "D1", "D2"),2),
+                len=c(6.8, 15, 33, 4.2, 10, 29.5))
+head(df2)
+```
+
+```{r}
+df2 %>% 
+  ggplot(aes(x=dose, y=len, fill=supp)) +
+  geom_bar(stat="identity")
+```
+
+```{r}
+df2 %>% 
+  ggplot(aes(x=dose, y=len, fill=supp)) + 
+  geom_bar(stat="identity", position=position_dodge())
+```
+
+Change color manually
+
+```{r comment = NA}
+p <- 
+  ggplot(data=df2, aes(x=dose, y=len, fill=supp)) +
+  geom_bar(stat="identity", color="black", position=position_dodge()) +
+  scale_fill_manual(values=c('#999999','#E69F00')) +
+  theme_minimal()
+p
+```
+
+Create some data
+
+```{r comment = NA}
+df_sorted <- 
+  tibble(supp = factor(rep(c("VC", "OJ"), each=3)),
+         dose = rep(c("0.5", "1", "2"),2),
+         len = c(6.8, 15, 33, 4.2, 10, 29.5)) %>% 
+  arrange(dose, supp) %>% 
+  group_by(dose) %>% 
+  mutate(label_ypos=cumsum(len))
+df_sorted
+```
+
+```{r comment = NA}
+df_sorted %>% 
+  ggplot(aes(x=dose, y=len, fill=supp)) +
+  geom_bar(stat="identity")+
+  geom_text(aes(y=label_ypos, label=len), vjust=1.6, 
+            color="white", size=3.5)+
+  scale_fill_brewer(palette="Paired")+
+  theme_minimal()
+```
+
+Plotting barplot with x-axis treated as continuous variable
+
+```{r comment = NA}
+# 
+df_sorted %>% 
+  mutate(dose = as.numeric(dose)) %>% 
+  ggplot(aes(x=dose, y=len, fill=supp)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired")+
+  theme_minimal()
+```
+
+```{r comment = NA}
+# Axis treated as discrete variable
+df_sorted %>% 
+  mutate(dose = as.factor(dose)) %>% 
+  ggplot(aes(x=dose, y=len, fill=supp)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired")+
+  theme_minimal()
+```
+
+```{r comment = NA}
+ToothGrowth %>% 
+  mutate(dose = as.factor(dose)) %>% 
+  group_by(supp, dose) %>% 
+  summarise(sd = sd(len), len = mean(len)) %>% 
+  ggplot(aes(x=dose, y=len, fill=supp)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=len-sd, ymax=len+sd), width=.2, 
+                position=position_dodge(.9)) +
+  labs(title="Plot of length  per dose", x="Dose (mg)", y = "Length")+
+  scale_fill_brewer(palette="Paired") + 
+  theme_minimal()
+```

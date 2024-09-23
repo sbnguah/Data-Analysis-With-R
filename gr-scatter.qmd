@@ -1,0 +1,323 @@
+---
+title: "Scatter Plot"
+---
+
+```{r}
+#| include: false
+
+rm(list=ls(all.names=TRUE))
+library(tidyverse)
+library(patchwork)
+```
+
+```{r}
+#| message: false
+#| warning: false
+
+dat <- foreign::read.dta("C:/Dataset/bea_organ_damage_28122013.dta")
+
+dataF <- readstata13::read.dta13("C:/Dataset/olivia_data_wide.dta")
+
+df1 <- read.csv("C:\\Users\\Sbngu\\Dropbox\\Data for book\\booking1.csv")
+
+SC <- 
+  dat %>% 
+  select(q12weight, q13waist, q3sex, q10what) %>% 
+  drop_na() %>%
+  ggplot(aes(x = q12weight, y = q13waist, color = q3sex))
+```
+
+```{r comment = NA}
+#| label: fig-one
+#| fig-cap: "Relationship between weight and waist circunference"
+SC + 
+    geom_point(shape = "diamond", size = 2) +
+    labs(
+        x = "Weight (kgs)", 
+        color = "Gender",
+        y = "Waist Circumference (cms)") +
+    geom_smooth(method = "lm", formula = "y ~ x") +
+    theme(
+        axis.title.x = element_text(
+            vjust = 0, 
+            size = 14, 
+            color = "blue", 
+            face = "italic"),
+        axis.title.y = element_text(
+          vjust = 2, 
+          size = 14, 
+          color = "firebrick", 
+          face = "bold"),
+        axis.text = element_text(
+          color = "dodgerblue", size = 12),
+        axis.text.x = element_text(face = "italic"))
+```
+
+```{r comment}
+#| label: fig-two
+#| fig-cap: "Relationship between weight and waist circunference"
+SC + 	
+  geom_point(aes(shape = q3sex)) + 
+	geom_smooth(method=lm, formula = y~x, se=F) + 
+	theme_bw(base_family = "serif") +
+	labs(
+	    x = "Weight (kgs)", 
+	    y = "Waist Circumference (cms)") + 
+	theme(
+	    plot.title=element_text(size=15, face="bold"), 
+	    axis.text.x=element_text(size=12), 
+	    axis.text.y=element_text(size=12),
+	    axis.title.x=element_text(size=13),
+	    axis.title.y=element_text(size=13), 
+	    plot.background = element_rect(fill = "grey90"),
+	    panel.background = element_rect(fill = "snow1")) +
+    scale_color_discrete(name="Sex") +
+	scale_shape_discrete(name="Sex")
+```
+
+```{r comment = NA}
+#| label: fig-three
+#| fig-cap: "Relationship between weight and waist circunference"
+SC + 	
+    geom_point() + 
+	geom_smooth(method=loess, se=TRUE, formula = y~x) + 
+	theme_classic() +
+	labs(
+	    x = "Weight (kgs)", 
+	    y = "Waist Circumference (cms)") + 
+	theme(
+	    plot.title=element_text(size=15, face="bold"), 
+	    axis.text.x=element_text(size=12), 
+	    axis.text.y=element_text(size=12),
+	    axis.title.x=element_text(size=13),
+	    axis.title.y=element_text(size=13)) + 
+  scale_color_discrete(name="Sex")
+```
+
+```{r comment = NA}
+#| label: fig-four
+#| fig-cap: "Relationship between weight and waist circunference"
+#| 
+SC + 	
+  geom_point() + 
+	geom_smooth(method=lm, formula = y ~ x, se=F) + 
+	theme_minimal() +
+	labs(
+	    x = "Weight (kgs)", 
+	    y = "Waist Circumference (cms)") + 
+	theme(
+	    plot.title=element_text(size=15, face="bold"), 
+	    axis.text.x=element_text(size=12), 
+	    axis.text.y=element_text(size=12),
+	    axis.title.x=element_text(size=13),
+	    axis.title.y=element_text(size=13)) + 
+    scale_color_discrete(name = "Sex") + 
+	facet_wrap(~q10what)
+```
+
+```{r comment = NA}
+#| label: fig-six
+#| fig-cap: "Relationship between weight and waist circunference"
+SC + 
+  geom_point(color = "firebrick") +
+  labs(
+      x = "Weight (kgs)", 
+	  y = "Waist Circumference (cms)") +
+  theme(axis.ticks.y = element_blank(),
+        axis.text.y = element_blank())
+```
+
+Limit Axes Range
+
+```{r}
+#| label: fig-seven
+#| fig-cap: "Plot of Weight versus height"
+
+df1 %>% 
+    drop_na(weight, height) %>% 
+  ggplot(aes(x = weight, y = height)) +
+	geom_point(aes(color = sex, shape = sex)) + 
+	geom_smooth(method = "lm", formula = y ~ x, se = T) + 
+	labs(x = "Weight (kgs)", y = "Height (cm)") +
+	theme_light() +
+	theme(
+	    plot.title=element_text(size = 16, face = "bold"), 
+	    axis.text.x=element_text(size = 12), 
+	    axis.text.y=element_text(size = 12),
+	    axis.title.x=element_text(size = 12, face = "bold"),
+	    axis.title.y=element_text(size = 12, face = "bold")) + 
+	scale_color_discrete(name="Gender") + 
+	scale_shape_discrete(name="Gender")
+```
+
+```{r}
+#| label: fig-nine
+#| fig-cap: "Relationship between first and second platelet counts showing possible outliers"
+#| warning: false
+
+
+dataF %>% 
+    mutate(
+        mcv_cat_1 = case_when(
+            mcv1 < 80 ~ "Microcyte",
+            mcv1 >= 80 & mcv1 <= 90 ~ "Normal",
+            mcv1 > 90 ~ "Macrocyte") %>% 
+            factor(levels = c("Microcyte", "Normal", "Macrocyte"))) %>% 
+    ggplot(aes(x = hb1, y = hb2)) +
+    geom_point(aes(size = mcv_cat_1, col = mcv_cat_1), alpha = .5) +
+    geom_smooth(formula = y ~ x, method = "lm", color = "black") +
+    geom_vline(
+        xintercept = 10, 
+        color = "red", 
+        linewidth = 0.5, 
+        linetype = "dashed") +
+    geom_hline(
+        yintercept = 10, 
+        color = "red", 
+        linewidth = 0.5, 
+        linetype = "dashed") +
+    geom_abline(
+        intercept = 0, 
+        slope = 1, 
+        color = "brown", 
+        linewidth = 0.5, 
+        linetype = "dashed") +
+    labs(x = "First Hemoglobin", y = "Second Hemoglobin") +
+    theme_light()
+```
+
+```{r}
+#| label: fig-ten
+#| fig-cap: "Height v. Weight"
+
+dataF.2 <- 
+    tibble(
+    lbls = c("Kofi","Ama", "Yaw","Sammy", "Abena"),
+    hgts = c(176, 154, 136, 144, 165),
+    wgts = c(65, 76,48,77, 65))
+
+dataF.2 %>% 
+    ggplot(aes(x = hgts, y = wgts))+
+    geom_point() +
+    annotate(
+        "text", 
+        x = dataF.2$hgts, 
+        y = dataF.2$wgts, 
+        label = dataF.2$lbls, 
+        vjust = 1, col=1:5) +
+    labs(
+        title = "Height vrs Weight", 
+        subtitle = "Yes we can", 
+        caption = "2020 Data")+
+    ggthemes::theme_gdocs() +
+    scale_y_continuous(
+        name = "Weight (kgs)", 
+        limits = c(40, 80), 
+        breaks = c(45, 50, 55, 60, 65, 70, 75)) +
+    scale_x_continuous(
+        name = "Height (kgs)", 
+        limits = c(130, 200), 
+        breaks = seq(130, 190, 10)) +
+    geom_label(aes(label = lbls), col = "grey", nudge_y = 3)
+```
+
+```{r}
+#| label: fig-eleven
+#| fig-cap: "Relationship between first and second platelet counts showing possible outliers"
+
+dataG <- 
+    dataF %>% 
+    mutate(is_outlier = (plt1<50 | plt2<100 | plt2>400 | plt1>400)) 
+
+dataG %>% 
+    ggplot(aes(x = plt1, y = plt2, col = is_outlier)) + 
+    geom_point() +
+    labs(
+        x = "First Platelet Count",
+        y = "Second Platelet Count",
+        title = "Relationship between first and second platelet counts showing possible outliers")+
+    theme_bw()+
+    ggrepel::geom_label_repel(
+        data = filter(dataG, is_outlier == TRUE), 
+        aes(label=id)) +
+    theme(legend.position="none")
+```
+
+```{r}
+#| label: fig-twelve
+#| fig-cap: "My special scatterplot with histograms of first and secon HgB"
+
+p1 <-
+    dataF %>% 
+    ggplot(aes(x = hb1, y = hb2))+
+    geom_point(col = "maroon") +
+    geom_smooth(formula = y~x, method = "lm") +
+    theme_bw() +
+    labs(
+        x = "First HgB measurement (g/dL)",
+        y = "Second HgB measurement (g/dL)")
+
+p2 <- 
+    dataF %>% 
+    ggplot() +
+    geom_histogram(aes(x=hb1),bins = 12, col="black", fill = "grey") +
+    labs(x=NULL, y=NULL) +
+    theme_void() +
+    theme(
+        axis.ticks.y = element_blank(),
+        axis.ticks.x  = element_blank(),
+        axis.line.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.text.x = element_blank(),
+        axis.text.y = element_blank())
+
+p3 <- 
+    dataF %>% 
+    ggplot() +
+    geom_histogram(aes(x=hb2),bins = 12, col="black", fill = "grey") +
+    coord_flip()+
+    labs(x=NULL, y=NULL) +
+    theme_void() +
+    theme(
+        axis.ticks.y = element_blank(),
+          axis.ticks.x  = element_blank(),
+          axis.line.x = element_blank(),
+          axis.line.y = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank())
+
+col1 <- (p2/p1) + plot_layout(heights = c(1,4))
+col2 <- (plot_spacer()/p3) + plot_layout(heights = c(1,4))
+(col1 | col2) +  
+    plot_layout(widths = c(5,1)) +
+    plot_annotation(caption = "Source: 2021 Data")
+```
+
+```{r}
+#| label: fig-thirteen
+#| fig-cap: "Combining plots"
+
+p1 <-
+    dataF %>% 
+    ggplot(aes(x=hb1, y = hb2, col = fpreg)) +
+    geom_point() +
+    geom_density_2d(color = "blue")
+
+p2 <-
+    dataF %>% 
+    ggplot(aes(x=hb1, y = hb3, col = fpreg)) +
+    geom_point() +
+    geom_density_2d(color = "blue")
+
+(p1 + p2) +
+    plot_annotation(
+        title = "My special title is here",
+        subtitle = "Yes it is here",
+        caption = "Why not!",
+        theme = theme(
+            plot.title = element_text(family ="serif", colour = "red"),
+            plot.subtitle = element_text(
+                family = "serif", color = "red", face = "italic")),
+        tag_levels = "A") + 
+    plot_layout(widths = c(1, 2),guides = "collect")
+```

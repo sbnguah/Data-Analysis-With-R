@@ -1,0 +1,428 @@
+---
+title: "Linear Regression"
+---
+
+```{r}
+#| label: "setup"
+#| include: false
+#| warning: false
+
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+rm(list = ls(all=TRUE))
+```
+
+## Acquiring the data
+
+We begin by reading the data. Here we use the data from the `Carotid Intima` dataset
+
+```{r}
+dat <- 
+  dget("C:/Dataset/cint_data_clean")%>%
+  select(cca_0, sex, ageyrs, resid, hba1c, tobacco, alcohol, bmi, 
+         whratio, totchol, ldl, hdl, trig, sbp, dbp)  %>%
+  filter(!is.na(totchol), !is.na(ldl)) %>% 
+  mutate(trig = if_else(trig > 40, trig/10, trig, missing = NULL))
+```
+
+Next, we summarize the data
+
+```{r}
+dat %>% 
+    summarytools::dfSummary(graph.col = F)
+```
+
+## Linear regression with a single continuous variable
+
+We begin by looking at the relationship between the dependent and independent variables
+
+```{r}
+dat %>% 
+  ggplot(aes(x = ageyrs, y = cca_0)) +
+  geom_point() +
+  geom_smooth(method = "lm", formula = y~x) +
+  labs(
+      x = "Age in years", 
+      y = "Common Carotid Intima thickness",
+      title = "Relationship between CCA and Age of patient") +
+  theme_classic()
+```
+
+Since the relationship between the two looks linear we will go on to fit the model
+
+```{r}
+lm.1 <- 
+    lm(cca_0 ~ ageyrs, data = dat)
+```
+
+Next w,e summarise the model, extract the coefficients and confidence intervals with the help of the
+`flextable` package.
+
+```{r}
+lm.1 %>% flextable::as_flextable()
+```
+
+Next, we extract some regression analysis stats required for the regression diagnostics
+
+```{r}
+tibble(
+    resid = residuals(lm.1), 
+    fits = fitted(lm.1), 
+    st.resid = rstandard(lm.1),
+    cookd = cooks.distance(lm.1),
+    covr = covratio(lm.1),
+    hatv = hatvalues(lm.1),
+    dfit = dffits(lm.1),
+    dfbeta1 = dfbeta(lm.1)[,2]) %>% 
+  arrange(desc(cookd)) %>% 
+  round(5) %>% 
+  slice(1:10) %>% 
+    kableExtra::kable()
+```
+
+And then plot the regression diagnostic graphs
+
+```{r}
+opar <- par(mfrow = c(2,2))
+plot(lm.1, pch = 18, cex=.5)
+par(opar)
+```
+
+Below we formally check the model assumption with the `performance` package. First the normality of
+the residuals
+
+```{r}
+performance::check_predictions(lm.1)
+```
+
+```{r}
+performance::check_normality(lm.1)
+performance::check_normality(lm.1) %>% plot()
+```
+
+Next heteroscedasticity
+
+```{r}
+performance::check_heteroscedasticity(lm.1)
+performance::check_heteroscedasticity(lm.1) %>% 
+    plot()
+```
+
+```{r}
+performance::check_distribution(lm.1)
+performance::check_distribution(lm.1) %>% 
+    plot()
+```
+
+### Linear regression with one continuous and one categorical predictor
+
+```{r}
+lm.2 <- 
+    lm(cca_0 ~ ageyrs + sex, data = dat)
+
+lm.2 %>% 
+    summary() 
+```
+
+And then plot the diagnostics
+
+```{r}
+opar <- par(mfrow = c(2,2))
+lm.2 %>% 
+    plot(pch = 18, cex=.5)
+par(opar)
+```
+
+Further, we plot the marginal plot for the various sexes
+
+```{r}
+dat %>% 
+  ggplot(aes(x = ageyrs, y = cca_0, col = sex)) +
+  geom_smooth(formula = y~x, method = "lm") +
+  geom_point() +
+  labs(
+      x = "Age in years", 
+      y = "CCA", 
+      title = "CCA vrs Age for each sex") +
+  theme_bw()
+```
+
+Linear regression with one continuous and one categorical predictor with interaction
+
+```{r comment = NA}
+lm.3 <- 
+    lm(cca_0 ~ ageyrs*sex, data = dat)
+
+lm.3 %>% 
+    summary()
+```
+
+And then plot the diagnostics
+
+```{r}
+opar <- par(mfrow = c(2,2))
+lm.3 %>% 
+    plot(pch = 18, cex=.5)
+par(opar)
+```
+
+Next, we make a plot of the marginal effects after
+
+```{r}
+pr.3 <- 
+    ggeffects::ggpredict(lm.3, terms = c("ageyrs", "sex"))
+
+pr.3 %>% 
+  plot(ci = TRUE, add.data = TRUE) +
+  labs(
+      x = "Age in years", 
+      y = "CCA thickness", 
+      title = "Marginal relationship")
+```
+
+Linear regression with one continuous and two categorical predictors with interaction
+
+```{r}
+lm.4 <- 
+    lm(cca_0 ~ ageyrs*sex*resid, data = dat)
+
+lm.4 %>% 
+    summary()
+```
+
+And then plot the diagnostics
+
+```{r comment = NA}
+opar <- par(mfrow = c(2,2))
+lm.4 %>% 
+    plot(pch = 18, cex=.5)
+par(opar)
+```
+
+Next, we make a plot of the marginal effects after
+
+```{r comment = NA}
+pr.4 <- ggeffects::ggpredict(lm.4, terms = c("ageyrs", "sex", "resid"))
+pr.4 %>% 
+  plot(ci = TRUE, add.data = TRUE, dot.size = .5, dot.alpha = .5) +
+  labs(x = "Age in years", y = "CCA thickness", title = "Marginal relationship")
+```
+
+There is a set of criteria for evaluating linear regression equations. These are:
+
+1.  There must be a linear relationship between the predictor and dependent variables
+2.  The residuals must be independent
+3.  Homoscedaticity: The variance of the residuals must be uniform at every level of x
+4.  The residual must be normally distributed
+
+```{r comment = NA}
+corr.mat <- 
+  dat %>% 
+  select(cca_0, ageyrs, whratio, totchol, ldl, sbp, dbp) %>% 
+  cor() %>% 
+  round(4)
+
+corr.mat %>% 
+  kableExtra::kbl(align = c(rep("l", 7)), caption = "Correlation matrix") %>% 
+  kableExtra::kable_styling(bootstrap_options = c("striped", "bordered", "condensed", "hover", "responsive"), 
+                            full_width= FALSE, html_font = "san_serif", font_size = 16)
+```
+
+And then graphically present the correlation matrix
+
+```{r comment = NA}
+dat %>% 
+  select(cca_0, ageyrs, whratio, totchol, ldl, sbp, dbp) %>% 
+  pairs(pch=".")
+corrplot::corrplot(corr.mat)
+```
+
+Both the correlation matrix and the diagram indicate a high correlation between
+
+a.  `sbp` and `dbp`
+b.  `totchol, ldl` and `hdl`
+
+These could potentially be indicative of multicollinearity
+
+## Fitting the model
+
+We then fit the linear model and summarize it
+
+```{r comment = NA}
+lm1 <- lm(cca_0 ~ sbp + dbp + ldl + ageyrs + totchol + whratio, data = dat)
+summary(lm1)
+```
+
+The broom package gives us the opportunity of extracting the coefficient, residual, etc into a
+dataframe. We next do this below
+
+```{r comment = NA}
+lm1 %>% broom::tidy()
+lm1 %>% broom::augment()
+lm1 %>% broom::glance()
+```
+
+```{r comment = NA}
+lm1 %>% 
+  broom::augment() %>% 
+  ggplot(aes(x=.resid)) + 
+  geom_histogram(fill = "blue", col = "black", alpha = .4) +
+  theme_classic()
+
+lm1 %>% 
+  broom::augment() %>%
+  ggpubr::ggqqplot(x = ".resid", col = "red", 
+                   title = "QQ plot of the residuals of  the model") 
+lm1 %>% 
+  plot(1, pch = 16, col = "skyblue")
+
+lm1 %>% 
+  plot(2, pch = 16, col = "skyblue")
+
+lm1 %>% 
+  plot(3, pch = 16, col = "skyblue")
+
+lm1 %>% 
+  plot(4, pch = 16, col = "skyblue")
+
+```
+
+## Checking multi-colinearity
+
+```{r comment = NA}
+car::vif(lm1) %>% round(3)
+```
+
+## Variable selection in multiple linear regression
+
+Here we go through the drill of selecting the best model from a set of predictor variables. We do
+this with the help of the `olsrr` package.
+
+### Forward regression using the p-values for the selection of the best model
+
+We begin by running the model as before
+
+```{r comment = NA}
+lm1 <- lm(cca_0 ~ sbp + dbp + ldl + ageyrs + totchol + whratio, data = dat)
+summary(lm1)
+```
+
+Next, we perform the forward stepwise selection using a cut-off p.value of 0.1. The table below
+gives a summary of the selection criteria
+
+```{r comment = NA}
+fwd.fit.pval <- olsrr::ols_step_forward_p(lm1, penter=0.1)
+fwd.fit.pval
+```
+
+The final best-fitting selected model is as below. However, I will run it on the standardized
+version of our variables as the coefficients are too small
+
+```{r comment = NA}
+dat2 <-  
+  dat %>% 
+  mutate_at(c("ageyrs", "sbp"), ~(scale(.) %>% as.vector))
+
+lm.pval <- lm(cca_0 ~ sbp + ageyrs, data = dat2)
+coefficients(lm.pval)
+lm.pval %>% flextable::as_flextable()
+
+lm.pval %>%
+    broom::tidy(conf.int=T) %>% 
+    mutate(across(estimate:conf.high,~round(.x, 3))) %>% 
+    flextable::flextable() %>% 
+    flextable::font(i=1:3, fontname = "Times New Roman") %>% 
+    flextable::bold(i=1, j=1:7,part = "header") %>% 
+    flextable::theme_zebra()
+
+
+lm.pval %>% performance::check_collinearity()
+lm.pval %>% performance::check_collinearity() %>% plot()
+
+lm.pval %>% performance::check_heteroscedasticity()
+lm.pval %>% performance::check_heteroscedasticity() %>% plot()
+
+lm.pval %>% performance::check_normality()
+lm.pval %>% performance::check_normality() %>% plot() 
+
+
+lm.pval %>% performance::check_predictions()
+lm.pval %>% performance::check_predictions() %>% plot()
+
+lm.pval %>% performance::check_outliers()
+lm.pval %>% performance::check_outliers() %>% plot()
+
+plot(lm.pval)
+```
+
+### Forward regression using the AIC for the selection of the best model
+
+We change next to perform the forward stepwise selection using the AIC. The table below gives a
+summary of the selection criteria
+
+```{r comment = NA}
+fwd.fit.aic <- 
+    olsrr::ols_step_forward_aic(lm1)
+fwd.fit.aic
+plot(fwd.fit.aic)
+```
+
+### Backward regression using the p.values for the selection of the best model
+
+We change next to perform the backward stepwise removal using the p-value. The table below gives a
+summary of the selection criteria
+
+```{r comment = NA}
+bwd.fit.pval <- 
+    olsrr::ols_step_backward_p(lm1, prem=0.1)
+bwd.fit.pval
+```
+
+### Backward regression using the aic for the selection of the best model
+
+```{r}
+bwd.fit.aic <- 
+    olsrr::ols_step_backward_aic(lm1)
+bwd.fit.aic
+plot(bwd.fit.aic)
+```
+
+### Both direction regression using the p.values for the selection of the best model
+
+We change next to perform the backward stepwise removal using the p-value. The table below gives a
+summary of the selection criteria
+
+```{r}
+both.fit.pval <- 
+    olsrr::ols_step_both_p(
+        lm1, 
+        prem = 0.1, 
+        penter = 0.1,  
+        progress = TRUE)
+both.fit.pval
+```
+
+### Both direction regression using the aic for the selection of the best model
+
+```{r}
+both.fit.aic <- 
+    olsrr::ols_step_both_aic(lm1, progress = TRUE)
+both.fit.aic
+plot(both.fit.aic)
+```
+
+### Pick the best predicting model.
+
+The output below is divided into two tables. The first picks out the best 1, 2, 3, etc predictir
+model. Hence the best 3 predictor model for our linear regression is `sbp ageyrs totchol`. However,
+to pick the best model out of the lot, in case 6, we look at the second table. The best will have a
+high R-Square Adj.R-Square and Pred R-Square. Also, the best model will give the lower C(p), AIC,
+SBIC, SBC, MSEP, FPE, HSP, and APC. Looking at our output it appears the best will be the 2
+predictor mode of `lm(cca_0 ~ ageyrs + sbp)`.
+
+```{r}
+modcompare <- 
+    olsrr::ols_step_best_subset(lm1)
+
+modcompare
+```

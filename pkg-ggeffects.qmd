@@ -1,0 +1,188 @@
+---
+title: "ggEffects Package"
+---
+
+```{r}
+#| include: false
+
+rm(list = ls(all=TRUE))
+library(tidyverse)
+```
+
+```{r}
+dm <- 
+    foreign::read.dta("C:/Dataset/ldh.dta")
+names(dm)[5] <- "wgt2"
+dm2 <-
+    dm %>% 
+    select(
+        ageyrs, sex, hgt, wgt2, schcat, N332_WC, zsbp, zdbp, 
+        'BMI classification') %>% 
+    mutate(bmicat = ifelse(
+        `BMI classification` == "overweight", 
+        "Overweight", `BMI classification`),
+    bmicat = factor(
+        bmicat, 
+        levels = c("Underweight", "Normal", "Overweight", "Obesity")),
+    sex = ifelse(sex == "NA", "M", sex),
+    sex = factor(sex),
+    hgt = ifelse(hgt < 70, NA, hgt),
+    wgt = ifelse(wgt2 == "61,0", "61.0", wgt2),
+    wgt = ifelse(wgt == "42\177.4", "42", wgt),
+    wgt = as.numeric(wgt),
+    wgt = ifelse(wgt > 100, NA, wgt),
+    schcat = factor(schcat),
+    wc = ifelse(N332_WC > 200, 73.7, N332_WC),
+    zsbp = ifelse(zsbp < -4, NA, zsbp),
+    zdbp = ifelse(zdbp < -4, NA, zdbp),
+    dbpcat = factor(ifelse(zdbp > 1, 0, 1), labels = c("No", "Yes"))) %>% 
+    select(-N332_WC, -wc, -wgt2, -'BMI classification') %>% 
+    na.omit()
+```
+
+```{r comment=NA}
+lm.1 <- lm(zsbp ~ wgt, data = dm2)
+broom::tidy(summary(lm.1)) %>% gt::gt()
+broom::tidy(lm.1)
+broom::glance(lm.1)
+broom::augment(lm.1)
+ggeffects::ggpredict(model = lm.1, terms = c("wgt"))
+ggeffects::ggpredict(model = lm.1, terms = c("wgt")) %>%  
+    plot(color = "Set1", add.data = TRUE)
+```
+
+```{r comment=NA}
+lm.2 <- lm(zsbp ~ sex, data = dm2)
+broom::tidy(summary(lm.1)) %>% gt::gt()
+broom::tidy(lm.2)
+broom::glance(lm.2)
+broom::augment(lm.2)
+ggeffects::ggpredict(model = lm.2, terms = c("sex"))
+ggeffects::ggpredict(model = lm.2, terms = c("sex")) %>%  
+    plot(color = "Set1")
+```
+
+```{r comment=NA}
+lm.3 <- lm(zsbp ~ wgt*sex, data = dm2)
+broom::tidy(summary(lm.3)) %>% gt::gt()
+broom::tidy(lm.3)
+broom::glance(lm.3)
+broom::augment(lm.3)
+ggeffects::ggpredict(model = lm.3, terms = c("wgt", "sex"))
+ggeffects::ggpredict(model = lm.3, terms = c("wgt", "sex")) %>%  
+    plot(color = "Set1", add.data = TRUE)
+```
+
+```{r comment=NA}
+lm.4 <- lm(zsbp ~ wgt*sex, data = dm2)
+broom::tidy(summary(lm.4)) %>% gt::gt()
+broom::tidy(lm.4)
+broom::glance(lm.4)
+broom::augment(lm.4)
+ggeffects::ggpredict(model = lm.4, terms = c("sex", "wgt"))
+ggeffects::ggpredict(
+    model = lm.4, 
+    terms = c("sex", "wgt[20, 30, 40, 50, 60, 70, 80, 90, 100]")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+lm.5 <- lm(zsbp ~ wgt*sex*bmicat, data = dm2)
+broom::tidy(summary(lm.5)) %>% gt::gt()
+broom::tidy(lm.5)
+broom::glance(lm.5)
+broom::augment(lm.5)
+ggeffects::ggpredict(
+    model = lm.5, terms = c("sex", "wgt", "bmicat"))
+ggeffects::ggpredict(
+    model = lm.5, terms = c("sex", "wgt", "bmicat")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+lm.6 <- lm(zsbp ~ sex*zdbp*bmicat, data = dm2)
+broom::tidy(summary(lm.6)) %>% gt::gt()
+broom::tidy(lm.6)
+broom::glance(lm.6)
+broom::augment(lm.6)
+ggeffects::ggpredict(
+    model = lm.6, terms = c("zdbp", "bmicat", "sex"))
+ggeffects::ggpredict(
+    model = lm.6, terms = c("zdbp", "bmicat", "sex")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+lm.7 <- lm(zsbp ~ sex*schcat*bmicat, data = dm2)
+broom::tidy(summary(lm.7)) %>% gt::gt()
+broom::tidy(lm.7)
+broom::glance(lm.7)
+broom::augment(lm.7)
+ggeffects::ggpredict(
+    model = lm.7, terms = c("bmicat", "schcat", "sex"))
+ggeffects::ggpredict(
+    model = lm.7, terms = c("bmicat", "schcat", "sex")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+glm.1 <- glm(dbpcat ~ sex, data = dm2, family = binomial)
+broom::tidy(glm.1) %>% gt::gt()
+broom::glance(glm.1)
+broom::augment(glm.1)
+ggeffects::ggpredict(model = glm.1, terms = c("sex"))
+ggeffects::ggpredict(model = glm.1, terms = c("sex")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+glm.1 <- glm(dbpcat ~ hgt, data = dm2, family = binomial)
+broom::tidy(glm.1) %>% gt::gt()
+broom::glance(glm.1)
+broom::augment(glm.1)
+ggeffects::ggpredict(model = glm.1, terms = c("hgt[all]"))
+ggeffects::ggpredict(model = glm.1, terms = c("hgt[all]")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+glm.2 <- glm(dbpcat ~ sex, data = dm2, family = binomial)
+broom::tidy(glm.2) %>% gt::gt()
+broom::glance(glm.2)
+broom::augment(glm.2)
+ggeffects::ggpredict(model = glm.2, terms = c("sex"))
+ggeffects::ggpredict(model = glm.2, terms = c("sex")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+glm.3 <- glm(dbpcat ~ hgt*sex, data = dm2, family = binomial)
+broom::tidy(glm.3) %>% gt::gt()
+broom::glance(glm.3)
+broom::augment(glm.3)
+ggeffects::ggpredict(model = glm.3, terms = c("hgt[all]", "sex"))
+ggeffects::ggpredict(model = glm.3, terms = c("hgt[all]", "sex")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+ggeffects::ggpredict(
+    model = glm.3, 
+    terms = c("sex", "hgt[135.0, 152.0, 156.0, 160.5, 180.0]"))
+ggeffects::ggpredict(
+    model = glm.3, 
+    terms = c("sex", "hgt[135.0, 152.0, 156.0, 160.5, 180.0]")) %>%  
+    plot()
+```
+
+```{r comment=NA}
+glm.4 <- glm(dbpcat ~ schcat*sex*bmicat, data = dm2, family = binomial)
+broom::tidy(glm.4) %>% gt::gt()
+broom::glance(glm.4)
+broom::augment(glm.4)
+ggeffects::ggpredict(
+    model = glm.4, terms = c("sex", "schcat", "bmicat"))
+ggeffects::ggpredict(
+    model = glm.4, terms = c("sex", "schcat", "bmicat")) %>%  
+    plot()
+```

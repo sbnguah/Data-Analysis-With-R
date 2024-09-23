@@ -1,0 +1,184 @@
+---
+title: "Oneway ANOVA"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+
+mystyle <- function(x){
+    gt::gt(x) %>% 
+    gt::opt_stylize(1, color = "blue") %>% 
+    gt::tab_options(table.font.names = "Times New Roman") %>% 
+    gt::tab_style(
+        style = gt::cell_text(weight = "bold"),
+        locations = gt::cells_column_labels()
+        )
+    }
+```
+
+## Background
+
+Oneway analysis of variance is used when there are more than two levels of a predictor variable and
+one dependent variable.
+
+## Hypothesis
+
+H~0~ - There is no difference in the means for each group
+
+Ha - At least one of the means is significantly different from the others
+
+## Assumptions
+
+1.  **Normality** – Each sample should be drawn from a normally distributed population. It is not
+    required for large sample sizes. If normality is violated use **Kruskal-Wallis** test
+2.  **Equal Variance** - The variance of all the groups must be similar. If variances are equal, use
+    **ANOVA**. If variances are not equal, use the **Welch ANOVA**
+3.  **Independence** - The observation in each group must be independent from each other. They must
+    also come from a random process.
+4.  **Outlier** - Data should be devoid of significant outliers
+
+## Data
+
+We look at data from a nursery of newborns, comparing their weights after grouping their 5-minute
+APGAR scores into Low (0-3), Medium(4-7), and High (8-10).
+
+```{r}
+df_babies <- 
+    readxl::read_xlsx("C:/Dataset/mbu2.xlsx") %>% 
+    filter(age == 0 & apgar2 <= 10 & sex != "Missing" & wt < 7.5) %>% 
+    select(apgar5 = apgar2, bwt = wt, sex) %>% 
+    drop_na() %>% 
+    mutate(
+        sex = factor(sex),
+        apgar5 = case_when(
+            apgar5 < 4 ~ "0-3",
+            apgar5 < 8 ~ "4-7",
+            apgar5 <= 10 ~ "8-10") %>% 
+            factor(levels = c("0-3", "4-7", "8-10"), ordered = TRUE))
+
+df_babies %>% 
+    summarytools::dfSummary(graph.col = F)
+```
+
+Data summary and visualization
+
+```{r}
+df_babies %>% 
+    group_by(apgar5) %>% 
+    summarise(across(
+        .cols = c(bwt), 
+        .fns = list(
+            "Mean" = ~mean(.x), 
+            "SD" = ~sd(.x),
+            "Variance" = ~var(.x),
+            "N" = ~n()))) %>% 
+    kableExtra::kable()
+```
+
+```{r}
+#| label: fig-fig1
+#| fig-cap: "Distriubution of birth weight for various APGAR categories"
+#| fig-height: 3
+#| fig-width: 5
+df_babies %>% 
+    ggplot(aes(y = bwt, x = apgar5)) + 
+    geom_boxplot(alpha = .3) +
+    labs(
+        y = "Birth Weight (kgs)", 
+        x = "APGAR",
+        fill = "APGAR Category") +
+    theme_light()
+```
+
+```{r}
+#| label: fig-fig2
+#| fig-cap: "Distriubution of birth weight for various APGAR categories"
+#| fig-height: 3
+#| fig-width:  6
+df_babies %>% 
+    ggplot(aes(y = bwt, x = apgar5)) + 
+    geom_boxplot(alpha = .3) +
+    labs(
+        y = "Birth Weight (kgs)", 
+        x = "APGAR") +
+    theme_light()+
+    theme(
+        strip.text = element_text(face = "bold", size = 12),
+        strip.background = element_rect(fill = "black"))+
+    facet_wrap(. ~ sex)
+```
+
+## Fit model
+
+All data together
+
+```{r}
+df_babies %>% 
+    rstatix::anova_test(bwt ~ apgar5) %>% 
+    kableExtra::kable()
+```
+
+Data grouped by sex
+
+```{r}
+df_babies %>% 
+    group_by(sex) %>% 
+    rstatix::anova_test(bwt ~ apgar5) %>% 
+    kableExtra::kable()
+```
+
+## Mutltiple comparison
+
+All data together
+
+```{r}
+df_babies %>% 
+    rstatix::tukey_hsd(bwt ~ apgar5) %>% 
+    kableExtra::kable()
+```
+
+Data grouped by sex
+
+```{r}
+df_babies %>% 
+    group_by(sex) %>% 
+    rstatix::tukey_hsd(bwt ~ apgar5) %>%  
+    kableExtra::kable()
+```
+
+## Checking assumptions
+
+### Plotting
+
+This is a large sample size but it will be performed for practice
+
+```{r}
+#| fig-height: 10
+#| fig-width: 8
+df_babies %>% 
+    aov(bwt ~ apgar5, data = .) %>% 
+    performance::check_model()
+```
+
+There appear to be significant violations of the assumptions of the model
+
+### Testing
+
+#### Normality
+
+```{r}
+df_babies %>% 
+    aov(bwt ~ apgar5, data = .) %>% 
+    broom::augment() %>% 
+    rstatix::shapiro_test(.resid) %>%
+    mystyle()
+```
+
+#### Equality of variance
+
+```{r}
+df_babies %>% 
+    rstatix::levene_test(bwt ~ apgar5)%>%
+    mystyle()
+```

@@ -1,0 +1,391 @@
+---
+title: "`dplyr` Package"
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+----------------------------------------------------------------------------------------------------
+
+# Creating function to configrure tables
+
+```{r}
+tbl_style <- function(df){
+    df %>% 
+        gt::gt() %>% 
+        gt::tab_options(
+            table.font.size = 14, 
+            table.font.names = "serif", 
+            data_row.padding = gt::px(2)
+        ) %>% 
+        gt::opt_stylize(style = 5)
+}
+```
+
+----------------------------------------------------------------------------------------------------
+
+# Manual data entry
+
+```{r comment=NA}
+dat <- tribble(~"name", ~"day", ~"month", ~"year", ~"bp",
+               "Ama", 12, 05, 2020, "120/80",
+               "Kwame", 14, 02, 2019, "132/66",
+               "Akosua", 21, 12, 2010, "110/76",
+               "Yaw", 13, 03, 1982, "144/98",
+               "Yaa", 19, 08, 2000, "117/77")
+dat %>% 
+tbl_style()
+```
+
+# Reading in data
+
+```{r comment = NA}
+dataF <-
+    readxl::read_xlsx(
+        "C:/Dataset/SBPDATA.xlsx"
+    ) %>% 
+    janitor::clean_names() %>% 
+    rename(
+        ageyrs = a3_how_old_are_you_years,
+        dxs_class = disease_class,
+        gender = a1_gender
+    ) %>% 
+    mutate(
+        dxs_class = factor(dxs_class),
+        gender = factor(gender, levels = c(0, 1), labels = c("Male", "Female"))
+    )
+
+```
+
+# `dplyr` functions
+
+## `arrange`
+
+```{r}
+dat %>% 
+    arrange(name, desc(day))
+```
+
+## `unite()`
+
+```{r comment=NA}
+dat %>% 
+    unite(col = "dob", c(day, month, year), sep="/") %>% 
+    tbl_style()
+```
+
+## `seperate()`
+
+```{r comment=NA}
+dat %>% 
+    separate(col = bp, into = c("sbp", "dbp"), sep = "/") %>% 
+    tbl_style()
+```
+
+```{r}
+dat %>% 
+    separate(col = bp, into = c("sbp", "dbp"), sep = "/") %>% 
+    unite(col = "dob", c(day, month, year), sep="/") %>% 
+    mutate(dob_new = lubridate::dmy(dob)) %>% 
+    tbl_style()
+```
+
+# Visualise and summarize the data
+
+```{r comment=NA}
+dataF %>% glimpse()
+dataF %>% skimr::skim()
+dataF %>% summarytools::dfSummary(graph.col = FALSE)
+dataF %>% visdat::vis_dat(palette = "cb_safe")
+dataF %>% visdat::vis_miss()
+```
+
+# The `relocate` function
+
+```{r comment=NA}
+dataF %>% 
+    relocate(ageyrs, gender, .before = sbp_0) %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+```
+
+```{r comment=NA}
+dataF %>% 
+    relocate(sid, .after = last_col()) %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+```
+
+```{r comment=NA}
+dataF %>% 
+    relocate(where(is.numeric)) %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+```
+
+```{r comment=NA}
+dataF %>% 
+    relocate(contains("sbp")) %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+```
+
+# The `summarize` and `across` functions
+
+```{r comment = NA}
+dataF %>% 
+    summarize(across(sbp_0:sbp_8, .fns = mean, na.rm=T)) %>% 
+    tbl_style()
+```
+
+```{r}
+dataF %>% 
+    na.omit() %>% 
+    group_by(dxs_class) %>% 
+    summarize(across(where(is.numeric), ~quantile(.x))) %>% 
+    ungroup() %>% 
+    tbl_style()
+```
+
+# Distinct observations
+
+```{r}
+dataF %>% 
+    summarise(across(where(is.numeric), n_distinct)) %>% 
+    tbl_style()
+```
+
+# Using list of functions, defining column names and removing NA
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class)&!is.na(gender)) %>% 
+    group_by(dxs_class, gender) %>%
+    summarise(
+        across(
+            starts_with("sbp"), 
+            list(
+                AVG = mean, 
+                SD = sd, 
+                N_missing = ~sum(is.na(.x), na.rm=TRUE)
+                )
+            )
+        ) %>%
+    ungroup() %>% 
+    tbl_style()
+```
+
+# Summarizing by anonymous functions
+
+```{r comment=NA}
+dataF %>% 
+    filter(!is.na(dxs_class)) %>% 
+    group_by(dxs_class) %>%
+    summarise(across(.cols = c(sbp_0, sbp_18), 
+                     .fns = list("Mean" = ~mean(.x, na.rm=T), 
+                                 "UpperCI" = ~(mean(.x, na.rm=T) + 1.96*sd(.x, na.rm=T)/sqrt(n())) ,
+                                 "LowerCI" = ~(mean(.x, na.rm=T) - 1.96*sd(.x, na.rm=T)/sqrt(n()))))) %>%
+    ungroup() %>% 
+    tbl_style()
+```
+
+# Generating all combinations of variables: `expand`
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class) & !is.na(gender)) %>% 
+    expand(dxs_class, gender) %>% 
+    tbl_style()
+```
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class) & !is.na(gender)) %>% 
+    select(dxs_class, gender) %>% 
+    crossing() %>% 
+    tbl_style()
+```
+
+# Adding a running id to data
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class) & !is.na(gender)) %>% 
+    select(dxs_class, gender) %>%
+    mutate(running_id = row_number()) %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+```
+
+# Reshaping data `pivot_longer` & `pivot_wider`
+
+```{r}
+dataF_long <-
+    dataF %>% 
+    select(gender, dxs_class, sbp_0:sbp_18) %>% 
+    pivot_longer(cols = starts_with("sbp"),
+                 names_to = "measure",
+                 values_to = "sbp",
+                 values_drop_na = TRUE)
+dataF_long %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+```
+
+```{r}
+dataF %>% 
+    select(dxs_class, gender, sbp_0, sbp_2, sbp_4) %>%
+    na.omit() %>% 
+    group_by(dxs_class) %>% 
+    pivot_wider(names_from = gender, 
+                values_from = c(sbp_0, sbp_2, sbp_4), 
+                values_fn = ~mean(.x, na.rm = TRUE)) %>% 
+    ungroup() %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+
+```
+
+# `tidyquant` Tabulation
+
+```{r}
+dataF %>% 
+    select(dxs_class, gender) %>% 
+    na.omit() %>% 
+    tidyquant::pivot_table(
+        .rows = gender, .columns = dxs_class, .values = ~n()
+    ) %>% 
+    tbl_style()
+```
+
+```{r comment=NA}
+dataF %>% 
+    select(dxs_class, gender, sbp_0, sbp_2) %>% 
+    na.omit() %>% 
+    tidyquant::pivot_table(.rows = gender, 
+                           .columns = dxs_class, 
+                           .values = ~quantile(sbp_0)) %>% 
+    unnest(cols = c("DM","HPT","DM+HPT")) %>% 
+    tbl_style()
+```
+
+# `rowwise` manipulations
+
+```{r}
+dataF %>% 
+    rowwise() %>% 
+    mutate(sbp_mean = mean(c(sbp_0,sbp_2,sbp_4,sbp_6,sbp_8, sbp_10, sbp_12,
+                             sbp_14,sbp_16, sbp_18), na.rm=T),
+           sbp_sd = sd(c(sbp_0,sbp_2,sbp_4,sbp_6,sbp_8, sbp_10, sbp_12,sbp_14,
+                         sbp_16, sbp_18), na.rm=T),
+           n=n()) %>% 
+    ungroup() %>% 
+    relocate(sid, dxs_class, ageyrs, gender, sbp_mean, sbp_sd, contains("sbp")) %>% 
+    slice_head(n=10) %>% 
+    tbl_style()
+```
+
+# Glue function via `str_glue` functions
+
+```{r comment=NA}
+x <- c("Ama", "is", "a", "Girl")
+cat(x)
+```
+
+```{r comment = NA}
+name <- "Fred"
+str_glue('My name is {name}.')
+```
+
+```{r comment=NA}
+stringr_fcn <- "`stringr::str_glue()`"
+glue_fcn    <- "`glue::glue()`"
+
+str_glue('{stringr_fcn} is essentially an alias for {glue_fcn}.')
+```
+
+```{r comment=NA}
+name <- "Fred"
+age <- 50
+anniversary <- as.Date("1991-10-12")
+str_glue('My name is {name},',
+  ' my age next year is {age + 1},',
+  ' my anniversary is {format(anniversary, "%A, %B %d, %Y")}.')
+```
+
+```{r comment=NA}
+str_glue('My name is {name},',
+  ' my age next year is {age + 1},',
+  ' my anniversary is {format(anniversary, "%A, %B %d, %Y")}.',
+  name = "Joe",
+  age = 40,
+  anniversary = as.Date("2001-10-12"))
+```
+
+```{r comment=NA}
+mtcars %>% 
+    head() %>% 
+    tbl_style()
+
+head(mtcars) %>% 
+    glue::glue_data("{rownames(.)} has {hp} hp")
+```
+
+```{r comment=NA}
+head(iris) %>%
+  mutate(
+      description = str_glue(
+          "This {Species} has a petal length of {Petal.Length}"
+          )
+      ) %>% 
+    tbl_style()
+```
+
+```{r comment=NA}
+str_glue("
+    A formatted string
+    Can have multiple lines
+      with additional indention preserved
+    ")
+```
+
+```{r comment=NA}
+str_glue("
+
+  leading or trailing newlines can be added explicitly
+
+  ")
+```
+
+```{r comment=NA}
+str_glue("
+    A formatted string \\
+    can also be on a \\
+    single line
+    ")
+```
+
+```{r comment=NA}
+name <- "Fred"
+str_glue("My name is {name}, not {{name}}.")
+```
+
+```{r comment=NA}
+one <- "1"
+str_glue("The value of $e^{2\\pi i}$ is $<<one>>$.", .open = "<<", .close = ">>")
+```
+
+```{r comment=NA}
+dataF %>% 
+    filter(!is.na(sbp_0)) %>% 
+    ggplot(aes(x=sbp_0)) +
+    geom_histogram(col = "grey", fill = "wheat") +
+    labs(title = str_glue("Histogram with Mean = {mean_sbp0}mmHg and \\
+                          Standard Deviation = {sd_sbp0}",
+                          mean_sbp0 = mean(dataF$sbp_0, na.rm=T) %>% round(1),
+                          sd_sbp0   = sd(dataF$sbp_0,   na.rm=T) %>% round(1)),
+         x = "Systolic Blood Pressure (mmHg)",
+         y = "Frequency") +
+    theme_light(base_size = 12, base_family = "serif")
+```

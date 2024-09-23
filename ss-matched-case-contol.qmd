@@ -1,0 +1,26 @@
+---
+title: "Sample Size: Matched Case-Control"
+bibliography: references.bib
+---
+
+This section uses the formula by @wang2020. This is written below:
+
+$$
+n = (\frac{Z_{\alpha/2} + Z_\beta}{P_1 - P_2})^2 \times (1 + \frac{1}{k})
+$$
+
+where:
+
+-   $n$ is the number of matched pairs needed
+-   $Z_{\alpha/2}$ is the critical value of the standard normal distribution at the desired
+    significance level such that a 95% confidence level will correspond to 1.96
+-   $Z_{\beta}$ is the critical value of the standard normal distribution at the desired power such
+    that an 80% power will correspond to a value of 0.84.
+-   $P_1$ is the proportion of exposure in cases
+-   $P_0$ is the proportion of exposure in controls
+-   $k$ is the number of controls per case such that for a 1:1 match $k$ =1
+
+## Scenario
+
+A researcher intends to conduct a matched case-control study to determine the association between
+exposure and an outcome.

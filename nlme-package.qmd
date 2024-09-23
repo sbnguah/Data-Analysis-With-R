@@ -1,0 +1,162 @@
+---
+title: "`nlme` package"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+rm(list = ls(all=TRUE))
+library(tidyverse)
+```
+
+```{r}
+cint <- dget("C:/Dataset/cint_data_11042021")
+```
+
+Since this is a large dataset we start off by selecting the variables we need, convert it to the
+long format, and generate the "Time" variable
+
+```{r comment=NA}
+df <-
+    cint %>% 
+    select(
+        sid, cca_0, cca_12, sex, ageyrs, resid, physical, 
+        hpt_old, cart) %>% 
+    gather(period, cca, cca_0:cca_12) %>% 
+    mutate(
+        Time = ifelse(
+            period == "cca_0", 0, 
+            ifelse(period == "cca_12", 1, NA)))
+```
+
+Here we begin to pick up abnormal or suspicious data escpecially in the cca. One way is to determine
+the changes with time
+
+```{r comment=NA}
+df2 <- 
+    df %>% 
+    arrange(sid, period) %>%
+    group_by(sid) %>% 
+    mutate(
+        cca_prev = lag(cca, order_by = sid),
+        cca_diff = cca - cca_prev) 
+
+df2 %>% 
+    arrange(sid, period) %>% 
+    head(10) %>% 
+    kableExtra::kable()
+```
+
+And then plot the differences
+
+```{r}
+df2 %>% 
+    na.omit() %>% 
+    ggplot(aes(x = cca_diff)) +
+    geom_boxplot()
+```
+
+Comment: Generally there was decrease in the cca values over the two time periods. Next we summarise
+and visualise the data
+
+```{r}
+df %>% 
+    na.omit() %>% 
+    ggplot(aes(x = Time, y = cca, group = sid))+
+    geom_jitter(show.legend = F, width = .01) +
+    stat_smooth(
+        formula = y ~x, 
+        method = "lm", 
+        se = FALSE, 
+        col = "grey") +
+    theme_light()
+```
+
+Next the UNCONDITIONAL NULL MODEL to evaluate clustering, thereby finding out if we need to even do
+multilevel analysis
+
+```{r comment=NA}
+n0 <- 
+    nlme::gls(
+        cca ~ 1, data = df, na.action = na.omit, method = "ML")
+
+n0 %>% 
+    broom.mixed::tidy(conf.int=T) %>% 
+    kableExtra::kable()
+```
+
+```{r comment=NA}
+n1 <- 
+    nlme::lme(
+        cca ~ 1, random = ~ 1 | sid, 
+        data = df, na.action = na.omit, method = "ML")
+
+n0 %>% broom.mixed::tidy(conf.int=T) %>% kableExtra::kable()
+```
+
+```{r comment=NA}
+n1 %>% reghelper::ICC()
+
+anova(n0, n1)
+```
+
+Since ICC \> 0.05 and also the random effects CI does not include 0 there exist significant
+clustering to suggest we do multilevel modeling. Next we test the UNCONDITIONAL SLOPE MODEL using
+the FIXED slope
+
+```{r comment=NA}
+n2 <- 
+    nlme::lme(
+        cca ~ Time, random = ~ 1 | sid, 
+        data = df, 
+        na.action = na.omit, 
+        method = "ML")
+
+n2 %>% 
+    broom.mixed::tidy(conf.int=T) %>% 
+    kableExtra::kable()
+
+n2 %>% reghelper::ICC()
+
+anova(n0, n1, n2)
+```
+
+Next we test the UNCONDITIONAL SLOPE MODEL using the RANDOM slope
+
+```{r comment=NA}
+n3 <- 
+    nlme::lme(
+        cca ~ Time, 
+        random = ~ Time | sid, 
+        data = df, 
+        na.action = na.omit, 
+        method = "ML")
+
+
+n3 %>% summary()
+
+n3 %>% nlme::intervals(which = "fixed")
+
+n3 %>% reghelper::ICC()
+
+anova(n0, n1, n2, n3)
+```
+
+Next we test the FULL MODEL using the RANDOM slope
+
+```{r comment=NA}
+n4 <- 
+    nlme::lme(
+        cca ~ Time + hpt_old + sex + scale(ageyrs) + cart, 
+        random = ~ 1 | sid, 
+        data = df, 
+        method = "ML", 
+        na.action = na.omit)
+
+n4 %>% 
+    broom.mixed::tidy() %>% 
+    kableExtra::kable()
+
+n4 %>% reghelper::ICC()
+
+anova(n0, n1, n2, n3, n4) 
+```

@@ -1,0 +1,78 @@
+---
+title: "Correlation"
+author: "Dr Samuel Blay Nguah"
+---
+
+
+```{r}
+#| label: setup
+#| include: false
+
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+rm(list = ls(all=T))
+```
+
+We begin by reading in the data and selecting our desired variables
+
+```{r  comment = NA, warning=F}
+matDF <- 
+    readstata13::read.dta13("C:/Dataset/olivia_data_wide.dta") %>% 
+    select(hct1, hct2, hct3, hct4, hct5)
+```
+
+Next we summarize the data
+
+```{r comment=NA}
+summarytools::dfSummary(matDF, graph.col = F)
+```
+
+We begin by running a correlation coefficient matrix with lower segment shown
+
+```{r comment = NA}
+psych::lowerCor(matDF, method = "pearson")
+```
+
+And then a lot more detail with p-values and confidence interval (Normal)
+
+```{r}
+psych::corr.test(matDF, method = "pearson") %>% 
+    print(short=F)
+```
+
+Bootstrapped coefficients and confidence interval can be obtained as below
+
+```{r}
+#| fig-height: 10
+#| fig-width: 12
+psych::cor.ci(matDF, cex.axis = 2, cex.lab = 3)
+```
+
+```{r comment = NA}
+matDF %>% 
+    cor() %>% 
+    ggcorrplot::ggcorrplot(hc.order = FALSE, 
+           type = "lower", 
+           lab = TRUE, 
+           lab_size = 3, 
+           method="square", 
+           colors = c("tomato2", "white", "springgreen3"), 
+           title="Correlogram of blood indices", 
+           ggtheme=theme_bw)
+```
+
+Graphically we can use this
+
+```{r}
+matDF %>% 
+    cor() %>% 
+    corrplot::corrplot(type = "lower", tl.pos = "ld",
+                       title = "Out correlation matrix", addCoef.col = "black",
+                       outline = "black", number.cex = .8)
+```
+
+```{r}
+#|mmessage: false
+#|warning: false
+GGally::ggpairs(data = matDF, ggplot2::aes(color = hct1>30))
+```

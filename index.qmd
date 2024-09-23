@@ -1,0 +1,5 @@
+---
+title: Practical data analysis with R
+---
+
+This compilation is dedicated to all who desire to learn!!

@@ -1,0 +1,249 @@
+---
+title: "Logistic Regression"
+author: "Dr Samuel Blay Nguah"
+---
+
+## Reading and visualizing data
+
+First, we read the data and visualize it
+
+```{r}
+#| message: false
+library(tidyverse)
+adm <- 
+    read.table("C:/Dataset/Admissions.txt", header = TRUE) %>% 
+    select(-x) %>% 
+    tibble()
+
+adm %>% 
+    summarytools::dfSummary(graph.col = F)
+```
+
+## Assumptions for a logistic regression
+
+1.  Cases are randomly sampled
+2.  Data free of bivariate or multivariate outliers
+3.  The outcome variable is dichotomous
+4.  The association between the continuous predictor and logit transformation is linear
+5.  Model-free of collinearity
+
+## Building the model
+
+Then we build a logistic regression model using the rank variable as a numeric variable
+
+```{r}
+mod.1 <- 
+    glm(admit ~ .,  data = adm, family = "binomial")
+```
+
+## Visualizing the model and its properties
+
+A summary of the model can be visualized from the `summary()` function. Next, we use the `broom`
+package to display various properties of the model in a tabular form. These can then be used for
+further analysis.
+
+```{r}
+mod.1 %>% summary()
+broom::glance(mod.1)
+broom::augment(mod.1) %>% 
+    arrange(desc(.cooksd)) %>% 
+    head(10) %>% 
+    gt::gt()
+```
+
+The maximum Cook's Distance of 0.02 (\<0.04) is not very different from the rest and can therefore
+be said not to have outliers.
+
+Next, we check for linear association by applying the Box Tidwell test
+
+```{r}
+glm(admit ~ gmat + gmat:log(gmat) + gpa  + gpa:log(gpa) + rank + 
+        rank:log(rank), data = adm, family = "binomial") %>% 
+    broom::tidy()
+```
+
+None of the variables has a significant interaction and hence the linearity between the variable and
+the logit of the outcome can be assumed.
+
+Residuals are referred to as deviant residuals. Also, we have out beta estimates and significance
+(p-values). Null deviance is a measure of error if you estimate only the model with the intercept
+term and not the x variable at all at the right. So we compare the value of the Residual deviance to
+the Null deviance. Also, we can use the AIC, smaller is better here.
+
+## Plotting coefficients
+
+The coefficient of the regression can be plotted using the `coefplot`package. This is illustrated
+below
+
+```{r}
+coefplot::coefplot(
+    mod.1, 
+    predictors=c("gpa", "rank", "gmat"), 
+    guide = "none", innerCI = 2, 
+    outerCI=0, 
+    title = "Coefficient Plot of Model 1", 
+    ylab = "Predictors",
+    decreasing = FALSE,  
+    newNames = c(
+        gpa = "Grade Point Avg.", 
+        rank = "Rank of School",
+        gmat = "GMAT Score")) + 
+  theme_light()
+```
+
+## Predictions for the model - Extracting and plotting
+
+Predictions from the model can be obtained with the `effects` package. This is illustrated below.
+First, we predict the model using the `gpa`, convert it to a *tibble*, plot the predicted
+probabilities and finally compare the plotted probabilities for the persons ranked as 1 to 5.
+
+```{r}
+ggeffects::ggpredict(model = mod.1, terms = c("gpa[all]"))
+ggeffects::ggpredict(model = mod.1, terms = c("gpa[all]")) %>% 
+    tibble()
+ggeffects::ggpredict(model = mod.1, terms = c("gpa[all]")) %>% 
+    plot()
+glm(admit ~ gpa*rank + gmat,  data = adm, family = "binomial") %>% 
+    ggeffects::ggpredict(terms = c("gpa[all]", "rank[2,4]")) %>% 
+    plot()
+```
+
+## Comparing two nested models
+
+We can compare the two models using the `anova` function in R. The first one is the Null Mode and
+the other includes the `gpa` variable. This we do with the analysis of the deviance table as below.
+Remember these must be nested in each other.
+
+```{r}
+first_model <- 
+    glm(admit ~ 1,  data = adm, family = "binomial")
+second_model <- 
+    glm(admit ~ gpa,  data = adm, family = "binomial")
+anova(first_model, second_model, test = "Chisq") %>% 
+    broom::tidy() %>% 
+    gt::gt() %>% 
+    gt::opt_stylize(style = 6, color = "gray")
+rm(first_model, second_model)
+```
+
+Results indicate a significant improvement between the Null model and the one with the `gpa` as a
+predictor
+
+### ROC curves for model
+
+Next, we compute the predicted probabilities of being admitted for each individual. And then
+generate ROC curves after we re-categorize standard error of the `Rank` variable into *High* and
+*Low*.
+
+```{r comment = NA}
+data.frame(
+    adm = adm$admit, 
+    pred = mod.1$fitted.values, 
+    rank2 = ifelse(adm$rank > 2, "High", "Low") %>% 
+        as.factor()) %>% 
+    arrange(adm) %>% 
+    ggplot(aes(d=adm, m=pred, col=rank2))+ 
+    plotROC::geom_roc(n.cuts = 5) + 
+    geom_segment(
+        x=0, y=0, xend=1, yend=1, col="black", lty = "solid", 
+        linewidth = 0.7) +
+    labs(
+        title = "ROC for the various groups of Ranks",
+        x = "1 - Sepcificity",
+        y = "Sensitivity",
+        col = "Rank") +
+  theme_light()
+```
+
+Rank is considered as a numeric variable but it is a categorical one so we convert it to one below
+
+```{r}
+adm <- 
+    adm %>% 
+    mutate(catrank = factor(rank))
+adm
+```
+
+And then create a second model
+
+```{r}
+mod.2 <- 
+    glm(admit ~ gmat + gpa + catrank,  data = adm, family = "binomial")
+
+mod.2 %>% 
+    summary()
+```
+
+We note a significant change in our Null Deviance and the residual deviance as well as a small AIC.
+
+Next, we build some confidence intervals using the profile log-likelihood.
+
+```{r}
+mod.2 %>% confint()
+```
+
+And then using the standard errors
+
+```{r}
+mod.2 %>% 
+    confint.default()
+```
+
+Next, we can create a coefficients confidence interval table as below
+
+```{r}
+conf_table <- 
+    cbind(mod.2$coefficient, confint(mod.2))
+
+conf_table
+```
+
+We convert to odd ratios with
+
+```{r}
+exp(conf_table)
+```
+
+We can also use the epiDisplay package to display this
+
+```{r}
+options(width = 100)
+epiDisplay::logistic.display(mod.2)
+```
+
+## The `lessR` Logit function
+
+The `lessR` package gives a detailed output for logistic regression. This is shown below.
+
+```{r}
+lessR::Logit(admit ~ gpa + rank + gmat,  data = adm, brief = F)
+```
+
+## Selecting the best model
+
+To select the best model we first run a stepwise backward regression
+
+```{r}
+mod.3 <- 
+    MASS::stepAIC(mod.2, direction = "backward", trace = FALSE)
+
+mod.3
+```
+
+All factors are considered significant and retained in the model
+
+Next, we run a bootstrap diagnostic retention of variables to determine the best predictive
+variables
+
+```{r comment = NA}
+bootStepAIC::boot.stepAIC(mod.2, data = adm, B = 100)
+```
+
+The suggested final predictive model therefore is
+
+```{r comment = NA}
+mod.4 <- 
+    glm(admit ~ gmat + gpa + catrank,  data = adm, family = "binomial")
+
+epiDisplay::logistic.display(mod.4)
+```

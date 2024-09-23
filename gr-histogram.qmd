@@ -1,0 +1,108 @@
+---
+title: "Histogram"
+---
+
+### Read in Data
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+```
+
+We begin by importing the data into R Studio and then summarizing it.
+
+```{r}
+#| warning: false
+
+df_histo <- 
+    readstata13::read.dta13("C:/Dataset/olivia_data_wide.dta") %>% 
+    select(hb1, hb2, hb3, hb4)
+
+df_histo %>% 
+    summarytools::dfSummary(labels.col = F, graph.col = F) 
+```
+
+### Simple histogram
+
+```{r}
+#| label: fig-fig1
+#| fig-cap: "Distribution of the first hemoglobins concentration"
+df_histo %>% 
+    ggplot(aes(x = hb1)) +
+    geom_histogram(
+        col = "red", 
+        fill = "snow1", 
+        bins = 12) +
+    labs(
+        x = "Hemoglobin (mg/dl)", 
+        y = "Frequency") +
+    theme_classic()
+```
+
+### Histogram with normal curve
+
+```{r}
+#| label: fig-fig2
+#| fig-cap: "Distribution of the first hemoglobins concentration"
+df_histo %>% 
+    ggplot(
+        aes(x = hb1)) + 
+    geom_histogram(
+        aes(y = after_stat(density)),
+        breaks = seq(7.5, 17.5, by = 1), 
+        colour = "blue", 
+        fill = "white") +
+    stat_function(
+        fun = dnorm, 
+        args = list(mean = mean(df_histo$hb1), sd = sd(df_histo$hb1)),
+        color = 'red')+
+    labs(
+        x = "Hemoglobin (mg/dl)", 
+        y = "Density") +
+    theme_classic()
+```
+
+### Panel histogram
+
+```{r}
+#| label: fig-fig3
+#| fig-cap: "Distribution of the first hemoglobins concentration"
+df_temp <- 
+    df_histo %>% 
+    pivot_longer(cols = c(hb1, hb2, hb3, hb4)) %>% 
+    drop_na(value) %>% 
+    mutate(
+        name = factor(
+            name, 
+            levels = c("hb1", "hb2", "hb3", "hb4"),
+            labels = c("First HB", "Second HB", "Third HB", "Fourth HB")))
+
+df_temp %>% 
+    ggplot(
+        aes(x = value)) + 
+    geom_histogram(
+        aes(y = after_stat(density)),
+        breaks = seq(7.55, 17.5, by = 1), 
+        colour = "blue", 
+        fill = "white", 
+        bins = 10) +
+    stat_function(
+        fun = dnorm, 
+        args = list(
+            mean = mean(df_temp$value), sd = sd(df_temp$value)),
+        color = 'red')+
+    labs(
+        x = "Hemoglobin (mg/dl)", 
+        y = "Density") +
+    theme_bw()+
+    facet_wrap(
+        facets = .~name)+
+    theme(
+        text = element_text(family = "serif"),
+        strip.text = element_text(face = "bold", color = "white"),
+        strip.background = element_rect(fill = "#4C4CBD"),
+        plot.title = element_text(face = 'bold'))
+```

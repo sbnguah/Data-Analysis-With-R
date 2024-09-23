@@ -1,0 +1,278 @@
+---
+title: "Visualization"
+---
+
+## Importing data
+
+```{r}
+#| message: false
+#| label: Reading and generating data
+
+library(tidyverse)
+df_hpt <- 
+    readxl::read_xlsx(path = "C:/Dataset/hptdata.xlsx") %>% 
+    janitor::clean_names() %>% 
+    mutate(
+        sex = factor(sex),
+        educ = factor(
+            educ, 
+            levels = c("None", "Primary", "JHS/Form 4", "SHS/Secondary", "Tertiary")
+            ),
+        hpt = case_when(
+            (syst1 >= 140 | syst2 >= 140 | diast1 >= 90 | diast2 >= 90) ~ "Yes",
+            (syst1 < 140 & syst2 < 140 & diast1 < 90 & diast2 < 90) ~ "No"
+            ) %>% factor()
+        )
+```
+
+## Labelling data
+
+```{r}
+#| label: labellig data
+
+df_hpt <- 
+    df_hpt %>% 
+    labelled::set_variable_labels(
+        sid = "Study ID",
+        ageyrs = "Age (years)",
+        sex = "Sex",
+        educ = "Educational level",
+        wgt = "Body Weight",
+        waist = "Waist circumference (cm)",
+        hgt = "Height (cm)",
+        syst1 = "Systolic BP 1st",
+        diast1 = "Diastolic BP 1st",
+        syst2 = "Systolic BP 2nd",
+        diast2 = "Diastolic BP 2nd",
+        recdate = "Record date",
+        hpt = "Hypertension"
+    )
+```
+
+## Summarizing data
+
+```{r}
+df_hpt %>% 
+    summarytools::dfSummary(graph.col = F, labels.col = F)
+
+```
+
+## Viewing missing data pattern
+
+```{r}
+#| label: fig-misspattern
+#| fig-cap: "Missing data pattern"
+#| fig-width: 8
+#| fig-height: 4
+df_hpt %>% mice::md.pattern(rotate.names = T)
+```
+
+```{r}
+#| label: fig-misspattern2
+#| fig-cap: "Missing data pattern 2"
+#| fig-width: 7
+#| fig-height: 5
+
+df_hpt %>% 
+    visdat::vis_miss()
+```
+
+## Regression with `mice` imputation
+
+```{r}
+#| message: false
+gtsummary::theme_gtsummary_compact()
+
+# Input the data
+imputed_data <- 
+    df_hpt %>% 
+    select(hpt, ageyrs, sex, waist, educ, wgt, hgt) %>% 
+    mice::mice(maxit = 20, m = 5,printFlag = F)
+
+# Visualize the 3rd og the 5 data sets created
+mice::complete(imputed_data, 4) %>% 
+    head() %>% 
+    gt::gt() %>% 
+    gt::opt_stylize(style = 3, color = "blue", add_row_striping = TRUE)
+
+# Create univariate table for original data set
+tbl1 <- 
+    df_hpt %>% 
+    gtsummary::tbl_uvregression(
+        include = c(ageyrs, sex, waist, educ, wgt, hgt),
+        y = hpt,
+        method = glm,
+        method.args = family(binomial),
+        exponentiate=TRUE,
+        pvalue_fun = function(x) gtsummary::style_pvalue(x, digits = 3)
+        ) %>% 
+    gtsummary::bold_labels() %>% 
+    gtsummary::bold_p()
+tbl1
+
+# Build the model
+imputed_model <- 
+    with(imputed_data, 
+         glm(hpt ~ ageyrs + sex + waist + educ + wgt + hgt, 
+             family = "binomial")
+         )
+
+# present beautiful table with gtsummary
+tbl2 <- 
+    imputed_model %>% 
+    gtsummary::tbl_regression(
+        exponentiate=TRUE,
+        pvalue_fun = function(x) gtsummary::style_pvalue(x, digits = 3)
+        ) %>% 
+    gtsummary::bold_labels() %>% 
+    gtsummary::bold_p()
+tbl2
+
+# Combine tables
+gtsummary::tbl_merge(
+    tbls = list(tbl1, tbl2), 
+    tab_spanner = c("**Univariate**", "**Multivariate**")
+    )
+```
+
+## Inputation with variable selection using missRanger package
+
+@tbl-first is the first table we are drawing
+
+```{r}
+#| message: false
+#| label: tbl-first
+#| tbl-cap: "The first table is here"
+#| tbl-cap-location: top
+
+# Create an empty list
+kk <- list()
+
+
+# Create a loop for running multiple (10) imputations  and selecting the best variables
+for(i in 1:10){
+    df_temp <- 
+        df_hpt %>% 
+        select(hpt, ageyrs, sex, waist, educ, wgt, hgt)
+
+    df_imp <-  
+        df_temp %>% 
+        missRanger::missRanger(
+            formula = . ~ ., seed = i, num.trees = 1000,verbose = F) 
+
+    model.x <- 
+        glm(hpt ~ ageyrs + sex + waist + educ + wgt + hgt, 
+            family = "binomial", data = df_imp)
+
+    kk[[i]]<-
+        MASS::stepAIC(model.x, direction = "both", trace = FALSE,) %>% 
+        broom::tidy(exponentiate = T) %>% 
+        pull(term)
+}
+
+# Tabulate selected variables. Chosen : ageyrs and waist
+unlist(kk) %>% table()
+
+df_for_reg <-
+    df_hpt %>% 
+    select(ageyrs, waist, hpt)
+
+# Univariate regression
+tbl1 <-
+    df_temp %>% 
+    gtsummary::tbl_uvregression(
+        method = glm,
+        y = hpt,
+        method.args = family(binomial),
+        exponentiate = TRUE,
+        pvalue_fun = function(x) gtsummary::style_pvalue(x, digits = 3)
+        ) %>% 
+    gtsummary::bold_p()
+
+# Multivariate regression 
+tbl2 <-
+    df_for_reg %>%
+    mice::mice(m = 10, seed = 200, printFlag = F)%>%
+    with(glm(hpt ~ ageyrs + waist, family = "binomial")
+        ) %>%
+    gtsummary::tbl_regression(
+        exponentiate = T,
+        pvalue_fun = function(x) gtsummary::style_pvalue(x, digits = 3)
+        ) %>%
+    gtsummary::bold_labels() %>%
+    gtsummary::bold_p()
+
+# Merge tables into one
+tbl_all <-
+    gtsummary::tbl_merge(
+    tbls = list(tbl1, tbl2),
+    tab_spanner = c("**Univariate**", "**Multivariate**")
+    )
+
+tbl_all
+```
+
+@fig-bps is a depiction of the figures that may show on the table every time there is an indication
+for such
+
+```{r}
+#| label: fig-bps
+#| fig-cap: "Relationship between systolic blood pressure and age"
+#| fig-width: 8
+#| fig-height: 4
+
+df_hpt %>% 
+    select(syst1, ageyrs, sex) %>% 
+    drop_na(syst1, ageyrs, sex) %>% 
+    ggplot(aes(x = ageyrs, y = syst1, color = sex)) + 
+    geom_point()+
+    geom_smooth(formula = y~x, method = "loess", se = F)+
+    labs(
+        x = "Age (years)",
+        y = "Systolic Blood Pressure (mmHg)"
+        ) +
+    ggthemes::theme_clean()+
+    scale_color_manual(
+        name = "Sex", 
+        labels = c("Female","Male"), 
+        values = c("red", "#0043E0")
+        )
+```
+
+```{r}
+lm1 <- 
+    glm(syst1 ~ sex+ ageyrs + waist + hgt, data = df_hpt, family = "gaussian")
+lm1 %>% performance::check_heteroscedasticity()
+lm1 %>% performance::check_normality() %>% plot()
+lm1 %>% performance::check_posterior_predictions()
+lm1 %>% performance::check_outliers() %>% plot()
+lm1 %>% performance::check_collinearity() %>% plot() 
+lm1 %>% 
+    sjPlot::plot_model(type = "eff", term = c("ageyrs[all]", "sex"))+ 
+    theme_bw()
+lm1 %>% 
+    sjPlot::tab_model(
+        p.style = "numeric_stars", 
+        show.reflvl = T, 
+        show.intercept = F
+        )
+```
+
+```{r}
+lm2 <- 
+    glm(waist ~ sex* ageyrs, data = df_hpt, family = "gaussian")
+lm2 %>% performance::check_heteroscedasticity()
+lm2 %>% performance::check_normality() %>% plot()
+lm2 %>% performance::check_posterior_predictions()
+lm2 %>% performance::check_outliers() %>% plot()
+lm2 %>% performance::check_collinearity() %>% plot() 
+lm2 %>% 
+    sjPlot::plot_model(type = "eff", term = c("sex", "ageyrs[20, 50, 80]"))+ 
+    theme_bw()
+lm2 %>% 
+    sjPlot::tab_model(
+        p.style = "numeric_stars", 
+        show.reflvl = T, 
+        show.intercept = F
+        )
+```
