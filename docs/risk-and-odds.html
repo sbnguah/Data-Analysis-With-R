@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./correlation.html" rel="next">
-<link href="./missing-data.html" rel="prev">
+<link href="./normality.html" rel="next">
+<link href="./data-types.html" rel="prev">
 <link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -173,13 +173,43 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Practical data analysis with R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data analysis with R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./confounding-and-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -187,22 +217,16 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -210,8 +234,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -219,7 +243,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -227,8 +251,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
   </div>
 </li>
       </ul>
@@ -236,7 +260,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -244,8 +268,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -253,7 +277,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -261,8 +285,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -270,7 +294,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -278,8 +302,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -296,19 +320,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
   </div>
 </li>
       </ul>
@@ -325,7 +349,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
   </div>
 </li>
       </ul>
@@ -342,55 +366,55 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -496,23 +520,23 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="vcbhghcbjk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vcbhghcbjk table {
+<div id="pcjovaaekp" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#pcjovaaekp table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vcbhghcbjk thead, #vcbhghcbjk tbody, #vcbhghcbjk tfoot, #vcbhghcbjk tr, #vcbhghcbjk td, #vcbhghcbjk th {
+#pcjovaaekp thead, #pcjovaaekp tbody, #pcjovaaekp tfoot, #pcjovaaekp tr, #pcjovaaekp td, #pcjovaaekp th {
   border-style: none;
 }
 
-#vcbhghcbjk p {
+#pcjovaaekp p {
   margin: 0;
   padding: 0;
 }
 
-#vcbhghcbjk .gt_table {
+#pcjovaaekp .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -538,12 +562,12 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-left-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_caption {
+#pcjovaaekp .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vcbhghcbjk .gt_title {
+#pcjovaaekp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -555,7 +579,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-width: 0;
 }
 
-#vcbhghcbjk .gt_subtitle {
+#pcjovaaekp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -567,7 +591,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-top-width: 0;
 }
 
-#vcbhghcbjk .gt_heading {
+#pcjovaaekp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -579,13 +603,13 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_bottom_border {
+#pcjovaaekp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_col_headings {
+#pcjovaaekp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -600,7 +624,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_col_heading {
+#pcjovaaekp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -620,7 +644,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   overflow-x: hidden;
 }
 
-#vcbhghcbjk .gt_column_spanner_outer {
+#pcjovaaekp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -632,15 +656,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 4px;
 }
 
-#vcbhghcbjk .gt_column_spanner_outer:first-child {
+#pcjovaaekp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vcbhghcbjk .gt_column_spanner_outer:last-child {
+#pcjovaaekp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vcbhghcbjk .gt_column_spanner {
+#pcjovaaekp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -652,11 +676,11 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   width: 100%;
 }
 
-#vcbhghcbjk .gt_spanner_row {
+#pcjovaaekp .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vcbhghcbjk .gt_group_heading {
+#pcjovaaekp .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -682,7 +706,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   text-align: left;
 }
 
-#vcbhghcbjk .gt_empty_group_heading {
+#pcjovaaekp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -697,15 +721,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   vertical-align: middle;
 }
 
-#vcbhghcbjk .gt_from_md > :first-child {
+#pcjovaaekp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vcbhghcbjk .gt_from_md > :last-child {
+#pcjovaaekp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vcbhghcbjk .gt_row {
+#pcjovaaekp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -724,7 +748,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   overflow-x: hidden;
 }
 
-#vcbhghcbjk .gt_stub {
+#pcjovaaekp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -737,7 +761,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#vcbhghcbjk .gt_stub_row_group {
+#pcjovaaekp .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -751,15 +775,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   vertical-align: top;
 }
 
-#vcbhghcbjk .gt_row_group_first td {
+#pcjovaaekp .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vcbhghcbjk .gt_row_group_first th {
+#pcjovaaekp .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vcbhghcbjk .gt_summary_row {
+#pcjovaaekp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -769,16 +793,16 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#vcbhghcbjk .gt_first_summary_row {
+#pcjovaaekp .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_first_summary_row.thick {
+#pcjovaaekp .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vcbhghcbjk .gt_last_summary_row {
+#pcjovaaekp .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -788,7 +812,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_grand_summary_row {
+#pcjovaaekp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -798,7 +822,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#vcbhghcbjk .gt_first_grand_summary_row {
+#pcjovaaekp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -808,7 +832,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-top-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_last_grand_summary_row_top {
+#pcjovaaekp .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -818,11 +842,11 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_striped {
+#pcjovaaekp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vcbhghcbjk .gt_table_body {
+#pcjovaaekp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -831,7 +855,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_footnotes {
+#pcjovaaekp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -845,7 +869,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_footnote {
+#pcjovaaekp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -854,7 +878,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#vcbhghcbjk .gt_sourcenotes {
+#pcjovaaekp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -868,7 +892,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#vcbhghcbjk .gt_sourcenote {
+#pcjovaaekp .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -876,72 +900,72 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#vcbhghcbjk .gt_left {
+#pcjovaaekp .gt_left {
   text-align: left;
 }
 
-#vcbhghcbjk .gt_center {
+#pcjovaaekp .gt_center {
   text-align: center;
 }
 
-#vcbhghcbjk .gt_right {
+#pcjovaaekp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vcbhghcbjk .gt_font_normal {
+#pcjovaaekp .gt_font_normal {
   font-weight: normal;
 }
 
-#vcbhghcbjk .gt_font_bold {
+#pcjovaaekp .gt_font_bold {
   font-weight: bold;
 }
 
-#vcbhghcbjk .gt_font_italic {
+#pcjovaaekp .gt_font_italic {
   font-style: italic;
 }
 
-#vcbhghcbjk .gt_super {
+#pcjovaaekp .gt_super {
   font-size: 65%;
 }
 
-#vcbhghcbjk .gt_footnote_marks {
+#pcjovaaekp .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vcbhghcbjk .gt_asterisk {
+#pcjovaaekp .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vcbhghcbjk .gt_indent_1 {
+#pcjovaaekp .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vcbhghcbjk .gt_indent_2 {
+#pcjovaaekp .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vcbhghcbjk .gt_indent_3 {
+#pcjovaaekp .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vcbhghcbjk .gt_indent_4 {
+#pcjovaaekp .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vcbhghcbjk .gt_indent_5 {
+#pcjovaaekp .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vcbhghcbjk .katex-display {
+#pcjovaaekp .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vcbhghcbjk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#pcjovaaekp div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1508,13 +1532,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./missing-data.html" class="pagination-link" aria-label="Visualization">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualization</span></span>
+      <a href="./data-types.html" class="pagination-link" aria-label="Data Types">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./correlation.html" class="pagination-link" aria-label="Correlation">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Correlation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./normality.html" class="pagination-link" aria-label="Normality">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normality</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

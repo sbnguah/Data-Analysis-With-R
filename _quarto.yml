@@ -20,10 +20,11 @@ book:
     center: "Compiled by: Dr Samuel Blay Nguah"
   chapters:
     - index.qmd
-    - part: "<span style='font-weight:bold; color: black;'>Missiing Data</span>"
-      chapters: 
-        - missing-data.qmd
+    - data-types.qmd
     - risk-and-odds.qmd
+    - normality.qmd
+    - hypothesis-testing.qmd
+    - confounding-and-interaction.qmd
     - part: "<span style='font-weight:bold; color: black;'>Correlation</span>"
       chapters: 
         - correlation.qmd
@@ -39,6 +40,9 @@ book:
     - part: "<span style='font-weight:bold; color: black;'>Survival Analysis</span>"
       chapters: 
         - survival-analysis.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Missiing Data</span>"
+      chapters: 
+        - missing-data.qmd
     - part: "<span style='font-weight:bold; color: black;'>Specific Packages</span>"
       chapters: 
         - pkg-dplyr.qmd

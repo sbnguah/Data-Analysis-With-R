@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>2&nbsp; Visualization – Data Analysis With R</title>
+<title>12&nbsp; Visualization – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,8 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./risk-and-odds.html" rel="next">
-<link href="./index.html" rel="prev">
+<link href="./pkg-dplyr.html" rel="next">
+<link href="./survival-analysis.html" rel="prev">
 <link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./missing-data.html"><span style="font-weight:bold; color: black;">Missiing Data</span></a></li><li class="breadcrumb-item"><a href="./missing-data.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualization</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./missing-data.html"><span style="font-weight:bold; color: black;">Missiing Data</span></a></li><li class="breadcrumb-item"><a href="./missing-data.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -144,13 +144,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Practical data analysis with R</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data analysis with R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./confounding-and-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -158,22 +188,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./missing-data.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -181,8 +205,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -190,7 +214,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -198,8 +222,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
   </div>
 </li>
       </ul>
@@ -207,7 +231,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -215,8 +239,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -224,7 +248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -232,8 +256,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -241,7 +265,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -249,8 +273,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  <a href="./missing-data.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -267,19 +291,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
   </div>
 </li>
       </ul>
@@ -296,7 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
   </div>
 </li>
       </ul>
@@ -313,55 +337,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -382,21 +406,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#importing-data" id="toc-importing-data" class="nav-link active" data-scroll-target="#importing-data"><span class="header-section-number">2.1</span> Importing data</a></li>
-  <li><a href="#labelling-data" id="toc-labelling-data" class="nav-link" data-scroll-target="#labelling-data"><span class="header-section-number">2.2</span> Labelling data</a></li>
-  <li><a href="#summarizing-data" id="toc-summarizing-data" class="nav-link" data-scroll-target="#summarizing-data"><span class="header-section-number">2.3</span> Summarizing data</a></li>
-  <li><a href="#viewing-missing-data-pattern" id="toc-viewing-missing-data-pattern" class="nav-link" data-scroll-target="#viewing-missing-data-pattern"><span class="header-section-number">2.4</span> Viewing missing data pattern</a></li>
-  <li><a href="#regression-with-mice-imputation" id="toc-regression-with-mice-imputation" class="nav-link" data-scroll-target="#regression-with-mice-imputation"><span class="header-section-number">2.5</span> Regression with <code>mice</code> imputation</a></li>
-  <li><a href="#inputation-with-variable-selection-using-missranger-package" id="toc-inputation-with-variable-selection-using-missranger-package" class="nav-link" data-scroll-target="#inputation-with-variable-selection-using-missranger-package"><span class="header-section-number">2.6</span> Inputation with variable selection using missRanger package</a></li>
+  <li><a href="#importing-data" id="toc-importing-data" class="nav-link active" data-scroll-target="#importing-data"><span class="header-section-number">12.1</span> Importing data</a></li>
+  <li><a href="#labelling-data" id="toc-labelling-data" class="nav-link" data-scroll-target="#labelling-data"><span class="header-section-number">12.2</span> Labelling data</a></li>
+  <li><a href="#summarizing-data" id="toc-summarizing-data" class="nav-link" data-scroll-target="#summarizing-data"><span class="header-section-number">12.3</span> Summarizing data</a></li>
+  <li><a href="#viewing-missing-data-pattern" id="toc-viewing-missing-data-pattern" class="nav-link" data-scroll-target="#viewing-missing-data-pattern"><span class="header-section-number">12.4</span> Viewing missing data pattern</a></li>
+  <li><a href="#regression-with-mice-imputation" id="toc-regression-with-mice-imputation" class="nav-link" data-scroll-target="#regression-with-mice-imputation"><span class="header-section-number">12.5</span> Regression with <code>mice</code> imputation</a></li>
+  <li><a href="#inputation-with-variable-selection-using-missranger-package" id="toc-inputation-with-variable-selection-using-missranger-package" class="nav-link" data-scroll-target="#inputation-with-variable-selection-using-missranger-package"><span class="header-section-number">12.6</span> Inputation with variable selection using missRanger package</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./missing-data.html"><span style="font-weight:bold; color: black;">Missiing Data</span></a></li><li class="breadcrumb-item"><a href="./missing-data.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualization</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./missing-data.html"><span style="font-weight:bold; color: black;">Missiing Data</span></a></li><li class="breadcrumb-item"><a href="./missing-data.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Visualization</span></h1>
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualization</span></h1>
 </div>
 
 
@@ -413,8 +437,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="importing-data" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="importing-data"><span class="header-section-number">2.1</span> Importing data</h2>
+<section id="importing-data" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="importing-data"><span class="header-section-number">12.1</span> Importing data</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -436,8 +460,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="labelling-data" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="labelling-data"><span class="header-section-number">2.2</span> Labelling data</h2>
+<section id="labelling-data" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="labelling-data"><span class="header-section-number">12.2</span> Labelling data</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -461,8 +485,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 </section>
-<section id="summarizing-data" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="summarizing-data"><span class="header-section-number">2.3</span> Summarizing data</h2>
+<section id="summarizing-data" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="summarizing-data"><span class="header-section-number">12.3</span> Summarizing data</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -550,8 +574,8 @@ No   Variable            Stats / Values              Freqs (% of Valid)    Valid
 </div>
 </div>
 </section>
-<section id="viewing-missing-data-pattern" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="viewing-missing-data-pattern"><span class="header-section-number">2.4</span> Viewing missing data pattern</h2>
+<section id="viewing-missing-data-pattern" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="viewing-missing-data-pattern"><span class="header-section-number">12.4</span> Viewing missing data pattern</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -579,7 +603,7 @@ No   Variable            Stats / Values              Freqs (% of Valid)    Valid
 <img src="missing-data_files/figure-html/fig-misspattern-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-misspattern-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.1: Missing data pattern
+Figure&nbsp;12.1: Missing data pattern
 </figcaption>
 </figure>
 </div>
@@ -598,15 +622,15 @@ Figure&nbsp;2.1: Missing data pattern
 <img src="missing-data_files/figure-html/fig-misspattern2-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-misspattern2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.2: Missing data pattern 2
+Figure&nbsp;12.2: Missing data pattern 2
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="regression-with-mice-imputation" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="regression-with-mice-imputation"><span class="header-section-number">2.5</span> Regression with <code>mice</code> imputation</h2>
+<section id="regression-with-mice-imputation" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="regression-with-mice-imputation"><span class="header-section-number">12.5</span> Regression with <code>mice</code> imputation</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -625,23 +649,23 @@ Figure&nbsp;2.2: Missing data pattern 2
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">3</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">add_row_striping =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="dmiojwkqvj" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dmiojwkqvj table {
+<div id="dwzmfrtxpv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dwzmfrtxpv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dmiojwkqvj thead, #dmiojwkqvj tbody, #dmiojwkqvj tfoot, #dmiojwkqvj tr, #dmiojwkqvj td, #dmiojwkqvj th {
+#dwzmfrtxpv thead, #dwzmfrtxpv tbody, #dwzmfrtxpv tfoot, #dwzmfrtxpv tr, #dwzmfrtxpv td, #dwzmfrtxpv th {
   border-style: none;
 }
 
-#dmiojwkqvj p {
+#dwzmfrtxpv p {
   margin: 0;
   padding: 0;
 }
 
-#dmiojwkqvj .gt_table {
+#dwzmfrtxpv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -667,12 +691,12 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-left-color: #D3D3D3;
 }
 
-#dmiojwkqvj .gt_caption {
+#dwzmfrtxpv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dmiojwkqvj .gt_title {
+#dwzmfrtxpv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -684,7 +708,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-width: 0;
 }
 
-#dmiojwkqvj .gt_subtitle {
+#dwzmfrtxpv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -696,7 +720,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-width: 0;
 }
 
-#dmiojwkqvj .gt_heading {
+#dwzmfrtxpv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -708,13 +732,13 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#dmiojwkqvj .gt_bottom_border {
+#dwzmfrtxpv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #929292;
 }
 
-#dmiojwkqvj .gt_col_headings {
+#dwzmfrtxpv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #929292;
@@ -729,7 +753,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#dmiojwkqvj .gt_col_heading {
+#dwzmfrtxpv .gt_col_heading {
   color: #FFFFFF;
   background-color: #004D80;
   font-size: 100%;
@@ -749,7 +773,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#dmiojwkqvj .gt_column_spanner_outer {
+#dwzmfrtxpv .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #004D80;
   font-size: 100%;
@@ -761,15 +785,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 4px;
 }
 
-#dmiojwkqvj .gt_column_spanner_outer:first-child {
+#dwzmfrtxpv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dmiojwkqvj .gt_column_spanner_outer:last-child {
+#dwzmfrtxpv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dmiojwkqvj .gt_column_spanner {
+#dwzmfrtxpv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #929292;
@@ -781,11 +805,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   width: 100%;
 }
 
-#dmiojwkqvj .gt_spanner_row {
+#dwzmfrtxpv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dmiojwkqvj .gt_group_heading {
+#dwzmfrtxpv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -811,7 +835,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   text-align: left;
 }
 
-#dmiojwkqvj .gt_empty_group_heading {
+#dwzmfrtxpv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -826,15 +850,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: middle;
 }
 
-#dmiojwkqvj .gt_from_md > :first-child {
+#dwzmfrtxpv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dmiojwkqvj .gt_from_md > :last-child {
+#dwzmfrtxpv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dmiojwkqvj .gt_row {
+#dwzmfrtxpv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -853,7 +877,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#dmiojwkqvj .gt_stub {
+#dwzmfrtxpv .gt_stub {
   color: #333333;
   background-color: #D5D5D5;
   font-size: 100%;
@@ -866,7 +890,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#dmiojwkqvj .gt_stub_row_group {
+#dwzmfrtxpv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -880,15 +904,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: top;
 }
 
-#dmiojwkqvj .gt_row_group_first td {
+#dwzmfrtxpv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dmiojwkqvj .gt_row_group_first th {
+#dwzmfrtxpv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dmiojwkqvj .gt_summary_row {
+#dwzmfrtxpv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -898,16 +922,16 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#dmiojwkqvj .gt_first_summary_row {
+#dwzmfrtxpv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #929292;
 }
 
-#dmiojwkqvj .gt_first_summary_row.thick {
+#dwzmfrtxpv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dmiojwkqvj .gt_last_summary_row {
+#dwzmfrtxpv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -917,7 +941,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #929292;
 }
 
-#dmiojwkqvj .gt_grand_summary_row {
+#dwzmfrtxpv .gt_grand_summary_row {
   color: #333333;
   background-color: #D5D5D5;
   text-transform: inherit;
@@ -927,7 +951,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#dmiojwkqvj .gt_first_grand_summary_row {
+#dwzmfrtxpv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -937,7 +961,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-color: #929292;
 }
 
-#dmiojwkqvj .gt_last_grand_summary_row_top {
+#dwzmfrtxpv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -947,11 +971,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #929292;
 }
 
-#dmiojwkqvj .gt_striped {
+#dwzmfrtxpv .gt_striped {
   background-color: #F4F4F4;
 }
 
-#dmiojwkqvj .gt_table_body {
+#dwzmfrtxpv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #929292;
@@ -960,7 +984,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #929292;
 }
 
-#dmiojwkqvj .gt_footnotes {
+#dwzmfrtxpv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -974,7 +998,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#dmiojwkqvj .gt_footnote {
+#dwzmfrtxpv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -983,7 +1007,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#dmiojwkqvj .gt_sourcenotes {
+#dwzmfrtxpv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -997,7 +1021,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#dmiojwkqvj .gt_sourcenote {
+#dwzmfrtxpv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1005,72 +1029,72 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#dmiojwkqvj .gt_left {
+#dwzmfrtxpv .gt_left {
   text-align: left;
 }
 
-#dmiojwkqvj .gt_center {
+#dwzmfrtxpv .gt_center {
   text-align: center;
 }
 
-#dmiojwkqvj .gt_right {
+#dwzmfrtxpv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dmiojwkqvj .gt_font_normal {
+#dwzmfrtxpv .gt_font_normal {
   font-weight: normal;
 }
 
-#dmiojwkqvj .gt_font_bold {
+#dwzmfrtxpv .gt_font_bold {
   font-weight: bold;
 }
 
-#dmiojwkqvj .gt_font_italic {
+#dwzmfrtxpv .gt_font_italic {
   font-style: italic;
 }
 
-#dmiojwkqvj .gt_super {
+#dwzmfrtxpv .gt_super {
   font-size: 65%;
 }
 
-#dmiojwkqvj .gt_footnote_marks {
+#dwzmfrtxpv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dmiojwkqvj .gt_asterisk {
+#dwzmfrtxpv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dmiojwkqvj .gt_indent_1 {
+#dwzmfrtxpv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dmiojwkqvj .gt_indent_2 {
+#dwzmfrtxpv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dmiojwkqvj .gt_indent_3 {
+#dwzmfrtxpv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dmiojwkqvj .gt_indent_4 {
+#dwzmfrtxpv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dmiojwkqvj .gt_indent_5 {
+#dwzmfrtxpv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dmiojwkqvj .katex-display {
+#dwzmfrtxpv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dmiojwkqvj div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dwzmfrtxpv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1103,7 +1127,7 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center gt_striped" headers="sex">Female</td>
 <td class="gt_row gt_right gt_striped" headers="waist">80</td>
 <td class="gt_row gt_center gt_striped" headers="educ">None</td>
-<td class="gt_row gt_right gt_striped" headers="wgt">55.3</td>
+<td class="gt_row gt_right gt_striped" headers="wgt">53.7</td>
 <td class="gt_row gt_right gt_striped" headers="hgt">149</td>
 </tr>
 <tr class="odd">
@@ -1165,23 +1189,23 @@ Figure&nbsp;2.2: Missing data pattern 2
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>tbl1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="wbrswulbgi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wbrswulbgi table {
+<div id="vbmgamhoec" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#vbmgamhoec table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wbrswulbgi thead, #wbrswulbgi tbody, #wbrswulbgi tfoot, #wbrswulbgi tr, #wbrswulbgi td, #wbrswulbgi th {
+#vbmgamhoec thead, #vbmgamhoec tbody, #vbmgamhoec tfoot, #vbmgamhoec tr, #vbmgamhoec td, #vbmgamhoec th {
   border-style: none;
 }
 
-#wbrswulbgi p {
+#vbmgamhoec p {
   margin: 0;
   padding: 0;
 }
 
-#wbrswulbgi .gt_table {
+#vbmgamhoec .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1207,12 +1231,12 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-left-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_caption {
+#vbmgamhoec .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wbrswulbgi .gt_title {
+#vbmgamhoec .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1224,7 +1248,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-width: 0;
 }
 
-#wbrswulbgi .gt_subtitle {
+#vbmgamhoec .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1236,7 +1260,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-width: 0;
 }
 
-#wbrswulbgi .gt_heading {
+#vbmgamhoec .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1248,13 +1272,13 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_bottom_border {
+#vbmgamhoec .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_col_headings {
+#vbmgamhoec .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1269,7 +1293,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_col_heading {
+#vbmgamhoec .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1289,7 +1313,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#wbrswulbgi .gt_column_spanner_outer {
+#vbmgamhoec .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1301,15 +1325,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 4px;
 }
 
-#wbrswulbgi .gt_column_spanner_outer:first-child {
+#vbmgamhoec .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wbrswulbgi .gt_column_spanner_outer:last-child {
+#vbmgamhoec .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wbrswulbgi .gt_column_spanner {
+#vbmgamhoec .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1321,11 +1345,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   width: 100%;
 }
 
-#wbrswulbgi .gt_spanner_row {
+#vbmgamhoec .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wbrswulbgi .gt_group_heading {
+#vbmgamhoec .gt_group_heading {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1351,7 +1375,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   text-align: left;
 }
 
-#wbrswulbgi .gt_empty_group_heading {
+#vbmgamhoec .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1366,15 +1390,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: middle;
 }
 
-#wbrswulbgi .gt_from_md > :first-child {
+#vbmgamhoec .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wbrswulbgi .gt_from_md > :last-child {
+#vbmgamhoec .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wbrswulbgi .gt_row {
+#vbmgamhoec .gt_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1393,7 +1417,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#wbrswulbgi .gt_stub {
+#vbmgamhoec .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1406,7 +1430,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#wbrswulbgi .gt_stub_row_group {
+#vbmgamhoec .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1420,15 +1444,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: top;
 }
 
-#wbrswulbgi .gt_row_group_first td {
+#vbmgamhoec .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wbrswulbgi .gt_row_group_first th {
+#vbmgamhoec .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wbrswulbgi .gt_summary_row {
+#vbmgamhoec .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1438,16 +1462,16 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#wbrswulbgi .gt_first_summary_row {
+#vbmgamhoec .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_first_summary_row.thick {
+#vbmgamhoec .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wbrswulbgi .gt_last_summary_row {
+#vbmgamhoec .gt_last_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1457,7 +1481,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_grand_summary_row {
+#vbmgamhoec .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1467,7 +1491,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#wbrswulbgi .gt_first_grand_summary_row {
+#vbmgamhoec .gt_first_grand_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1477,7 +1501,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_last_grand_summary_row_top {
+#vbmgamhoec .gt_last_grand_summary_row_top {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1487,11 +1511,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_striped {
+#vbmgamhoec .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wbrswulbgi .gt_table_body {
+#vbmgamhoec .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1500,7 +1524,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_footnotes {
+#vbmgamhoec .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1514,7 +1538,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_footnote {
+#vbmgamhoec .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 1px;
@@ -1523,7 +1547,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#wbrswulbgi .gt_sourcenotes {
+#vbmgamhoec .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1537,7 +1561,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#wbrswulbgi .gt_sourcenote {
+#vbmgamhoec .gt_sourcenote {
   font-size: 90%;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -1545,72 +1569,72 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#wbrswulbgi .gt_left {
+#vbmgamhoec .gt_left {
   text-align: left;
 }
 
-#wbrswulbgi .gt_center {
+#vbmgamhoec .gt_center {
   text-align: center;
 }
 
-#wbrswulbgi .gt_right {
+#vbmgamhoec .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wbrswulbgi .gt_font_normal {
+#vbmgamhoec .gt_font_normal {
   font-weight: normal;
 }
 
-#wbrswulbgi .gt_font_bold {
+#vbmgamhoec .gt_font_bold {
   font-weight: bold;
 }
 
-#wbrswulbgi .gt_font_italic {
+#vbmgamhoec .gt_font_italic {
   font-style: italic;
 }
 
-#wbrswulbgi .gt_super {
+#vbmgamhoec .gt_super {
   font-size: 65%;
 }
 
-#wbrswulbgi .gt_footnote_marks {
+#vbmgamhoec .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wbrswulbgi .gt_asterisk {
+#vbmgamhoec .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wbrswulbgi .gt_indent_1 {
+#vbmgamhoec .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wbrswulbgi .gt_indent_2 {
+#vbmgamhoec .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wbrswulbgi .gt_indent_3 {
+#vbmgamhoec .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wbrswulbgi .gt_indent_4 {
+#vbmgamhoec .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wbrswulbgi .gt_indent_5 {
+#vbmgamhoec .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wbrswulbgi .katex-display {
+#vbmgamhoec .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wbrswulbgi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#vbmgamhoec div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1778,23 +1802,23 @@ Figure&nbsp;2.2: Missing data pattern 2
 <span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>tbl2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="aokhdqhjtq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aokhdqhjtq table {
+<div id="mycajegacu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mycajegacu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aokhdqhjtq thead, #aokhdqhjtq tbody, #aokhdqhjtq tfoot, #aokhdqhjtq tr, #aokhdqhjtq td, #aokhdqhjtq th {
+#mycajegacu thead, #mycajegacu tbody, #mycajegacu tfoot, #mycajegacu tr, #mycajegacu td, #mycajegacu th {
   border-style: none;
 }
 
-#aokhdqhjtq p {
+#mycajegacu p {
   margin: 0;
   padding: 0;
 }
 
-#aokhdqhjtq .gt_table {
+#mycajegacu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1820,12 +1844,12 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-left-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_caption {
+#mycajegacu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aokhdqhjtq .gt_title {
+#mycajegacu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1837,7 +1861,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-width: 0;
 }
 
-#aokhdqhjtq .gt_subtitle {
+#mycajegacu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1849,7 +1873,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-width: 0;
 }
 
-#aokhdqhjtq .gt_heading {
+#mycajegacu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1861,13 +1885,13 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_bottom_border {
+#mycajegacu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_col_headings {
+#mycajegacu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1882,7 +1906,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_col_heading {
+#mycajegacu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1902,7 +1926,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#aokhdqhjtq .gt_column_spanner_outer {
+#mycajegacu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1914,15 +1938,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 4px;
 }
 
-#aokhdqhjtq .gt_column_spanner_outer:first-child {
+#mycajegacu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aokhdqhjtq .gt_column_spanner_outer:last-child {
+#mycajegacu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aokhdqhjtq .gt_column_spanner {
+#mycajegacu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1934,11 +1958,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   width: 100%;
 }
 
-#aokhdqhjtq .gt_spanner_row {
+#mycajegacu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aokhdqhjtq .gt_group_heading {
+#mycajegacu .gt_group_heading {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -1964,7 +1988,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   text-align: left;
 }
 
-#aokhdqhjtq .gt_empty_group_heading {
+#mycajegacu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1979,15 +2003,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: middle;
 }
 
-#aokhdqhjtq .gt_from_md > :first-child {
+#mycajegacu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aokhdqhjtq .gt_from_md > :last-child {
+#mycajegacu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aokhdqhjtq .gt_row {
+#mycajegacu .gt_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2006,7 +2030,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#aokhdqhjtq .gt_stub {
+#mycajegacu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2019,7 +2043,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#aokhdqhjtq .gt_stub_row_group {
+#mycajegacu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2033,15 +2057,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: top;
 }
 
-#aokhdqhjtq .gt_row_group_first td {
+#mycajegacu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aokhdqhjtq .gt_row_group_first th {
+#mycajegacu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aokhdqhjtq .gt_summary_row {
+#mycajegacu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2051,16 +2075,16 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#aokhdqhjtq .gt_first_summary_row {
+#mycajegacu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_first_summary_row.thick {
+#mycajegacu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aokhdqhjtq .gt_last_summary_row {
+#mycajegacu .gt_last_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2070,7 +2094,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_grand_summary_row {
+#mycajegacu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2080,7 +2104,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#aokhdqhjtq .gt_first_grand_summary_row {
+#mycajegacu .gt_first_grand_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2090,7 +2114,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_last_grand_summary_row_top {
+#mycajegacu .gt_last_grand_summary_row_top {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2100,11 +2124,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_striped {
+#mycajegacu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aokhdqhjtq .gt_table_body {
+#mycajegacu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2113,7 +2137,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_footnotes {
+#mycajegacu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2127,7 +2151,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_footnote {
+#mycajegacu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 1px;
@@ -2136,7 +2160,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#aokhdqhjtq .gt_sourcenotes {
+#mycajegacu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2150,7 +2174,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#aokhdqhjtq .gt_sourcenote {
+#mycajegacu .gt_sourcenote {
   font-size: 90%;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -2158,72 +2182,72 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#aokhdqhjtq .gt_left {
+#mycajegacu .gt_left {
   text-align: left;
 }
 
-#aokhdqhjtq .gt_center {
+#mycajegacu .gt_center {
   text-align: center;
 }
 
-#aokhdqhjtq .gt_right {
+#mycajegacu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aokhdqhjtq .gt_font_normal {
+#mycajegacu .gt_font_normal {
   font-weight: normal;
 }
 
-#aokhdqhjtq .gt_font_bold {
+#mycajegacu .gt_font_bold {
   font-weight: bold;
 }
 
-#aokhdqhjtq .gt_font_italic {
+#mycajegacu .gt_font_italic {
   font-style: italic;
 }
 
-#aokhdqhjtq .gt_super {
+#mycajegacu .gt_super {
   font-size: 65%;
 }
 
-#aokhdqhjtq .gt_footnote_marks {
+#mycajegacu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aokhdqhjtq .gt_asterisk {
+#mycajegacu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aokhdqhjtq .gt_indent_1 {
+#mycajegacu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aokhdqhjtq .gt_indent_2 {
+#mycajegacu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aokhdqhjtq .gt_indent_3 {
+#mycajegacu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aokhdqhjtq .gt_indent_4 {
+#mycajegacu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aokhdqhjtq .gt_indent_5 {
+#mycajegacu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#aokhdqhjtq .katex-display {
+#mycajegacu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#aokhdqhjtq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mycajegacu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2274,15 +2298,15 @@ Figure&nbsp;2.2: Missing data pattern 2
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Male</td>
-<td class="gt_row gt_center" headers="estimate">1.33</td>
-<td class="gt_row gt_center" headers="conf.low">0.62, 2.85</td>
-<td class="gt_row gt_center" headers="p.value">0.461</td>
+<td class="gt_row gt_center" headers="estimate">1.30</td>
+<td class="gt_row gt_center" headers="conf.low">0.60, 2.79</td>
+<td class="gt_row gt_center" headers="p.value">0.503</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Waist circumference (cm)</td>
 <td class="gt_row gt_center" headers="estimate">1.03</td>
 <td class="gt_row gt_center" headers="conf.low">0.98, 1.09</td>
-<td class="gt_row gt_center" headers="p.value">0.198</td>
+<td class="gt_row gt_center" headers="p.value">0.233</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Educational level</td>
@@ -2302,39 +2326,39 @@ Figure&nbsp;2.2: Missing data pattern 2
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Primary</td>
-<td class="gt_row gt_center" headers="estimate">0.50</td>
-<td class="gt_row gt_center" headers="conf.low">0.18, 1.39</td>
-<td class="gt_row gt_center" headers="p.value">0.181</td>
+<td class="gt_row gt_center" headers="estimate">0.52</td>
+<td class="gt_row gt_center" headers="conf.low">0.18, 1.47</td>
+<td class="gt_row gt_center" headers="p.value">0.216</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;JHS/Form 4</td>
-<td class="gt_row gt_center" headers="estimate">0.85</td>
-<td class="gt_row gt_center" headers="conf.low">0.41, 1.78</td>
-<td class="gt_row gt_center" headers="p.value">0.671</td>
+<td class="gt_row gt_center" headers="estimate">0.86</td>
+<td class="gt_row gt_center" headers="conf.low">0.41, 1.79</td>
+<td class="gt_row gt_center" headers="p.value">0.685</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;SHS/Secondary</td>
-<td class="gt_row gt_center" headers="estimate">0.85</td>
-<td class="gt_row gt_center" headers="conf.low">0.21, 3.47</td>
-<td class="gt_row gt_center" headers="p.value">0.817</td>
+<td class="gt_row gt_center" headers="estimate">0.86</td>
+<td class="gt_row gt_center" headers="conf.low">0.21, 3.50</td>
+<td class="gt_row gt_center" headers="p.value">0.828</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Tertiary</td>
-<td class="gt_row gt_center" headers="estimate">11.1</td>
+<td class="gt_row gt_center" headers="estimate">11.2</td>
 <td class="gt_row gt_center" headers="conf.low">0.89, 140</td>
-<td class="gt_row gt_center" headers="p.value">0.062</td>
+<td class="gt_row gt_center" headers="p.value">0.061</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Body Weight</td>
-<td class="gt_row gt_center" headers="estimate">0.99</td>
+<td class="gt_row gt_center" headers="estimate">1.00</td>
 <td class="gt_row gt_center" headers="conf.low">0.95, 1.04</td>
-<td class="gt_row gt_center" headers="p.value">0.787</td>
+<td class="gt_row gt_center" headers="p.value">0.846</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Height (cm)</td>
 <td class="gt_row gt_center" headers="estimate">0.99</td>
 <td class="gt_row gt_center" headers="conf.low">0.96, 1.02</td>
-<td class="gt_row gt_center" headers="p.value">0.455</td>
+<td class="gt_row gt_center" headers="p.value">0.428</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="even">
@@ -2356,23 +2380,23 @@ Figure&nbsp;2.2: Missing data pattern 2
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="xjpisvfcfc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#xjpisvfcfc table {
+<div id="ddgdhpsqdu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ddgdhpsqdu table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#xjpisvfcfc thead, #xjpisvfcfc tbody, #xjpisvfcfc tfoot, #xjpisvfcfc tr, #xjpisvfcfc td, #xjpisvfcfc th {
+#ddgdhpsqdu thead, #ddgdhpsqdu tbody, #ddgdhpsqdu tfoot, #ddgdhpsqdu tr, #ddgdhpsqdu td, #ddgdhpsqdu th {
   border-style: none;
 }
 
-#xjpisvfcfc p {
+#ddgdhpsqdu p {
   margin: 0;
   padding: 0;
 }
 
-#xjpisvfcfc .gt_table {
+#ddgdhpsqdu .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2398,12 +2422,12 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-left-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_caption {
+#ddgdhpsqdu .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#xjpisvfcfc .gt_title {
+#ddgdhpsqdu .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2415,7 +2439,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-width: 0;
 }
 
-#xjpisvfcfc .gt_subtitle {
+#ddgdhpsqdu .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2427,7 +2451,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-width: 0;
 }
 
-#xjpisvfcfc .gt_heading {
+#ddgdhpsqdu .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2439,13 +2463,13 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_bottom_border {
+#ddgdhpsqdu .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_col_headings {
+#ddgdhpsqdu .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2460,7 +2484,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_col_heading {
+#ddgdhpsqdu .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2480,7 +2504,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#xjpisvfcfc .gt_column_spanner_outer {
+#ddgdhpsqdu .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2492,15 +2516,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 4px;
 }
 
-#xjpisvfcfc .gt_column_spanner_outer:first-child {
+#ddgdhpsqdu .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#xjpisvfcfc .gt_column_spanner_outer:last-child {
+#ddgdhpsqdu .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#xjpisvfcfc .gt_column_spanner {
+#ddgdhpsqdu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2512,11 +2536,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   width: 100%;
 }
 
-#xjpisvfcfc .gt_spanner_row {
+#ddgdhpsqdu .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#xjpisvfcfc .gt_group_heading {
+#ddgdhpsqdu .gt_group_heading {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2542,7 +2566,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   text-align: left;
 }
 
-#xjpisvfcfc .gt_empty_group_heading {
+#ddgdhpsqdu .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2557,15 +2581,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: middle;
 }
 
-#xjpisvfcfc .gt_from_md > :first-child {
+#ddgdhpsqdu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xjpisvfcfc .gt_from_md > :last-child {
+#ddgdhpsqdu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xjpisvfcfc .gt_row {
+#ddgdhpsqdu .gt_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2584,7 +2608,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   overflow-x: hidden;
 }
 
-#xjpisvfcfc .gt_stub {
+#ddgdhpsqdu .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2597,7 +2621,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#xjpisvfcfc .gt_stub_row_group {
+#ddgdhpsqdu .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2611,15 +2635,15 @@ Figure&nbsp;2.2: Missing data pattern 2
   vertical-align: top;
 }
 
-#xjpisvfcfc .gt_row_group_first td {
+#ddgdhpsqdu .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#xjpisvfcfc .gt_row_group_first th {
+#ddgdhpsqdu .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#xjpisvfcfc .gt_summary_row {
+#ddgdhpsqdu .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2629,16 +2653,16 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#xjpisvfcfc .gt_first_summary_row {
+#ddgdhpsqdu .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_first_summary_row.thick {
+#ddgdhpsqdu .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#xjpisvfcfc .gt_last_summary_row {
+#ddgdhpsqdu .gt_last_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2648,7 +2672,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_grand_summary_row {
+#ddgdhpsqdu .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2658,7 +2682,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#xjpisvfcfc .gt_first_grand_summary_row {
+#ddgdhpsqdu .gt_first_grand_summary_row {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2668,7 +2692,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-top-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_last_grand_summary_row_top {
+#ddgdhpsqdu .gt_last_grand_summary_row_top {
   padding-top: 1px;
   padding-bottom: 1px;
   padding-left: 5px;
@@ -2678,11 +2702,11 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_striped {
+#ddgdhpsqdu .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#xjpisvfcfc .gt_table_body {
+#ddgdhpsqdu .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2691,7 +2715,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-bottom-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_footnotes {
+#ddgdhpsqdu .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2705,7 +2729,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_footnote {
+#ddgdhpsqdu .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 1px;
@@ -2714,7 +2738,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#xjpisvfcfc .gt_sourcenotes {
+#ddgdhpsqdu .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2728,7 +2752,7 @@ Figure&nbsp;2.2: Missing data pattern 2
   border-right-color: #D3D3D3;
 }
 
-#xjpisvfcfc .gt_sourcenote {
+#ddgdhpsqdu .gt_sourcenote {
   font-size: 90%;
   padding-top: 1px;
   padding-bottom: 1px;
@@ -2736,72 +2760,72 @@ Figure&nbsp;2.2: Missing data pattern 2
   padding-right: 5px;
 }
 
-#xjpisvfcfc .gt_left {
+#ddgdhpsqdu .gt_left {
   text-align: left;
 }
 
-#xjpisvfcfc .gt_center {
+#ddgdhpsqdu .gt_center {
   text-align: center;
 }
 
-#xjpisvfcfc .gt_right {
+#ddgdhpsqdu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xjpisvfcfc .gt_font_normal {
+#ddgdhpsqdu .gt_font_normal {
   font-weight: normal;
 }
 
-#xjpisvfcfc .gt_font_bold {
+#ddgdhpsqdu .gt_font_bold {
   font-weight: bold;
 }
 
-#xjpisvfcfc .gt_font_italic {
+#ddgdhpsqdu .gt_font_italic {
   font-style: italic;
 }
 
-#xjpisvfcfc .gt_super {
+#ddgdhpsqdu .gt_super {
   font-size: 65%;
 }
 
-#xjpisvfcfc .gt_footnote_marks {
+#ddgdhpsqdu .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#xjpisvfcfc .gt_asterisk {
+#ddgdhpsqdu .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#xjpisvfcfc .gt_indent_1 {
+#ddgdhpsqdu .gt_indent_1 {
   text-indent: 5px;
 }
 
-#xjpisvfcfc .gt_indent_2 {
+#ddgdhpsqdu .gt_indent_2 {
   text-indent: 10px;
 }
 
-#xjpisvfcfc .gt_indent_3 {
+#ddgdhpsqdu .gt_indent_3 {
   text-indent: 15px;
 }
 
-#xjpisvfcfc .gt_indent_4 {
+#ddgdhpsqdu .gt_indent_4 {
   text-indent: 20px;
 }
 
-#xjpisvfcfc .gt_indent_5 {
+#ddgdhpsqdu .gt_indent_5 {
   text-indent: 25px;
 }
 
-#xjpisvfcfc .katex-display {
+#ddgdhpsqdu .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#xjpisvfcfc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ddgdhpsqdu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2898,9 +2922,9 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="estimate_1">1.09</td>
 <td class="gt_row gt_center" headers="conf.low_1">0.63, 1.87</td>
 <td class="gt_row gt_center" headers="p.value_1">0.765</td>
-<td class="gt_row gt_center" headers="estimate_2">1.33</td>
-<td class="gt_row gt_center" headers="conf.low_2">0.62, 2.85</td>
-<td class="gt_row gt_center" headers="p.value_2">0.461</td>
+<td class="gt_row gt_center" headers="estimate_2">1.30</td>
+<td class="gt_row gt_center" headers="conf.low_2">0.60, 2.79</td>
+<td class="gt_row gt_center" headers="p.value_2">0.503</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Waist circumference (cm)</td>
@@ -2910,7 +2934,7 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="p.value_1">0.099</td>
 <td class="gt_row gt_center" headers="estimate_2">1.03</td>
 <td class="gt_row gt_center" headers="conf.low_2">0.98, 1.09</td>
-<td class="gt_row gt_center" headers="p.value_2">0.198</td>
+<td class="gt_row gt_center" headers="p.value_2">0.233</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Educational level</td>
@@ -2948,9 +2972,9 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="estimate_1">0.23</td>
 <td class="gt_row gt_center" headers="conf.low_1">0.09, 0.56</td>
 <td class="gt_row gt_center" headers="p.value_1" style="font-weight: bold">0.002</td>
-<td class="gt_row gt_center" headers="estimate_2">0.50</td>
-<td class="gt_row gt_center" headers="conf.low_2">0.18, 1.39</td>
-<td class="gt_row gt_center" headers="p.value_2">0.181</td>
+<td class="gt_row gt_center" headers="estimate_2">0.52</td>
+<td class="gt_row gt_center" headers="conf.low_2">0.18, 1.47</td>
+<td class="gt_row gt_center" headers="p.value_2">0.216</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;JHS/Form 4</td>
@@ -2959,9 +2983,9 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="estimate_1">0.43</td>
 <td class="gt_row gt_center" headers="conf.low_1">0.24, 0.77</td>
 <td class="gt_row gt_center" headers="p.value_1" style="font-weight: bold">0.005</td>
-<td class="gt_row gt_center" headers="estimate_2">0.85</td>
-<td class="gt_row gt_center" headers="conf.low_2">0.41, 1.78</td>
-<td class="gt_row gt_center" headers="p.value_2">0.671</td>
+<td class="gt_row gt_center" headers="estimate_2">0.86</td>
+<td class="gt_row gt_center" headers="conf.low_2">0.41, 1.79</td>
+<td class="gt_row gt_center" headers="p.value_2">0.685</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;SHS/Secondary</td>
@@ -2970,9 +2994,9 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="estimate_1">0.32</td>
 <td class="gt_row gt_center" headers="conf.low_1">0.08, 0.98</td>
 <td class="gt_row gt_center" headers="p.value_1">0.060</td>
-<td class="gt_row gt_center" headers="estimate_2">0.85</td>
-<td class="gt_row gt_center" headers="conf.low_2">0.21, 3.47</td>
-<td class="gt_row gt_center" headers="p.value_2">0.817</td>
+<td class="gt_row gt_center" headers="estimate_2">0.86</td>
+<td class="gt_row gt_center" headers="conf.low_2">0.21, 3.50</td>
+<td class="gt_row gt_center" headers="p.value_2">0.828</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label">&nbsp;&nbsp;&nbsp;&nbsp;Tertiary</td>
@@ -2981,9 +3005,9 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="estimate_1">2.60</td>
 <td class="gt_row gt_center" headers="conf.low_1">0.32, 53.4</td>
 <td class="gt_row gt_center" headers="p.value_1">0.414</td>
-<td class="gt_row gt_center" headers="estimate_2">11.1</td>
+<td class="gt_row gt_center" headers="estimate_2">11.2</td>
 <td class="gt_row gt_center" headers="conf.low_2">0.89, 140</td>
-<td class="gt_row gt_center" headers="p.value_2">0.062</td>
+<td class="gt_row gt_center" headers="p.value_2">0.061</td>
 </tr>
 <tr class="even">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Body Weight</td>
@@ -2991,9 +3015,9 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="estimate_1">0.98</td>
 <td class="gt_row gt_center" headers="conf.low_1">0.96, 1.00</td>
 <td class="gt_row gt_center" headers="p.value_1">0.120</td>
-<td class="gt_row gt_center" headers="estimate_2">0.99</td>
+<td class="gt_row gt_center" headers="estimate_2">1.00</td>
 <td class="gt_row gt_center" headers="conf.low_2">0.95, 1.04</td>
-<td class="gt_row gt_center" headers="p.value_2">0.787</td>
+<td class="gt_row gt_center" headers="p.value_2">0.846</td>
 </tr>
 <tr class="odd">
 <td class="gt_row gt_left" headers="label" style="font-weight: bold">Height (cm)</td>
@@ -3003,7 +3027,7 @@ Figure&nbsp;2.2: Missing data pattern 2
 <td class="gt_row gt_center" headers="p.value_1">0.103</td>
 <td class="gt_row gt_center" headers="estimate_2">0.99</td>
 <td class="gt_row gt_center" headers="conf.low_2">0.96, 1.02</td>
-<td class="gt_row gt_center" headers="p.value_2">0.455</td>
+<td class="gt_row gt_center" headers="p.value_2">0.428</td>
 </tr>
 </tbody><tfoot class="gt_footnotes">
 <tr class="odd">
@@ -3018,9 +3042,9 @@ Figure&nbsp;2.2: Missing data pattern 2
 </div>
 </div>
 </section>
-<section id="inputation-with-variable-selection-using-missranger-package" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="inputation-with-variable-selection-using-missranger-package"><span class="header-section-number">2.6</span> Inputation with variable selection using missRanger package</h2>
-<p><a href="#tbl-first" class="quarto-xref">Table&nbsp;<span>2.1</span></a> is the first table we are drawing</p>
+<section id="inputation-with-variable-selection-using-missranger-package" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="inputation-with-variable-selection-using-missranger-package"><span class="header-section-number">12.6</span> Inputation with variable selection using missRanger package</h2>
+<p><a href="#tbl-first" class="quarto-xref">Table&nbsp;<span>12.1</span></a> is the first table we are drawing</p>
 <div class="cell" data-tbl-cap-location="top">
 <details class="code-fold">
 <summary>Code</summary>
@@ -3100,7 +3124,7 @@ Figure&nbsp;2.2: Missing data pattern 2
 <div id="tbl-first" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-tbl-cap-location="top">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-first-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;2.1: The first table is here
+Table&nbsp;12.1: The first table is here
 </figcaption>
 <div aria-describedby="tbl-first-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
@@ -3793,7 +3817,7 @@ Table&nbsp;2.1: The first table is here
 </figure>
 </div>
 </div>
-<p><a href="#fig-bps" class="quarto-xref">Figure&nbsp;<span>2.3</span></a> is a depiction of the figures that may show on the table every time there is an indication for such</p>
+<p><a href="#fig-bps" class="quarto-xref">Figure&nbsp;<span>12.3</span></a> is a depiction of the figures that may show on the table every time there is an indication for such</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -3821,7 +3845,7 @@ Table&nbsp;2.1: The first table is here
 <img src="missing-data_files/figure-html/fig-bps-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bps-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.3: Relationship between systolic blood pressure and age
+Figure&nbsp;12.3: Relationship between systolic blood pressure and age
 </figcaption>
 </figure>
 </div>
@@ -4548,13 +4572,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Practical data analysis with R">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Practical data analysis with R</span></span>
+      <a href="./survival-analysis.html" class="pagination-link" aria-label="Survival Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./risk-and-odds.html" class="pagination-link" aria-label="Risk and Odds">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./pkg-dplyr.html" class="pagination-link" aria-label="`dplyr` Package">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
