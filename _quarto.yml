@@ -1,5 +1,6 @@
 project:
   type: book
+  output-dir: docs
 
 book:
   title: "Data Analysis With R"
@@ -22,6 +23,7 @@ book:
     - part: "<span style='font-weight:bold; color: black;'>Missiing Data</span>"
       chapters: 
         - missing-data.qmd
+    - risk-and-odds.qmd
     - part: "<span style='font-weight:bold; color: black;'>Correlation</span>"
       chapters: 
         - correlation.qmd

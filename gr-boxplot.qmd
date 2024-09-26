@@ -312,3 +312,19 @@ dataF %>%
             "mcv4" = "Fourth MCV",
             "mcv5" = "Fifth MCV"))
 ```
+
+```{r}
+dataF %>% 
+    select(mcv1, mcv2, mcv3, mcv4, mcv5, agecat, id) %>%
+    pivot_longer(cols = mcv1:mcv5, names_to = "Time", values_to = "MCV") %>% 
+    ggplot(aes(x = Time, y = MCV, col = Time), fill = "snow1") +
+    ggbeeswarm::geom_beeswarm() +
+    labs(x = "Time of Sample taking", 
+         y = "Mean Corpuscular Volume",
+         title = "Sequential changes in MCV over the study duration") +
+    theme_bw() +
+    scale_x_discrete(
+        labels = c(
+            "mcv1" = "First MCV", "mcv2" = "Second MCV", "mcv3" = "Third MCV", 
+            "mcv4" = "Fourth MCV", "mcv5" = "Fifth MCV"))
+```

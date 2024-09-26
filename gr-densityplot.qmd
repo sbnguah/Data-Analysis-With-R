@@ -100,3 +100,22 @@ df_bp %>%
         labels = c("sbp" = "Systolic", "dbp" = "Diastolic")) +
     theme(legend.position = "right")
 ```
+
+```{r}
+dataF %>% 
+    select(mcv1, mcv2, mcv3, mcv4, mcv5, agecat, id) %>%
+    pivot_longer(cols = mcv1:mcv5, names_to = "Time", values_to = "MCV") %>% 
+    ggplot(aes(x = MCV, fill = Time)) +
+    ggridges::geom_density_ridges(aes(y = agecat), alpha = .5) +
+    labs(x = "MCV", 
+         y = "Age Group Category (years)",
+         title = "Sequential changes in MCV over the study duration per age category") +
+    ggridges::theme_ridges() +
+    scale_fill_discrete(name = "Measure", 
+                        labels = c("mcv1" = "First", 
+                                   "mcv2" = "Second", 
+                                   "mcv3" = "Third",
+                                   "mcv4" = "Fourth",
+                                   "mcv5" = "Fifth")) +
+    theme(legend.position = "right")
+```

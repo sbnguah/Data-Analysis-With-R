@@ -6,6 +6,7 @@ title: "`gtsummary`"
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(gtsummary)
+gtsummary::theme_gtsummary_compact()
 ```
 
 # Reading in the data
@@ -74,9 +75,6 @@ df_mbu_clean <-
       del = "Mode of delivery",
       dura_adm = "Admission duration",
       died = "mortality")
-
-df_mbu_clean %>% 
-  summarytools::dfSummary(graph.col = F)
 ```
 
 # Summarizing data
@@ -129,9 +127,9 @@ df_mbu_clean %>%
 
 This is table 3 of many😉
 
-[^gt-summary-tables-1]
+[^pkg-gtsummary-1]
 
-[^gt-summary-tables-1]: Need to insert this k3k3
+[^pkg-gtsummary-1]: Need to insert this k3k3
 
 ```{r comment=NA}
 df_cint %>% 
@@ -362,8 +360,9 @@ df_cint %>%
 
 ```{r}
 df_mbu_clean %>% 
+    select(-dura_adm) %>% 
     glm(died ~ ., data = ., family = binomial) %>% 
-    tbl_regression(exponentiate = T, include = -dura_adm) %>% 
+    tbl_regression(exponentiate = T) %>% 
     add_n(location = "level") %>% 
     add_nevent(location = "level") %>% 
     add_global_p() %>% 
@@ -371,8 +370,7 @@ df_mbu_clean %>%
     add_significance_stars(
         hide_p = FALSE,
         hide_ci = FALSE,
-        hide_se = TRUE
-    ) %>% 
+        hide_se = TRUE) %>% 
     add_vif() %>% 
     modify_header(label = "**Predictor**") %>% 
     modify_caption(caption = "**Table 5: Highly customised logistic regression**") %>% 
@@ -381,8 +379,6 @@ df_mbu_clean %>%
     bold_p(t=0.1, q=TRUE) %>% 
     bold_labels() %>% 
     italicize_levels()
-    
-
 ```
 
 ### Cox proportional hazard regression
@@ -504,5 +500,3 @@ tbl1
 tbl2
 tbl_final
 ```
-
-## References

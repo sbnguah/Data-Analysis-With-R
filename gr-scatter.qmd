@@ -321,3 +321,57 @@ p2 <-
         tag_levels = "A") + 
     plot_layout(widths = c(1, 2),guides = "collect")
 ```
+
+```{r}
+dataF %>% 
+    mutate(hct3 = ifelse(hct3 < 20, hct3 +40, hct3),
+           hct3 = ifelse(hct3 > 60, hct3 - 20, hct3)) %>% 
+    ggplot(aes(x = hct3, y = hb3)) +
+    geom_point(color = "grey45") +
+    geom_smooth(aes(x = hct3, y = hb3, col =  "Observed"), 
+                formula = y~x, method = "lm", se = F) + 
+    geom_segment(aes(x = min(hct3), y = min(hct3/3), 
+                     xend = max(hct3), yend = max(hct3/3), 
+                     col =  "Expected"))+
+    labs(title = "Relationship between the third HB and HCT measurements",
+         subtitle = "Comparison of observed  and expected regression line if HCT = 3*HB",
+         x = "Hematocrit (%)", y = "Hemoglobin (mg/dl)", 
+         color = "Regression Line") +
+    theme_classic()+
+    theme(plot.title = element_text(face = "bold"),
+          plot.subtitle = element_text(face = "italic"))
+```
+
+```{r}
+dataF %>% 
+    ggplot(size = 0.5) +
+    geom_point(aes(hb3, mcv3, color = mcv1, size = occup, shape = educ)) + 
+    guides(color = guide_colorbar(title = "First MCV"),
+           shape = guide_legend(title = "Educational level"), 
+           size = guide_legend(title = "Occupation"))
+```
+
+```{r}
+dataF %>%
+    mutate(mari = fct_collapse(mari, 
+                             "Married" = c("Married","Cohabiting"),
+                             "Single" = c("Widowed", "Divorced"))) %>% 
+    ggplot()+
+    geom_point(aes(x = avehb, y = avehct, color = mari), show.legend = F) +
+    geom_smooth(aes(x = avehb, y = avehct), se=F, formula = y~x, 
+                method = "lm", size = 1, alpha = .5, col = "grey")+
+    facet_wrap(~mari, nrow = 2, strip.position = "left") +
+    labs(y = "Hematocrit (%)", x = "Hemoglobin (g/dl)", 
+         title = str_glue("Relationship between Blood hemoglobin and ",
+                          "Hematocrit stratified by marital status"))+
+    theme(panel.background = element_blank(),
+          panel.grid = element_blank(),
+          axis.line = element_line(),
+          strip.placement = "outside",
+          strip.background = element_rect(fill = "#c1d3fe", color = "black"),
+          strip.text = element_text(size = 10, face = "bold"),
+          text = element_text(family = "serif"),
+          axis.text = element_text(size = 10, face = "bold"),
+          axis.title = element_text(size = 10, face = "bold.italic"),
+          plot.title = element_text(face = "bold"))
+```

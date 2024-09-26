@@ -11,8 +11,8 @@ library(gtsummary)
 # Reading in the data
 
 ```{r comment=NA}
-df_cint_all <- dget("cint_data_clean")
-df_mbu <- readxl::read_xlsx("mbu.xlsx")
+df_cint_all <- dget("C:\\Dataset\\cint_data_clean")
+df_mbu <- readxl::read_xlsx("C:\\Dataset\\mbu.xlsx")
 ```
 
 # Formatting and cleaning the cint data
@@ -126,10 +126,6 @@ df_mbu_clean %>%
 ## Table 3
 
 This is table 3 of many😉
-
-[^gtsummary-package-1]
-
-[^gtsummary-package-1]: Need to insert this k3k3
 
 ```{r comment=NA}
 df_cint %>% 
@@ -360,8 +356,9 @@ df_cint %>%
 
 ```{r}
 df_mbu_clean %>% 
+    select(-dura_adm) %>% 
     glm(died ~ ., data = ., family = binomial) %>% 
-    tbl_regression(exponentiate = T, include = -dura_adm) %>% 
+    tbl_regression(exponentiate = T) %>% 
     add_n(location = "level") %>% 
     add_nevent(location = "level") %>% 
     add_global_p() %>% 

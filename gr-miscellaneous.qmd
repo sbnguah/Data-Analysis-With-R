@@ -52,68 +52,7 @@ dataF %>%
     theme_light()
 ```
 
-----------------------------------------------------------------------------------------------------
 
-```{r comment=NA}
-dataF %>% 
-    select(mcv1, mcv2, mcv3, mcv4, mcv5, agecat, id) %>%
-    pivot_longer(cols = mcv1:mcv5, names_to = "Time", values_to = "MCV") %>% 
-    ggplot(aes(x = Time, y = MCV, col = Time), fill = "snow1") +
-    ggbeeswarm::geom_beeswarm() +
-    labs(x = "Time of Sample taking", 
-         y = "Mean Corpuscular Volume",
-         title = "Sequential changes in MCV over the study duration") +
-    theme_bw() +
-    scale_x_discrete(
-        labels = c(
-            "mcv1" = "First MCV", "mcv2" = "Second MCV", "mcv3" = "Third MCV", 
-            "mcv4" = "Fourth MCV", "mcv5" = "Fifth MCV"))
-    
-```
-
-----------------------------------------------------------------------------------------------------
-
-```{r comment=NA}
-dataF %>% 
-    select(mcv1, mcv2, mcv3, mcv4, mcv5, agecat, id) %>%
-    pivot_longer(cols = mcv1:mcv5, names_to = "Time", values_to = "MCV") %>% 
-    ggplot(aes(x = Time, y = MCV, col = Time), fill = "snow1") +
-    ggbeeswarm::geom_quasirandom() +
-    labs(
-        x = "Time of Sample taking", 
-        y = "Mean Corpuscular Volume",
-        title = "Sequential changes in MCV over the study duration") +
-    theme_bw() +
-    scale_x_discrete(
-        labels =c(
-            "mcv1" = "First MCV", "mcv2" = "Second MCV", "mcv3" = "Third MCV",
-            "mcv4" = "Fourth MCV", "mcv5" = "Fifth MCV"))
-    
-```
-
-----------------------------------------------------------------------------------------------------
-
-```{r comment=NA}
-dataF %>% 
-    select(mcv1, mcv2, mcv3, mcv4, mcv5, agecat, id) %>%
-    pivot_longer(cols = mcv1:mcv5, names_to = "Time", values_to = "MCV") %>% 
-    ggplot(aes(x = MCV, fill = Time)) +
-    ggridges::geom_density_ridges(aes(y = agecat), alpha = .5) +
-    labs(x = "MCV", 
-         y = "Age Group Category (years)",
-         title = "Sequential changes in MCV over the study duration per age category") +
-    ggridges::theme_ridges() +
-    scale_fill_discrete(name = "Measure", 
-                        labels = c("mcv1" = "First", 
-                                   "mcv2" = "Second", 
-                                   "mcv3" = "Third",
-                                   "mcv4" = "Fourth",
-                                   "mcv5" = "Fifth")) +
-    theme(legend.position = "right")
-    
-```
-
-----------------------------------------------------------------------------------------------------
 
 ```{r comment=NA}
 dataF %>% 
@@ -134,7 +73,6 @@ dataF %>%
     
 ```
 
-----------------------------------------------------------------------------------------------------
 
 ```{r}
 dataF %>% 
@@ -159,38 +97,7 @@ dataF %>%
                           labels = c("Microcyte", "Normocyte", "Macrocyte"))
 ```
 
-----------------------------------------------------------------------------------------------------
-
 #### Elipse to show grouping
-
-```{r}
-dataF %>% 
-    ggplot(aes(x = hb4, y = hb5, col = n_anc, fill = n_anc)) +
-    geom_point(size = 1.5) +
-    stat_ellipse(geom = "polygon", alpha = .2) +
-    labs(title = " Relationship between HB4 and HB5 for various age groups",
-         x = "Hemoglobin 4 (mg/dl)",
-         y = "Hemoglobin 5 (mg/dl)") +
-    scale_color_manual(values = c("red","green", "blue"),
-                       guide = guide_legend(title = "ANC Visits", 
-                                            title.hjust = 0.5, 
-                                            title.position = "top", 
-                                            label.position = "right", 
-                                            direction = "horizontal", 
-                                            label.hjust = 0.5, 
-                                            nrow = 2)) +
-    scale_fill_manual(values = c("red","green", "blue"),
-                       guide = guide_legend(title = "ANC Visits", 
-                                            title.hjust = 0.5, 
-                                            title.position = "top", 
-                                            label.position = "right", 
-                                            direction = "horizontal", 
-                                            label.hjust = 0.5, 
-                                            nrow = 2)) +
-    theme_light()
-```
-
-----------------------------------------------------------------------------------------------------
 
 ```{r}
 dataF %>% 
@@ -200,8 +107,6 @@ dataF %>%
            shape = guide_legend(title = "Educational level"), 
            size = guide_legend(title = "Occupation"))
 ```
-
-----------------------------------------------------------------------------------------------------
 
 #### Histogram with density overlay
 
@@ -214,8 +119,6 @@ dataF %>%
     theme_classic()
 ```
 
-----------------------------------------------------------------------------------------------------
-
 #### Histogram with normal overlay
 
 ```{r comment=NA}
@@ -227,8 +130,6 @@ dataF %>%
                               sd = sd(dataF$hb2)), col = "blue",
                   size = 1.5)
 ```
-
-----------------------------------------------------------------------------------------------------
 
 #### Scatter plot by the various age groups - Facetting
 
@@ -256,7 +157,6 @@ dataF %>%
         plot.title = element_text(face = 'bold'))
 ```
 
-----------------------------------------------------------------------------------------------------
 
 ```{r warning=FALSE}
 dataF %>% 
@@ -271,7 +171,6 @@ dataF %>%
     facet_grid(occup ~ agecat, labeller = labeller(agecat = agecat_label))
 ```
 
-----------------------------------------------------------------------------------------------------
 
 ```{r warning=FALSE}
 dataF %>% 
