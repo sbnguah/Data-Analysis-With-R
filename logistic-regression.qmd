@@ -1,6 +1,5 @@
 ---
 title: "Logistic Regression"
-author: "Dr Samuel Blay Nguah"
 ---
 
 ## Reading and visualizing data

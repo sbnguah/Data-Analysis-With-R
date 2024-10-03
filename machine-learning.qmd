@@ -1,0 +1,84 @@
+---
+title: "Machine Learning"
+---
+
+## Loading packages
+We begin by loading required packages, importing the data and summarizing it
+
+```{r}
+#| message: false
+#| warning: false
+
+
+library(tidyverse)
+library(tidymodels)
+tidymodels_prefer()
+
+df_hpt <- 
+    readxl::read_xlsx("C:/Dataset/hptdata.xlsx") %>% 
+    mutate(
+        hpt = case_when(
+            (syst1 + syst2)/2 >= 130 ~ "Yes",
+            (diast1 + diast2)/2 >= 90 ~ "Yes",
+            (syst1 + syst2)/2 < 130 & (diast1+diast2)/2 < 90 ~ "No"),
+        across(c(hpt, sex), ~factor(.)),
+        educ = factor(
+            educ, 
+            levels = c("None", "Primary", "JHS/Form 4", "SHS/Secondary", "Tertiary"),
+            ordered = TRUE)
+        ) %>% 
+    select(ageyrs, sex, educ, wgt, waist, hgt, hpt) %>% 
+    drop_na(hpt)
+
+df_hpt %>% 
+    summarytools::dfSummary(graph.col = F)
+```
+
+Next we inspect the data graphically 
+
+```{r}
+df_hpt %>% 
+    select(where(is.numeric)) %>% 
+    drop_na() %>% 
+    pivot_longer(cols = ageyrs:hgt, names_to = "measure", values_to = "value") %>% 
+    ggplot(aes(x = value))+
+    geom_histogram(bins = 8, color = "blue", fill = "white")+
+    theme_light()+
+    facet_wrap(facets = "measure", ncol = 2, scales = "free" )
+    
+```
+
+Next we plot the categorical variables
+```{r}
+#| fig-height: 5
+#| fig-width: 8
+df_hpt %>% 
+    select(where(is.factor)) %>% 
+    mutate(educ = factor(educ, ordered = F)) %>% 
+    drop_na() %>% 
+    pivot_longer(cols = c(sex, educ, hpt), names_to = "measure", values_to = "value") %>% 
+    ggplot(aes(x = value))+
+    geom_bar(color = "blue", fill = "white")+
+    theme_light()+
+    coord_flip() +
+    facet_wrap(facets = "measure", ncol = 2, scales = "free" )
+    
+```
+
+## Split data into trainig and test data
+
+```{r}
+set.seed(7)
+df_hpt_split <- initial_split(df_hpt)
+df_hpt_train <- training(df_hpt_split)
+df_hpt_train <- testing(df_hpt_split)
+```
+
+## Create cross validation folds
+```{r}
+df_cv_fold <- vfold_cv(df_hpt_train)
+```
+
+
+
+

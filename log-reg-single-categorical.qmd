@@ -1,0 +1,125 @@
+---
+title: "Single Categorical Predictor"
+---
+
+This segment deals with the basic logistic regression using a single categorical predictor. We use
+the `babies`data. This is summarised below:
+
+```{r}
+#| message: false
+#| echo: false
+
+library(tidyverse)
+
+babies <- 
+    readxl::read_xlsx("C:/Dataset/babies.xlsx") %>% 
+    rename(apgar5 = apgar2) %>% 
+    mutate(
+        across(c(sex, hosp, delmode), ~factor(.x)),
+        died = case_when(
+            outcome == "Died" ~ "Yes",
+            outcome == "Discharged" ~ "No") %>%  factor(),
+        apgar1cat = case_when(
+            apgar1 < 4 ~ "Low",
+            apgar1 < 7 ~ "Medium",
+            apgar1 >= 7 ~ "High") %>% 
+            factor(levels = c("Low", "Medium", "High")),
+         apgar5cat = case_when(
+            apgar5 < 4 ~ "Low",
+            apgar5 < 7 ~ "Medium",
+            apgar5 >= 7 ~ "High")%>% 
+            factor(levels = c("Low", "Medium", "High"))) %>% 
+        select(-c(outcome, id)) %>% 
+    labelled::set_variable_labels(
+        hosp = "Hospital",
+        sex = "Sex of baby",
+        wt = "Weight of baby",
+        apgar1 = "First Minute APGAR Score",
+        apgar5 = "Fifth Minute APGAR Score", 
+        delmode = "Mode of Delivery",
+        died = "Mortality",
+        apgar1cat = "First minute APGAR Category",
+        apgar5cat = "Fifth minute APGAR Category") 
+
+gtsummary::theme_gtsummary_eda()
+gtsummary::theme_gtsummary_compact()
+babies %>% 
+    gtsummary::tbl_summary() %>% 
+    gtsummary::bold_labels()
+```
+
+## Research question
+
+-   What is the association between death and the fifth-minute APGAR Score categories?
+-   What are the predicted probabilities of death for the various fifth minute APGAR score
+    categories?
+-    Do these probabilities differ significantly from each other?
+
+## Regression
+
+```{r}
+model <- 
+    babies %>% 
+    glm(died ~ apgar5cat, family = binomial, data = .)
+
+model
+```
+
+```{r}
+babies %>% 
+    select(died, apgar5cat) %>% 
+    gtsummary::tbl_uvregression(
+        method = glm,
+        y = died,
+        method.args = family(binomial),
+        exponentiate = TRUE,
+        pvalue_fun = function(x) gtsummary::style_pvalue(x, digits = 3)) %>% 
+    gtsummary::modify_header(
+            estimate ~ "**OR**",
+            label ~ "**Variable**") %>%
+    gtsummary::bold_labels()
+```
+
+## Model evaluation
+
+```{r}
+model %>% performance::check_model(residual_type = "normal")
+```
+
+## Predicted probabilities
+
+```{r}
+model %>% 
+    ggeffects::ggeffect() %>% 
+    as_tibble() %>% 
+    unnest(cols = c(apgar5cat)) %>% 
+    kableExtra::kable()
+```
+
+## Plotting predicted probabilities
+
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+#| fig-align: center
+
+model %>% 
+    sjPlot::plot_model(type = "pred", terms = "apgar5cat") 
+```
+
+```{r}
+babies %>% 
+    select(died, apgar5cat) %>% 
+    gtsummary::tbl_uvregression(
+        method = glm,
+        y = died,
+        method.args = family(binomial),
+        exponentiate = TRUE,
+        pvalue_fun = function(x) gtsummary::style_pvalue(x, digits = 3),
+        add_pairwise_contrast = TRUE,
+        contrast_adjust = "holm") %>% 
+    gtsummary::modify_header(
+            estimate ~ "**OR**",
+            label ~ "**Variable**") %>%
+    gtsummary::bold_labels()
+```

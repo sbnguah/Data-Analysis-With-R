@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>21&nbsp; Scatter Plot – Data Analysis With R</title>
+<title>36&nbsp; Scatter Plot – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-scatter.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scatter Plot</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-scatter.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Scatter Plot</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -149,32 +149,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-importation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Importation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./data-types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Wrangling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptive-stats-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Descriptive Statistics - Continuous</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./normality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis-testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./confounding-and-interaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -189,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
       </ul>
@@ -205,8 +235,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -223,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
   </div>
 </li>
       </ul>
@@ -239,8 +299,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -257,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -274,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -291,19 +381,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
   </div>
 </li>
       </ul>
@@ -320,7 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
   </div>
 </li>
       </ul>
@@ -337,55 +427,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -407,9 +497,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-scatter.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scatter Plot</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-scatter.html"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Scatter Plot</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scatter Plot</span></h1>
+<h1 class="title"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Scatter Plot</span></h1>
 </div>
 
 
@@ -474,7 +564,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <img src="gr-scatter_files/figure-html/fig-one-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.1: Relationship between weight and waist circunference
+Figure&nbsp;36.1: Relationship between weight and waist circunference
 </figcaption>
 </figure>
 </div>
@@ -508,7 +598,7 @@ Figure&nbsp;21.1: Relationship between weight and waist circunference
 <img src="gr-scatter_files/figure-html/fig-two-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.2: Relationship between weight and waist circunference
+Figure&nbsp;36.2: Relationship between weight and waist circunference
 </figcaption>
 </figure>
 </div>
@@ -539,7 +629,7 @@ Figure&nbsp;21.2: Relationship between weight and waist circunference
 <img src="gr-scatter_files/figure-html/fig-three-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-three-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.3: Relationship between weight and waist circunference
+Figure&nbsp;36.3: Relationship between weight and waist circunference
 </figcaption>
 </figure>
 </div>
@@ -571,7 +661,7 @@ Figure&nbsp;21.3: Relationship between weight and waist circunference
 <img src="gr-scatter_files/figure-html/fig-four-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-four-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.4: Relationship between weight and waist circunference
+Figure&nbsp;36.4: Relationship between weight and waist circunference
 </figcaption>
 </figure>
 </div>
@@ -595,7 +685,7 @@ Figure&nbsp;21.4: Relationship between weight and waist circunference
 <img src="gr-scatter_files/figure-html/fig-six-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-six-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.5: Relationship between weight and waist circunference
+Figure&nbsp;36.5: Relationship between weight and waist circunference
 </figcaption>
 </figure>
 </div>
@@ -628,7 +718,7 @@ Figure&nbsp;21.5: Relationship between weight and waist circunference
 <img src="gr-scatter_files/figure-html/fig-seven-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-seven-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.6: Plot of Weight versus height
+Figure&nbsp;36.6: Plot of Weight versus height
 </figcaption>
 </figure>
 </div>
@@ -673,7 +763,7 @@ Figure&nbsp;21.6: Plot of Weight versus height
 <img src="gr-scatter_files/figure-html/fig-nine-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.7: Relationship between first and second platelet counts showing possible outliers
+Figure&nbsp;36.7: Relationship between first and second platelet counts showing possible outliers
 </figcaption>
 </figure>
 </div>
@@ -719,7 +809,7 @@ Figure&nbsp;21.7: Relationship between first and second platelet counts showing 
 <img src="gr-scatter_files/figure-html/fig-ten-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ten-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.8: Height v. Weight
+Figure&nbsp;36.8: Height v. Weight
 </figcaption>
 </figure>
 </div>
@@ -752,7 +842,7 @@ Figure&nbsp;21.8: Height v. Weight
 <img src="gr-scatter_files/figure-html/fig-eleven-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-eleven-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.9: Relationship between first and second platelet counts showing possible outliers
+Figure&nbsp;36.9: Relationship between first and second platelet counts showing possible outliers
 </figcaption>
 </figure>
 </div>
@@ -813,7 +903,7 @@ Figure&nbsp;21.9: Relationship between first and second platelet counts showing 
 <img src="gr-scatter_files/figure-html/fig-twelve-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-twelve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.10: My special scatterplot with histograms of first and secon HgB
+Figure&nbsp;36.10: My special scatterplot with histograms of first and secon HgB
 </figcaption>
 </figure>
 </div>
@@ -853,7 +943,7 @@ Figure&nbsp;21.10: My special scatterplot with histograms of first and secon HgB
 <img src="gr-scatter_files/figure-html/fig-thirteen-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-thirteen-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.11: Combining plots
+Figure&nbsp;36.11: Combining plots
 </figcaption>
 </figure>
 </div>
@@ -1379,12 +1469,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./gr-barplot.html" class="pagination-link" aria-label="Barplot">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Barplot</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Barplot</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./gr-line-plot.html" class="pagination-link" aria-label="Line Graphs">
-        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Line Graphs</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Line Graphs</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

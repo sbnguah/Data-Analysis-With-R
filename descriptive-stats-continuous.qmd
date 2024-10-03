@@ -1,0 +1,240 @@
+---
+title: "Descriptive Statistics - Continuous"
+---
+
+The initial analysis of numeric data is usually a description of the data at hand without making
+inference to the population from which the data was drawn. This gives the data analyst a general
+overview of the data at hand, how best to describe it and what analysis best suits it. In
+descriptive analysis of numeric data the most basic is to determine the:
+
+-   Measure of Central Tendency: This is a description of the center of the data. These measures
+    include mean, median and mode.
+-   Measure of Dispersion: A measure of how widespread the data is. These include standard
+    deviation, variance, interquartile range and range.
+
+For this section, we will use the `NewDrug_clean.dta` dataset
+
+```{r}
+#| message: false
+#| echo: false
+library(tidyverse)
+library(magrittr)
+newdrug <-  
+    haven::read_dta("C:/Dataset/NewDrug_clean.dta") %>% 
+    mutate(
+        sex  = haven::as_factor(sex), 
+        treat = haven::as_factor(treat)) %>% 
+    haven::zap_labels() 
+
+newdrug %>% summary()
+```
+
+## Single continuous variable
+
+### Measures of Central Tendency & Dispersion
+
+Below we determine the mean, median, standard deviation, range (minimum, maximum) and interquartile
+range of out initial blood pressure
+
+```{r comment=NA}
+newdrug %>% 
+    summarise(
+        Mean = mean(bp1), 
+        Median = median(bp1), 
+        Standard_Dev = sd(bp1), 
+        Minimum = min(bp1), 
+        Maximum = max(bp1),
+        IQR = IQR(bp1)) 
+```
+
+Alternatively, the `psych` package gives these measures in further details. The output includes a
+measure of the Kurtosis and Skewness, both describing the shape of the data.
+
+```{r comment=NA}
+newdrug %$% 
+    psych::describe(bp1)
+```
+
+And to show the interquartile range we do the following.
+
+```{r comment=NA}
+newdrug %$% 
+    psych::describe(bp1, IQR = TRUE,quant = c(.25, .75))
+```
+
+### Graphs - Histogram
+
+```{r comment=NA, fig.width = 6, fig.height=4}
+newdrug %>% 
+    ggplot(aes(x = bp1)) + 
+    geom_histogram(bins = 7, col="black", alpha = .5, fill = "red") +
+    labs(
+        title = "Histogram of Blood Pressure before  intervention",
+        x= "BP1")+
+    theme_light()
+```
+
+### Graphs - Boxplot and violin plot
+
+```{r comment=NA, fig.width=6, fig.height=4}
+newdrug %>% 
+    ggplot(aes(y = bp1)) + 
+    geom_boxplot(col="black",  
+                 alpha = .2, 
+                 fill = "blue", 
+                 outlier.fill = "black",
+                 outlier.shape = 22) +
+    labs(
+        title = "Boxplot of Blood Pressure before  intervention",
+        y = "BP1")+
+    theme_light()
+```
+
+#### Graphs - Density plot
+
+```{r}
+newdrug %>% 
+    ggplot(aes(y = bp1)) + 
+    geom_density(col="black", fill = "yellow", alpha=.6) +
+    labs(
+        title = "Density Plot of Blood Pressure before  intervention",
+        y = "Blood Pressure before  intervention")+
+    coord_flip() +
+    theme_light()
+```
+
+#### Graphs - Cumulative Frequency plot
+
+```{r}
+newdrug %>% 
+    group_by(bp1) %>% 
+    summarize(n = n()) %>% 
+    ungroup() %>% 
+    mutate(cum = cumsum(n)/sum(n)*100) %>% 
+    ggplot(aes(y = cum, x = bp1)) +
+    geom_line(col=3, linewidth=1.2)+
+    labs(
+        title = "Cumulative Frequency Plot of Blood Pressure before  intervention",
+        x = "BP1",
+        y = "Cumulative Frequency")+
+    theme_light() 
+
+```
+
+### Multiple Continuous variables
+
+#### Measures of Central tendency & Dispersion
+
+```{r}
+newdrug %>% 
+    select(where(is.numeric)) %>% 
+    psych::describe()
+```
+
+To illustrate graphing multiple continuous variables we use the 2 bp variables
+
+```{r}
+bps <- 
+    newdrug %>%
+    select(bp1, bp2) %>% 
+    pivot_longer(
+        cols = c(bp1, bp2),
+        names_to = "measure", 
+        values_to = "bp") %>% 
+    mutate(
+        measure = fct_recode(
+            measure, 
+            "Pre-Treatment" = "bp1", 
+            "Post-Treatment" = "bp2"))
+```
+
+Next, we create multiple density plots
+
+```{r}
+bps %>% 
+    ggplot(aes(y = measure, x = bp, fill = measure)) +
+    ggridges::geom_density_ridges2( col="black", alpha = .5, scale=1, 
+                                    show.legend = F) +
+    labs(
+        x = "Blood pressure (mmHg)", 
+        y = "Density", 
+        fill = "Blood Pressure") +
+    theme_bw()
+```
+
+```{r}
+bps %>% 
+    ggplot(aes(y = measure, x = bp, fill = measure))+
+    geom_boxplot(show.legend = FALSE) +
+    labs(y = NULL, 
+         x = "Blood Pressure", 
+         fill = "Blood Pressure") +
+    coord_flip()+
+    theme_light() 
+```
+
+```{r}
+bps %>% 
+    ggplot(aes(y = measure, x = bp, fill = measure))+
+    geom_violin(show.legend = FALSE) +
+    coord_flip()+
+    theme_light() 
+    
+```
+
+## Continuous by a single categorical variable
+
+### Summary
+
+We do this with one variable.
+
+```{r}
+newdrug %>% 
+    group_by(treat) %>% 
+    summarize(
+        mean.bp1 = mean(bp1),
+        sd.bp1 = sd(bp1),
+        var.bp1 = var(bp1),
+        se.mean.bp1 = sd(bp1)/sqrt(n()),
+        median.bp1 = median(bp1),
+        min.bp1 = min(bp1),
+        max.bp1 = max(bp1)) %>% 
+    ungroup()
+```
+
+### Graph - Histogram, Boxplot, Density plot and cumulative frequency
+
+The graphs are similar to the above so we skip them.
+
+## Continuous by multiple categorical variables
+
+### Summary
+
+This can be done as below.
+
+```{r}
+newdrug %>% 
+    group_by(treat, sex) %>% 
+    summarize(
+        mean.bp1 = mean(bp1),
+        sd.bp1 = sd(bp1),
+        var.bp1 = var(bp1),
+        se.mean.bp1 = sd(bp1)/sqrt(n()),
+        median.bp1 = median(bp1),
+        min.bp1 = min(bp1),
+        max.bp1 = max(bp1),
+        .groups = "drop") 
+```
+
+And this can be presented in a boxplot below
+
+```{r}
+newdrug %>% 
+    ggplot(aes(y = bp1, x = sex, fill = treat)) +
+    geom_boxplot()+
+    labs(
+        y = "Blood Pressure (mmHg)",
+        x =  "Sex",
+        fill = 'Treatment') +
+    theme_bw()
+```

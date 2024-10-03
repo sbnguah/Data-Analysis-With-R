@@ -1,0 +1,172 @@
+---
+title: "Data Wrangling"
+---
+
+```{r}
+#| echo: false
+#| message: false
+library(tidyverse)
+```
+
+In this chapter, we begin to delve into the manipulation of data in the form of a data frame or
+tibble. In so doing, we will introduce the `tidyverse` package and the various verbs (function) it
+provides.
+
+The `tidyverse` package is not just a single package but a composite of a group of packages. These
+include among others the `dplyr` package. Most of the function we will be employing in this chapter
+comes from `dplyr`.
+
+We begin by reading in the `blood_donors.xls`
+
+```{r comment=NA}
+df_blood <- readxl::read_xls("C:/Dataset/blood_donors_1.xls")
+df_blood
+```
+
+The output shows we have a 25-row and 6-column tibble.
+
+## Renaming variables
+
+Below we rename the variables `hb` to `hemog` and `id` to `studyid` using he `rename` function, and
+then show the first 5 records with the `head` function.
+
+```{r}
+df_blood %>% 
+    rename(hemog = hb, studyid = id) %>% 
+    head(5)
+```
+
+## Sorting data
+
+Below we use the `arrange` function to sort the `bldgrp` in ascending order and `hb` by descending
+order.
+
+```{r}
+df_blood %>% 
+    arrange(bldgrp, desc(hb))
+```
+
+## Subsetting data
+
+In this subsection, we demonstrate the use of the `filter` and `select` function to select specific
+records and variables in a tibble. Below we filter to select all records with `hb` \> 12g/dl and
+keep only the `id`, `hb` and `sex` columns.
+
+```{r}
+df_blood %>% 
+    filter(hb > 12) %>% 
+    select(id, hb, sex)
+```
+
+## Generating new variables
+
+To generate new variables we use the `mutate` function. Based on our knowledge that the hematocrit
+is approximately three times the haemoglobin we generate a new variable, `hb_from_hct`.
+
+```{r}
+df_blood %>% 
+    mutate(hb_from_hct = hct/3)
+```
+
+## Aggregating data
+
+Data can be aggregated in R using the `summarize` function. Below we determine the mean and standard
+deviation of the haemoglobin for the patient in the data.
+
+```{r}
+df_blood %>% 
+    summarize(mean_hb = mean(hb), sd_hb = sd(hb))
+```
+
+Grouping the data by the "bldgrp" before the aggregation yields the aggregated means and standard
+deviations for the various blood groups.
+
+```{r comment=NA}
+df_blood %>% 
+    group_by(bldgrp) %>% 
+    summarize(mean_hb = mean(hb), sd_hb = sd(hb))
+```
+
+## Reshaping data
+
+In longitudinal studies, data is captured from the same individual repeatedly. Such data is recorded
+either in long or wide formats. A typical example of a data frame in the long form is bpB below.
+
+```{r}
+bp_long <- read_csv(
+    file = "C:/Dataset/bp_long.txt",
+    col_names = TRUE, 
+    col_types = c("c", "c", "i"))
+
+bp_long
+```
+
+In this format, each visit or round of data taking is captured as a new row, but with the
+appropriate study ID and period of record, captured as the variable measure above. Measurement of
+systolic blood pressure on day 1 is indicated by sbp1 in the measure variable. Day 2 measurements
+are indicated as sbp2.
+
+The wide format of the same data can be obtained as below.
+
+```{r}
+bp_wide <- 
+    bp_long %>% 
+    pivot_wider(
+        id_cols = id, 
+        names_from = measure, 
+        values_from = sbp)
+
+bp_wide
+```
+
+Here, each study participant's record for the whole study is on one row of the data and the
+different measurements of systolic blood pressure are captured as different variables. Next, we
+convert the wide back to the long format.
+
+```{r}
+bp_wide %>% 
+    pivot_longer(
+        cols = c(sbp1, sbp2),
+        names_to = "time",
+        values_to = "syst_bp")
+```
+
+## Combining data
+
+In a study to determine the change in weight of athletes running a marathon, data about the athletes
+were obtained by the investigators. Since the marathon starts in town A and ends in town B, the
+investigators decided to weigh the athletes just before starting the race. Here they took records of
+the ID of the athlete's sid, sex, age and weight at the start (wgtst). The records of five of these
+athletes are in the data marathonA. At the end point of the marathon, another member of the
+investigation team recorded their IDs (eid), weight upon completion (wgtend) and the time it took
+the athletes to complete the marathon (dura).
+
+```{r}
+dataA <- 
+    read_delim(
+        file = "C:/Dataset/marathonA.txt",
+        col_names = TRUE,
+        delim = "\t",
+        col_types = c("c","c","i","d"))
+
+dataB <- 
+    read_delim(
+        file = "C:/Dataset/marathonB.txt",
+        col_names = TRUE,
+        delim = "\t",
+        col_types = c("c","c","i","d"))
+
+dataA
+
+dataB
+```
+
+We can determine the weight change only by matching the before and after weight of each individual.
+This is where merging is very useful. Below, we merge the two data into one. This is done below.
+
+```{r}
+dataA %>% 
+    full_join(dataB, by = join_by(sid == eid))
+```
+
+----------------------------------------------------------------------------------------------------

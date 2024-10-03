@@ -20,7 +20,12 @@ book:
     center: "Compiled by: Dr Samuel Blay Nguah"
   chapters:
     - index.qmd
+    - introduction.qmd
+    - data-importation.qmd
     - data-types.qmd
+    - data-wrangling.qmd
+    - data-cleaning.qmd
+    - descriptive-stats-continuous.qmd
     - risk-and-odds.qmd
     - normality.qmd
     - hypothesis-testing.qmd
@@ -30,12 +35,22 @@ book:
         - correlation.qmd
     - part: "<span style='font-weight:bold; color: black;'>Linear Regression</span>"
       chapters: 
+        - lin-reg-single-categorical.qmd
+        - lin-reg-single-continuous.qmd
+        - lin-reg-cont-categorical.qmd
+        - lin-reg-multivariate.qmd
+        - lin-reg-model-selection.qmd
         - linear-regression.qmd
     - part: "<span style='font-weight:bold; color: black;'>Analysis of Variance</span>"
       chapters: 
         - anova-oneway.qmd
     - part: "<span style='font-weight:bold; color: black;'>Logistic Regression</span>"
       chapters: 
+        - log-reg-single-categorical.qmd
+        - log-reg-single-continuous.qmd
+        - log-reg-cont-categorical.qmd
+        - log-reg-multivariate.qmd
+        - log-reg-model-selection.qmd
         - logistic-regression.qmd
     - part: "<span style='font-weight:bold; color: black;'>Survival Analysis</span>"
       chapters: 

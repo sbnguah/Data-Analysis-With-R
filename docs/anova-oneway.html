@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>9&nbsp; Oneway ANOVA – Data Analysis With R</title>
+<title>19&nbsp; Oneway ANOVA – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./logistic-regression.html" rel="next">
+<link href="./log-reg-single-categorical.html" rel="next">
 <link href="./linear-regression.html" rel="prev">
 <link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./anova-oneway.html"><span style="font-weight:bold; color: black;">Analysis of Variance</span></a></li><li class="breadcrumb-item"><a href="./anova-oneway.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./anova-oneway.html"><span style="font-weight:bold; color: black;">Analysis of Variance</span></a></li><li class="breadcrumb-item"><a href="./anova-oneway.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -149,32 +149,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-importation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Importation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./data-types.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Wrangling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptive-stats-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Descriptive Statistics - Continuous</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./normality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis-testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./confounding-and-interaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -189,7 +219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
       </ul>
@@ -205,8 +235,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -223,7 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
   </div>
 </li>
       </ul>
@@ -239,8 +299,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -257,7 +347,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -274,7 +364,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -291,19 +381,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
   </div>
 </li>
       </ul>
@@ -320,7 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
   </div>
 </li>
       </ul>
@@ -337,55 +427,55 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -406,16 +496,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">9.1</span> Background</a></li>
-  <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link" data-scroll-target="#hypothesis"><span class="header-section-number">9.2</span> Hypothesis</a></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">9.3</span> Assumptions</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">9.4</span> Data</a></li>
-  <li><a href="#fit-model" id="toc-fit-model" class="nav-link" data-scroll-target="#fit-model"><span class="header-section-number">9.5</span> Fit model</a></li>
-  <li><a href="#mutltiple-comparison" id="toc-mutltiple-comparison" class="nav-link" data-scroll-target="#mutltiple-comparison"><span class="header-section-number">9.6</span> Mutltiple comparison</a></li>
-  <li><a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions"><span class="header-section-number">9.7</span> Checking assumptions</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">19.1</span> Background</a></li>
+  <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link" data-scroll-target="#hypothesis"><span class="header-section-number">19.2</span> Hypothesis</a></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">19.3</span> Assumptions</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">19.4</span> Data</a></li>
+  <li><a href="#fit-model" id="toc-fit-model" class="nav-link" data-scroll-target="#fit-model"><span class="header-section-number">19.5</span> Fit model</a></li>
+  <li><a href="#mutltiple-comparison" id="toc-mutltiple-comparison" class="nav-link" data-scroll-target="#mutltiple-comparison"><span class="header-section-number">19.6</span> Mutltiple comparison</a></li>
+  <li><a href="#checking-assumptions" id="toc-checking-assumptions" class="nav-link" data-scroll-target="#checking-assumptions"><span class="header-section-number">19.7</span> Checking assumptions</a>
   <ul class="collapse">
-  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting"><span class="header-section-number">9.7.1</span> Plotting</a></li>
-  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">9.7.2</span> Testing</a></li>
+  <li><a href="#plotting" id="toc-plotting" class="nav-link" data-scroll-target="#plotting"><span class="header-section-number">19.7.1</span> Plotting</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">19.7.2</span> Testing</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -423,9 +513,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./anova-oneway.html"><span style="font-weight:bold; color: black;">Analysis of Variance</span></a></li><li class="breadcrumb-item"><a href="./anova-oneway.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./anova-oneway.html"><span style="font-weight:bold; color: black;">Analysis of Variance</span></a></li><li class="breadcrumb-item"><a href="./anova-oneway.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></h1>
 </div>
 
 
@@ -442,17 +532,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="background" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="background"><span class="header-section-number">9.1</span> Background</h2>
+<section id="background" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="background"><span class="header-section-number">19.1</span> Background</h2>
 <p>Oneway analysis of variance is used when there are more than two levels of a predictor variable and one dependent variable.</p>
 </section>
-<section id="hypothesis" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="hypothesis"><span class="header-section-number">9.2</span> Hypothesis</h2>
+<section id="hypothesis" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="hypothesis"><span class="header-section-number">19.2</span> Hypothesis</h2>
 <p>H<sub>0</sub> - There is no difference in the means for each group</p>
 <p>Ha - At least one of the means is significantly different from the others</p>
 </section>
-<section id="assumptions" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">9.3</span> Assumptions</h2>
+<section id="assumptions" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">19.3</span> Assumptions</h2>
 <ol type="1">
 <li><strong>Normality</strong> – Each sample should be drawn from a normally distributed population. It is not required for large sample sizes. If normality is violated use <strong>Kruskal-Wallis</strong> test</li>
 <li><strong>Equal Variance</strong> - The variance of all the groups must be similar. If variances are equal, use <strong>ANOVA</strong>. If variances are not equal, use the <strong>Welch ANOVA</strong></li>
@@ -460,8 +550,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>Outlier</strong> - Data should be devoid of significant outliers</li>
 </ol>
 </section>
-<section id="data" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="data"><span class="header-section-number">9.4</span> Data</h2>
+<section id="data" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="data"><span class="header-section-number">19.4</span> Data</h2>
 <p>We look at data from a nursery of newborns, comparing their weights after grouping their 5-minute APGAR scores into Low (0-3), Medium(4-7), and High (8-10).</p>
 <div class="cell">
 <details class="code-fold">
@@ -576,7 +666,7 @@ No   Variable            Stats / Values         Freqs (% of Valid)   Valid      
 <img src="anova-oneway_files/figure-html/fig-fig1-1.png" class="img-fluid figure-img" width="480">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.1: Distriubution of birth weight for various APGAR categories
+Figure&nbsp;19.1: Distriubution of birth weight for various APGAR categories
 </figcaption>
 </figure>
 </div>
@@ -604,15 +694,15 @@ Figure&nbsp;9.1: Distriubution of birth weight for various APGAR categories
 <img src="anova-oneway_files/figure-html/fig-fig2-1.png" class="img-fluid figure-img" width="576">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.2: Distriubution of birth weight for various APGAR categories
+Figure&nbsp;19.2: Distriubution of birth weight for various APGAR categories
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="fit-model" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="fit-model"><span class="header-section-number">9.5</span> Fit model</h2>
+<section id="fit-model" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="fit-model"><span class="header-section-number">19.5</span> Fit model</h2>
 <p>All data together</p>
 <div class="cell">
 <details class="code-fold">
@@ -697,8 +787,8 @@ Figure&nbsp;9.2: Distriubution of birth weight for various APGAR categories
 </div>
 </div>
 </section>
-<section id="mutltiple-comparison" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="mutltiple-comparison"><span class="header-section-number">9.6</span> Mutltiple comparison</h2>
+<section id="mutltiple-comparison" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="mutltiple-comparison"><span class="header-section-number">19.6</span> Mutltiple comparison</h2>
 <p>All data together</p>
 <div class="cell">
 <details class="code-fold">
@@ -886,10 +976,10 @@ Figure&nbsp;9.2: Distriubution of birth weight for various APGAR categories
 </div>
 </div>
 </section>
-<section id="checking-assumptions" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="checking-assumptions"><span class="header-section-number">9.7</span> Checking assumptions</h2>
-<section id="plotting" class="level3" data-number="9.7.1">
-<h3 data-number="9.7.1" class="anchored" data-anchor-id="plotting"><span class="header-section-number">9.7.1</span> Plotting</h3>
+<section id="checking-assumptions" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="checking-assumptions"><span class="header-section-number">19.7</span> Checking assumptions</h2>
+<section id="plotting" class="level3" data-number="19.7.1">
+<h3 data-number="19.7.1" class="anchored" data-anchor-id="plotting"><span class="header-section-number">19.7.1</span> Plotting</h3>
 <p>This is a large sample size but it will be performed for practice</p>
 <div class="cell">
 <details class="code-fold">
@@ -908,10 +998,10 @@ Figure&nbsp;9.2: Distriubution of birth weight for various APGAR categories
 </div>
 <p>There appear to be significant violations of the assumptions of the model</p>
 </section>
-<section id="testing" class="level3" data-number="9.7.2">
-<h3 data-number="9.7.2" class="anchored" data-anchor-id="testing"><span class="header-section-number">9.7.2</span> Testing</h3>
-<section id="normality" class="level4" data-number="9.7.2.1">
-<h4 data-number="9.7.2.1" class="anchored" data-anchor-id="normality"><span class="header-section-number">9.7.2.1</span> Normality</h4>
+<section id="testing" class="level3" data-number="19.7.2">
+<h3 data-number="19.7.2" class="anchored" data-anchor-id="testing"><span class="header-section-number">19.7.2</span> Testing</h3>
+<section id="normality" class="level4" data-number="19.7.2.1">
+<h4 data-number="19.7.2.1" class="anchored" data-anchor-id="normality"><span class="header-section-number">19.7.2.1</span> Normality</h4>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -927,23 +1017,23 @@ Figure&nbsp;9.2: Distriubution of birth weight for various APGAR categories
 This warning is displayed once per session.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="zodzatsvxq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#zodzatsvxq table {
+<div id="przeveffxt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#przeveffxt table {
   font-family: 'Times New Roman';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#zodzatsvxq thead, #zodzatsvxq tbody, #zodzatsvxq tfoot, #zodzatsvxq tr, #zodzatsvxq td, #zodzatsvxq th {
+#przeveffxt thead, #przeveffxt tbody, #przeveffxt tfoot, #przeveffxt tr, #przeveffxt td, #przeveffxt th {
   border-style: none;
 }
 
-#zodzatsvxq p {
+#przeveffxt p {
   margin: 0;
   padding: 0;
 }
 
-#zodzatsvxq .gt_table {
+#przeveffxt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -969,12 +1059,12 @@ This warning is displayed once per session.</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#zodzatsvxq .gt_caption {
+#przeveffxt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#zodzatsvxq .gt_title {
+#przeveffxt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -986,7 +1076,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-width: 0;
 }
 
-#zodzatsvxq .gt_subtitle {
+#przeveffxt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -998,7 +1088,7 @@ This warning is displayed once per session.</code></pre>
   border-top-width: 0;
 }
 
-#zodzatsvxq .gt_heading {
+#przeveffxt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1010,13 +1100,13 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zodzatsvxq .gt_bottom_border {
+#przeveffxt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#zodzatsvxq .gt_col_headings {
+#przeveffxt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1031,7 +1121,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zodzatsvxq .gt_col_heading {
+#przeveffxt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1051,7 +1141,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#zodzatsvxq .gt_column_spanner_outer {
+#przeveffxt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1063,15 +1153,15 @@ This warning is displayed once per session.</code></pre>
   padding-right: 4px;
 }
 
-#zodzatsvxq .gt_column_spanner_outer:first-child {
+#przeveffxt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zodzatsvxq .gt_column_spanner_outer:last-child {
+#przeveffxt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zodzatsvxq .gt_column_spanner {
+#przeveffxt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -1083,11 +1173,11 @@ This warning is displayed once per session.</code></pre>
   width: 100%;
 }
 
-#zodzatsvxq .gt_spanner_row {
+#przeveffxt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#zodzatsvxq .gt_group_heading {
+#przeveffxt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1113,7 +1203,7 @@ This warning is displayed once per session.</code></pre>
   text-align: left;
 }
 
-#zodzatsvxq .gt_empty_group_heading {
+#przeveffxt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1128,15 +1218,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: middle;
 }
 
-#zodzatsvxq .gt_from_md > :first-child {
+#przeveffxt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zodzatsvxq .gt_from_md > :last-child {
+#przeveffxt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zodzatsvxq .gt_row {
+#przeveffxt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1155,7 +1245,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#zodzatsvxq .gt_stub {
+#przeveffxt .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1168,7 +1258,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#zodzatsvxq .gt_stub_row_group {
+#przeveffxt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1182,15 +1272,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: top;
 }
 
-#zodzatsvxq .gt_row_group_first td {
+#przeveffxt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#zodzatsvxq .gt_row_group_first th {
+#przeveffxt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#zodzatsvxq .gt_summary_row {
+#przeveffxt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1200,16 +1290,16 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#zodzatsvxq .gt_first_summary_row {
+#przeveffxt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#zodzatsvxq .gt_first_summary_row.thick {
+#przeveffxt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#zodzatsvxq .gt_last_summary_row {
+#przeveffxt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1219,7 +1309,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#zodzatsvxq .gt_grand_summary_row {
+#przeveffxt .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1229,7 +1319,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#zodzatsvxq .gt_first_grand_summary_row {
+#przeveffxt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1239,7 +1329,7 @@ This warning is displayed once per session.</code></pre>
   border-top-color: #0076BA;
 }
 
-#zodzatsvxq .gt_last_grand_summary_row_top {
+#przeveffxt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1249,11 +1339,11 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#zodzatsvxq .gt_striped {
+#przeveffxt .gt_striped {
   background-color: #F4F4F4;
 }
 
-#zodzatsvxq .gt_table_body {
+#przeveffxt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1262,7 +1352,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#zodzatsvxq .gt_footnotes {
+#przeveffxt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1276,7 +1366,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zodzatsvxq .gt_footnote {
+#przeveffxt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1285,7 +1375,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#zodzatsvxq .gt_sourcenotes {
+#przeveffxt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1299,7 +1389,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#zodzatsvxq .gt_sourcenote {
+#przeveffxt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1307,72 +1397,72 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#zodzatsvxq .gt_left {
+#przeveffxt .gt_left {
   text-align: left;
 }
 
-#zodzatsvxq .gt_center {
+#przeveffxt .gt_center {
   text-align: center;
 }
 
-#zodzatsvxq .gt_right {
+#przeveffxt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zodzatsvxq .gt_font_normal {
+#przeveffxt .gt_font_normal {
   font-weight: normal;
 }
 
-#zodzatsvxq .gt_font_bold {
+#przeveffxt .gt_font_bold {
   font-weight: bold;
 }
 
-#zodzatsvxq .gt_font_italic {
+#przeveffxt .gt_font_italic {
   font-style: italic;
 }
 
-#zodzatsvxq .gt_super {
+#przeveffxt .gt_super {
   font-size: 65%;
 }
 
-#zodzatsvxq .gt_footnote_marks {
+#przeveffxt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#zodzatsvxq .gt_asterisk {
+#przeveffxt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#zodzatsvxq .gt_indent_1 {
+#przeveffxt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#zodzatsvxq .gt_indent_2 {
+#przeveffxt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#zodzatsvxq .gt_indent_3 {
+#przeveffxt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#zodzatsvxq .gt_indent_4 {
+#przeveffxt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#zodzatsvxq .gt_indent_5 {
+#przeveffxt .gt_indent_5 {
   text-indent: 25px;
 }
 
-#zodzatsvxq .katex-display {
+#przeveffxt .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#zodzatsvxq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#przeveffxt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1398,8 +1488,8 @@ This warning is displayed once per session.</code></pre>
 </div>
 </div>
 </section>
-<section id="equality-of-variance" class="level4" data-number="9.7.2.2">
-<h4 data-number="9.7.2.2" class="anchored" data-anchor-id="equality-of-variance"><span class="header-section-number">9.7.2.2</span> Equality of variance</h4>
+<section id="equality-of-variance" class="level4" data-number="19.7.2.2">
+<h4 data-number="19.7.2.2" class="anchored" data-anchor-id="equality-of-variance"><span class="header-section-number">19.7.2.2</span> Equality of variance</h4>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1408,23 +1498,23 @@ This warning is displayed once per session.</code></pre>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mystyle</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="afaaqeyriv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#afaaqeyriv table {
+<div id="dtlrwiyakw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dtlrwiyakw table {
   font-family: 'Times New Roman';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#afaaqeyriv thead, #afaaqeyriv tbody, #afaaqeyriv tfoot, #afaaqeyriv tr, #afaaqeyriv td, #afaaqeyriv th {
+#dtlrwiyakw thead, #dtlrwiyakw tbody, #dtlrwiyakw tfoot, #dtlrwiyakw tr, #dtlrwiyakw td, #dtlrwiyakw th {
   border-style: none;
 }
 
-#afaaqeyriv p {
+#dtlrwiyakw p {
   margin: 0;
   padding: 0;
 }
 
-#afaaqeyriv .gt_table {
+#dtlrwiyakw .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1450,12 +1540,12 @@ This warning is displayed once per session.</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#afaaqeyriv .gt_caption {
+#dtlrwiyakw .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#afaaqeyriv .gt_title {
+#dtlrwiyakw .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1467,7 +1557,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-width: 0;
 }
 
-#afaaqeyriv .gt_subtitle {
+#dtlrwiyakw .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1479,7 +1569,7 @@ This warning is displayed once per session.</code></pre>
   border-top-width: 0;
 }
 
-#afaaqeyriv .gt_heading {
+#dtlrwiyakw .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1491,13 +1581,13 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#afaaqeyriv .gt_bottom_border {
+#dtlrwiyakw .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#afaaqeyriv .gt_col_headings {
+#dtlrwiyakw .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1512,7 +1602,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#afaaqeyriv .gt_col_heading {
+#dtlrwiyakw .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1532,7 +1622,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#afaaqeyriv .gt_column_spanner_outer {
+#dtlrwiyakw .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1544,15 +1634,15 @@ This warning is displayed once per session.</code></pre>
   padding-right: 4px;
 }
 
-#afaaqeyriv .gt_column_spanner_outer:first-child {
+#dtlrwiyakw .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#afaaqeyriv .gt_column_spanner_outer:last-child {
+#dtlrwiyakw .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#afaaqeyriv .gt_column_spanner {
+#dtlrwiyakw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -1564,11 +1654,11 @@ This warning is displayed once per session.</code></pre>
   width: 100%;
 }
 
-#afaaqeyriv .gt_spanner_row {
+#dtlrwiyakw .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#afaaqeyriv .gt_group_heading {
+#dtlrwiyakw .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1594,7 +1684,7 @@ This warning is displayed once per session.</code></pre>
   text-align: left;
 }
 
-#afaaqeyriv .gt_empty_group_heading {
+#dtlrwiyakw .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1609,15 +1699,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: middle;
 }
 
-#afaaqeyriv .gt_from_md > :first-child {
+#dtlrwiyakw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#afaaqeyriv .gt_from_md > :last-child {
+#dtlrwiyakw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#afaaqeyriv .gt_row {
+#dtlrwiyakw .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1636,7 +1726,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#afaaqeyriv .gt_stub {
+#dtlrwiyakw .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1649,7 +1739,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#afaaqeyriv .gt_stub_row_group {
+#dtlrwiyakw .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1663,15 +1753,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: top;
 }
 
-#afaaqeyriv .gt_row_group_first td {
+#dtlrwiyakw .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#afaaqeyriv .gt_row_group_first th {
+#dtlrwiyakw .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#afaaqeyriv .gt_summary_row {
+#dtlrwiyakw .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1681,16 +1771,16 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#afaaqeyriv .gt_first_summary_row {
+#dtlrwiyakw .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#afaaqeyriv .gt_first_summary_row.thick {
+#dtlrwiyakw .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#afaaqeyriv .gt_last_summary_row {
+#dtlrwiyakw .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1700,7 +1790,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#afaaqeyriv .gt_grand_summary_row {
+#dtlrwiyakw .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1710,7 +1800,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#afaaqeyriv .gt_first_grand_summary_row {
+#dtlrwiyakw .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1720,7 +1810,7 @@ This warning is displayed once per session.</code></pre>
   border-top-color: #0076BA;
 }
 
-#afaaqeyriv .gt_last_grand_summary_row_top {
+#dtlrwiyakw .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1730,11 +1820,11 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#afaaqeyriv .gt_striped {
+#dtlrwiyakw .gt_striped {
   background-color: #F4F4F4;
 }
 
-#afaaqeyriv .gt_table_body {
+#dtlrwiyakw .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1743,7 +1833,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#afaaqeyriv .gt_footnotes {
+#dtlrwiyakw .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1757,7 +1847,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#afaaqeyriv .gt_footnote {
+#dtlrwiyakw .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1766,7 +1856,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#afaaqeyriv .gt_sourcenotes {
+#dtlrwiyakw .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1780,7 +1870,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#afaaqeyriv .gt_sourcenote {
+#dtlrwiyakw .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1788,72 +1878,72 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#afaaqeyriv .gt_left {
+#dtlrwiyakw .gt_left {
   text-align: left;
 }
 
-#afaaqeyriv .gt_center {
+#dtlrwiyakw .gt_center {
   text-align: center;
 }
 
-#afaaqeyriv .gt_right {
+#dtlrwiyakw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#afaaqeyriv .gt_font_normal {
+#dtlrwiyakw .gt_font_normal {
   font-weight: normal;
 }
 
-#afaaqeyriv .gt_font_bold {
+#dtlrwiyakw .gt_font_bold {
   font-weight: bold;
 }
 
-#afaaqeyriv .gt_font_italic {
+#dtlrwiyakw .gt_font_italic {
   font-style: italic;
 }
 
-#afaaqeyriv .gt_super {
+#dtlrwiyakw .gt_super {
   font-size: 65%;
 }
 
-#afaaqeyriv .gt_footnote_marks {
+#dtlrwiyakw .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#afaaqeyriv .gt_asterisk {
+#dtlrwiyakw .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#afaaqeyriv .gt_indent_1 {
+#dtlrwiyakw .gt_indent_1 {
   text-indent: 5px;
 }
 
-#afaaqeyriv .gt_indent_2 {
+#dtlrwiyakw .gt_indent_2 {
   text-indent: 10px;
 }
 
-#afaaqeyriv .gt_indent_3 {
+#dtlrwiyakw .gt_indent_3 {
   text-indent: 15px;
 }
 
-#afaaqeyriv .gt_indent_4 {
+#dtlrwiyakw .gt_indent_4 {
   text-indent: 20px;
 }
 
-#afaaqeyriv .gt_indent_5 {
+#dtlrwiyakw .gt_indent_5 {
   text-indent: 25px;
 }
 
-#afaaqeyriv .katex-display {
+#dtlrwiyakw .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#afaaqeyriv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dtlrwiyakw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2310,12 +2400,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./linear-regression.html" class="pagination-link" aria-label="Linear Regression">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Linear Regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./logistic-regression.html" class="pagination-link" aria-label="Logistic Regression">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./log-reg-single-categorical.html" class="pagination-link" aria-label="Single Categorical Predictor">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

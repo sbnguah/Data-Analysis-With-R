@@ -1,0 +1,3 @@
+---
+title: "Single Categorical Variable"
+---
