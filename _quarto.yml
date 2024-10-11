@@ -58,6 +58,21 @@ book:
     - part: "<span style='font-weight:bold; color: black;'>Missiing Data</span>"
       chapters: 
         - missing-data.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Generalised Additive Modelling</span>"
+      chapters: 
+        - gam-single-categorical.qmd
+        - gam-single-continuous.qmd
+        - gam-multivariate.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Polynomial Regression</span>"
+      chapters: 
+        - poly-single-categorical.qmd
+        - poly-single-continuous.qmd
+        - poly-multivariate.qmd
+    - part: "<span style='font-weight:bold; color: black;'>GQuantile Regression</span>"
+      chapters: 
+        - qr-single-categorical.qmd
+        - qr-single-continuous.qmd
+        - qr-multivariate.qmd
     - part: "<span style='font-weight:bold; color: black;'>Specific Packages</span>"
       chapters: 
         - pkg-dplyr.qmd

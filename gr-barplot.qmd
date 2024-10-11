@@ -31,7 +31,7 @@ p <-
 p + geom_bar(stat="identity")
 ```
 
-Next we flip the barlot horizontal, change the size of the bar width and change the theme
+Next we flip the barplot horizontal, change the size of the bar width and change the theme
 
 ```{r comment = NA}
 p + 
@@ -185,12 +185,16 @@ And then plot the graph
 
 ```{r comment = NA}
 BC +  
-  geom_bar(stat="identity", position=position_dodge()) +
-	geom_errorbar(aes(ymin=Mean.wgt-SD.wgt, ymax=Mean.wgt+SD.wgt), 
-	              width=.2, size=0., position=position_dodge(.9)) +
-	labs(title="Mean weight with error bars", 
-	     x="Case or Control", 
-	     y="Mean(kgs)") +
+    geom_bar(stat="identity", position=position_dodge()) + 
+    geom_errorbar(
+        aes(ymin = Mean.wgt-SD.wgt, ymax = Mean.wgt+SD.wgt), 
+	    width=.2, 
+        size=0., 
+        position=position_dodge(.9)) +
+	labs(
+	    title="Mean weight with error bars", 
+	    x="Case or Control", 
+	    y="Mean(kgs)") +
 	scale_fill_brewer(palette="Paired") + 
 	ggthemes::theme_stata()
 ```
@@ -275,7 +279,7 @@ df_sorted %>%
 ToothGrowth %>% 
   mutate(dose = as.factor(dose)) %>% 
   group_by(supp, dose) %>% 
-  summarise(sd = sd(len), len = mean(len)) %>% 
+  summarise(sd = sd(len), len = mean(len), .groups = "drop") %>% 
   ggplot(aes(x=dose, y=len, fill=supp)) + 
   geom_bar(stat="identity", position=position_dodge()) +
   geom_errorbar(aes(ymin=len-sd, ymax=len+sd), width=.2, 
@@ -283,4 +287,20 @@ ToothGrowth %>%
   labs(title="Plot of length  per dose", x="Dose (mg)", y = "Length")+
   scale_fill_brewer(palette="Paired") + 
   theme_minimal()
+```
+
+## Plotting raw data
+
+```{r}
+babies <- 
+    dget("babies_clean") %>% 
+    select(apgar5cat, died)
+
+babies %>% 
+    ggplot(aes(x = apgar5cat, fill = apgar5cat)) +
+    geom_bar(stat = 'count') +
+    scale_fill_grey(
+        name = "APGAR Category",
+        label = c("LOW", "MEDIUM", "HIGH"))+
+    theme_bw()
 ```

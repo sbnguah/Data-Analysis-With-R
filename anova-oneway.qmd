@@ -77,7 +77,7 @@ df_babies %>%
 ```
 
 ```{r}
-#| label: fig-fig1
+#| label: fig-one
 #| fig-cap: "Distriubution of birth weight for various APGAR categories"
 #| fig-height: 3
 #| fig-width: 5
@@ -92,7 +92,7 @@ df_babies %>%
 ```
 
 ```{r}
-#| label: fig-fig2
+#| label: fig-two
 #| fig-cap: "Distriubution of birth weight for various APGAR categories"
 #| fig-height: 3
 #| fig-width:  6

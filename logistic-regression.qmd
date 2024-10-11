@@ -43,8 +43,11 @@ further analysis.
 
 ```{r}
 mod.1 %>% summary()
-broom::glance(mod.1)
-broom::augment(mod.1) %>% 
+
+mod.1 %>% broom::glance()
+
+mod.1 %>% 
+    broom::augment() %>% 
     arrange(desc(.cooksd)) %>% 
     head(10) %>% 
     gt::gt()

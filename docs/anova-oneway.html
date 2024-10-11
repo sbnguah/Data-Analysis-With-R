@@ -372,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Generalised Additive Modelling</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -380,20 +380,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  <a href="./gam-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  <a href="./gam-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  <a href="./gam-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -401,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Polynomial Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -409,8 +409,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  <a href="./poly-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -418,7 +430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -426,56 +438,102 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -660,12 +718,12 @@ No   Variable            Stats / Values         Freqs (% of Valid)   Valid      
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_light</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-fig1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-one" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="anova-oneway_files/figure-html/fig-fig1-1.png" class="img-fluid figure-img" width="480">
+<div aria-describedby="fig-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="anova-oneway_files/figure-html/fig-one-1.png" class="img-fluid figure-img" width="480">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-one-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;19.1: Distriubution of birth weight for various APGAR categories
 </figcaption>
 </figure>
@@ -688,12 +746,12 @@ Figure&nbsp;19.1: Distriubution of birth weight for various APGAR categories
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(. <span class="sc">~</span> sex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-fig2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<div id="fig-two" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="anova-oneway_files/figure-html/fig-fig2-1.png" class="img-fluid figure-img" width="576">
+<div aria-describedby="fig-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="anova-oneway_files/figure-html/fig-two-1.png" class="img-fluid figure-img" width="576">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-two-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;19.2: Distriubution of birth weight for various APGAR categories
 </figcaption>
 </figure>
@@ -1017,23 +1075,23 @@ Figure&nbsp;19.2: Distriubution of birth weight for various APGAR categories
 This warning is displayed once per session.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="przeveffxt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#przeveffxt table {
+<div id="nmkhfzkgsr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nmkhfzkgsr table {
   font-family: 'Times New Roman';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#przeveffxt thead, #przeveffxt tbody, #przeveffxt tfoot, #przeveffxt tr, #przeveffxt td, #przeveffxt th {
+#nmkhfzkgsr thead, #nmkhfzkgsr tbody, #nmkhfzkgsr tfoot, #nmkhfzkgsr tr, #nmkhfzkgsr td, #nmkhfzkgsr th {
   border-style: none;
 }
 
-#przeveffxt p {
+#nmkhfzkgsr p {
   margin: 0;
   padding: 0;
 }
 
-#przeveffxt .gt_table {
+#nmkhfzkgsr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1059,12 +1117,12 @@ This warning is displayed once per session.</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#przeveffxt .gt_caption {
+#nmkhfzkgsr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#przeveffxt .gt_title {
+#nmkhfzkgsr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1076,7 +1134,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-width: 0;
 }
 
-#przeveffxt .gt_subtitle {
+#nmkhfzkgsr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1088,7 +1146,7 @@ This warning is displayed once per session.</code></pre>
   border-top-width: 0;
 }
 
-#przeveffxt .gt_heading {
+#nmkhfzkgsr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1100,13 +1158,13 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#przeveffxt .gt_bottom_border {
+#nmkhfzkgsr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#przeveffxt .gt_col_headings {
+#nmkhfzkgsr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1121,7 +1179,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#przeveffxt .gt_col_heading {
+#nmkhfzkgsr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1141,7 +1199,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#przeveffxt .gt_column_spanner_outer {
+#nmkhfzkgsr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1153,15 +1211,15 @@ This warning is displayed once per session.</code></pre>
   padding-right: 4px;
 }
 
-#przeveffxt .gt_column_spanner_outer:first-child {
+#nmkhfzkgsr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#przeveffxt .gt_column_spanner_outer:last-child {
+#nmkhfzkgsr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#przeveffxt .gt_column_spanner {
+#nmkhfzkgsr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -1173,11 +1231,11 @@ This warning is displayed once per session.</code></pre>
   width: 100%;
 }
 
-#przeveffxt .gt_spanner_row {
+#nmkhfzkgsr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#przeveffxt .gt_group_heading {
+#nmkhfzkgsr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1203,7 +1261,7 @@ This warning is displayed once per session.</code></pre>
   text-align: left;
 }
 
-#przeveffxt .gt_empty_group_heading {
+#nmkhfzkgsr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1218,15 +1276,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: middle;
 }
 
-#przeveffxt .gt_from_md > :first-child {
+#nmkhfzkgsr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#przeveffxt .gt_from_md > :last-child {
+#nmkhfzkgsr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#przeveffxt .gt_row {
+#nmkhfzkgsr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1245,7 +1303,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#przeveffxt .gt_stub {
+#nmkhfzkgsr .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1258,7 +1316,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#przeveffxt .gt_stub_row_group {
+#nmkhfzkgsr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1272,15 +1330,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: top;
 }
 
-#przeveffxt .gt_row_group_first td {
+#nmkhfzkgsr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#przeveffxt .gt_row_group_first th {
+#nmkhfzkgsr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#przeveffxt .gt_summary_row {
+#nmkhfzkgsr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1290,16 +1348,16 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#przeveffxt .gt_first_summary_row {
+#nmkhfzkgsr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#przeveffxt .gt_first_summary_row.thick {
+#nmkhfzkgsr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#przeveffxt .gt_last_summary_row {
+#nmkhfzkgsr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1309,7 +1367,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#przeveffxt .gt_grand_summary_row {
+#nmkhfzkgsr .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1319,7 +1377,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#przeveffxt .gt_first_grand_summary_row {
+#nmkhfzkgsr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1329,7 +1387,7 @@ This warning is displayed once per session.</code></pre>
   border-top-color: #0076BA;
 }
 
-#przeveffxt .gt_last_grand_summary_row_top {
+#nmkhfzkgsr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1339,11 +1397,11 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#przeveffxt .gt_striped {
+#nmkhfzkgsr .gt_striped {
   background-color: #F4F4F4;
 }
 
-#przeveffxt .gt_table_body {
+#nmkhfzkgsr .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1352,7 +1410,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#przeveffxt .gt_footnotes {
+#nmkhfzkgsr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1366,7 +1424,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#przeveffxt .gt_footnote {
+#nmkhfzkgsr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1375,7 +1433,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#przeveffxt .gt_sourcenotes {
+#nmkhfzkgsr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1389,7 +1447,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#przeveffxt .gt_sourcenote {
+#nmkhfzkgsr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1397,72 +1455,72 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#przeveffxt .gt_left {
+#nmkhfzkgsr .gt_left {
   text-align: left;
 }
 
-#przeveffxt .gt_center {
+#nmkhfzkgsr .gt_center {
   text-align: center;
 }
 
-#przeveffxt .gt_right {
+#nmkhfzkgsr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#przeveffxt .gt_font_normal {
+#nmkhfzkgsr .gt_font_normal {
   font-weight: normal;
 }
 
-#przeveffxt .gt_font_bold {
+#nmkhfzkgsr .gt_font_bold {
   font-weight: bold;
 }
 
-#przeveffxt .gt_font_italic {
+#nmkhfzkgsr .gt_font_italic {
   font-style: italic;
 }
 
-#przeveffxt .gt_super {
+#nmkhfzkgsr .gt_super {
   font-size: 65%;
 }
 
-#przeveffxt .gt_footnote_marks {
+#nmkhfzkgsr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#przeveffxt .gt_asterisk {
+#nmkhfzkgsr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#przeveffxt .gt_indent_1 {
+#nmkhfzkgsr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#przeveffxt .gt_indent_2 {
+#nmkhfzkgsr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#przeveffxt .gt_indent_3 {
+#nmkhfzkgsr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#przeveffxt .gt_indent_4 {
+#nmkhfzkgsr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#przeveffxt .gt_indent_5 {
+#nmkhfzkgsr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#przeveffxt .katex-display {
+#nmkhfzkgsr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#przeveffxt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nmkhfzkgsr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1498,23 +1556,23 @@ This warning is displayed once per session.</code></pre>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mystyle</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="dtlrwiyakw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dtlrwiyakw table {
+<div id="luoibotuba" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#luoibotuba table {
   font-family: 'Times New Roman';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dtlrwiyakw thead, #dtlrwiyakw tbody, #dtlrwiyakw tfoot, #dtlrwiyakw tr, #dtlrwiyakw td, #dtlrwiyakw th {
+#luoibotuba thead, #luoibotuba tbody, #luoibotuba tfoot, #luoibotuba tr, #luoibotuba td, #luoibotuba th {
   border-style: none;
 }
 
-#dtlrwiyakw p {
+#luoibotuba p {
   margin: 0;
   padding: 0;
 }
 
-#dtlrwiyakw .gt_table {
+#luoibotuba .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1540,12 +1598,12 @@ This warning is displayed once per session.</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#dtlrwiyakw .gt_caption {
+#luoibotuba .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dtlrwiyakw .gt_title {
+#luoibotuba .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1557,7 +1615,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-width: 0;
 }
 
-#dtlrwiyakw .gt_subtitle {
+#luoibotuba .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1569,7 +1627,7 @@ This warning is displayed once per session.</code></pre>
   border-top-width: 0;
 }
 
-#dtlrwiyakw .gt_heading {
+#luoibotuba .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1581,13 +1639,13 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dtlrwiyakw .gt_bottom_border {
+#luoibotuba .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
 }
 
-#dtlrwiyakw .gt_col_headings {
+#luoibotuba .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1602,7 +1660,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dtlrwiyakw .gt_col_heading {
+#luoibotuba .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1622,7 +1680,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#dtlrwiyakw .gt_column_spanner_outer {
+#luoibotuba .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1634,15 +1692,15 @@ This warning is displayed once per session.</code></pre>
   padding-right: 4px;
 }
 
-#dtlrwiyakw .gt_column_spanner_outer:first-child {
+#luoibotuba .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dtlrwiyakw .gt_column_spanner_outer:last-child {
+#luoibotuba .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dtlrwiyakw .gt_column_spanner {
+#luoibotuba .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #0076BA;
@@ -1654,11 +1712,11 @@ This warning is displayed once per session.</code></pre>
   width: 100%;
 }
 
-#dtlrwiyakw .gt_spanner_row {
+#luoibotuba .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dtlrwiyakw .gt_group_heading {
+#luoibotuba .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1684,7 +1742,7 @@ This warning is displayed once per session.</code></pre>
   text-align: left;
 }
 
-#dtlrwiyakw .gt_empty_group_heading {
+#luoibotuba .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1699,15 +1757,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: middle;
 }
 
-#dtlrwiyakw .gt_from_md > :first-child {
+#luoibotuba .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dtlrwiyakw .gt_from_md > :last-child {
+#luoibotuba .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dtlrwiyakw .gt_row {
+#luoibotuba .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1726,7 +1784,7 @@ This warning is displayed once per session.</code></pre>
   overflow-x: hidden;
 }
 
-#dtlrwiyakw .gt_stub {
+#luoibotuba .gt_stub {
   color: #FFFFFF;
   background-color: #0076BA;
   font-size: 100%;
@@ -1739,7 +1797,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#dtlrwiyakw .gt_stub_row_group {
+#luoibotuba .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1753,15 +1811,15 @@ This warning is displayed once per session.</code></pre>
   vertical-align: top;
 }
 
-#dtlrwiyakw .gt_row_group_first td {
+#luoibotuba .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dtlrwiyakw .gt_row_group_first th {
+#luoibotuba .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dtlrwiyakw .gt_summary_row {
+#luoibotuba .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1771,16 +1829,16 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#dtlrwiyakw .gt_first_summary_row {
+#luoibotuba .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #0076BA;
 }
 
-#dtlrwiyakw .gt_first_summary_row.thick {
+#luoibotuba .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dtlrwiyakw .gt_last_summary_row {
+#luoibotuba .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1790,7 +1848,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#dtlrwiyakw .gt_grand_summary_row {
+#luoibotuba .gt_grand_summary_row {
   color: #333333;
   background-color: #89D3FE;
   text-transform: inherit;
@@ -1800,7 +1858,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#dtlrwiyakw .gt_first_grand_summary_row {
+#luoibotuba .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1810,7 +1868,7 @@ This warning is displayed once per session.</code></pre>
   border-top-color: #0076BA;
 }
 
-#dtlrwiyakw .gt_last_grand_summary_row_top {
+#luoibotuba .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1820,11 +1878,11 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#dtlrwiyakw .gt_striped {
+#luoibotuba .gt_striped {
   background-color: #F4F4F4;
 }
 
-#dtlrwiyakw .gt_table_body {
+#luoibotuba .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #0076BA;
@@ -1833,7 +1891,7 @@ This warning is displayed once per session.</code></pre>
   border-bottom-color: #0076BA;
 }
 
-#dtlrwiyakw .gt_footnotes {
+#luoibotuba .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1847,7 +1905,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dtlrwiyakw .gt_footnote {
+#luoibotuba .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1856,7 +1914,7 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#dtlrwiyakw .gt_sourcenotes {
+#luoibotuba .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1870,7 +1928,7 @@ This warning is displayed once per session.</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dtlrwiyakw .gt_sourcenote {
+#luoibotuba .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1878,72 +1936,72 @@ This warning is displayed once per session.</code></pre>
   padding-right: 5px;
 }
 
-#dtlrwiyakw .gt_left {
+#luoibotuba .gt_left {
   text-align: left;
 }
 
-#dtlrwiyakw .gt_center {
+#luoibotuba .gt_center {
   text-align: center;
 }
 
-#dtlrwiyakw .gt_right {
+#luoibotuba .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dtlrwiyakw .gt_font_normal {
+#luoibotuba .gt_font_normal {
   font-weight: normal;
 }
 
-#dtlrwiyakw .gt_font_bold {
+#luoibotuba .gt_font_bold {
   font-weight: bold;
 }
 
-#dtlrwiyakw .gt_font_italic {
+#luoibotuba .gt_font_italic {
   font-style: italic;
 }
 
-#dtlrwiyakw .gt_super {
+#luoibotuba .gt_super {
   font-size: 65%;
 }
 
-#dtlrwiyakw .gt_footnote_marks {
+#luoibotuba .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dtlrwiyakw .gt_asterisk {
+#luoibotuba .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dtlrwiyakw .gt_indent_1 {
+#luoibotuba .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dtlrwiyakw .gt_indent_2 {
+#luoibotuba .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dtlrwiyakw .gt_indent_3 {
+#luoibotuba .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dtlrwiyakw .gt_indent_4 {
+#luoibotuba .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dtlrwiyakw .gt_indent_5 {
+#luoibotuba .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dtlrwiyakw .katex-display {
+#luoibotuba .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dtlrwiyakw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#luoibotuba div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>

@@ -401,7 +401,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Generalised Additive Modelling</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -409,20 +409,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  <a href="./gam-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  <a href="./gam-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  <a href="./gam-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -430,7 +430,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Polynomial Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -438,8 +438,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  <a href="./poly-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -447,7 +459,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -455,56 +467,102 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -610,23 +668,23 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="lvypcexcrz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lvypcexcrz table {
+<div id="ayynhhhmve" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ayynhhhmve table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lvypcexcrz thead, #lvypcexcrz tbody, #lvypcexcrz tfoot, #lvypcexcrz tr, #lvypcexcrz td, #lvypcexcrz th {
+#ayynhhhmve thead, #ayynhhhmve tbody, #ayynhhhmve tfoot, #ayynhhhmve tr, #ayynhhhmve td, #ayynhhhmve th {
   border-style: none;
 }
 
-#lvypcexcrz p {
+#ayynhhhmve p {
   margin: 0;
   padding: 0;
 }
 
-#lvypcexcrz .gt_table {
+#ayynhhhmve .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -652,12 +710,12 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-left-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_caption {
+#ayynhhhmve .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lvypcexcrz .gt_title {
+#ayynhhhmve .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -669,7 +727,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-width: 0;
 }
 
-#lvypcexcrz .gt_subtitle {
+#ayynhhhmve .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -681,7 +739,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-top-width: 0;
 }
 
-#lvypcexcrz .gt_heading {
+#ayynhhhmve .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -693,13 +751,13 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_bottom_border {
+#ayynhhhmve .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_col_headings {
+#ayynhhhmve .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -714,7 +772,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_col_heading {
+#ayynhhhmve .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -734,7 +792,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   overflow-x: hidden;
 }
 
-#lvypcexcrz .gt_column_spanner_outer {
+#ayynhhhmve .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -746,15 +804,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 4px;
 }
 
-#lvypcexcrz .gt_column_spanner_outer:first-child {
+#ayynhhhmve .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lvypcexcrz .gt_column_spanner_outer:last-child {
+#ayynhhhmve .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lvypcexcrz .gt_column_spanner {
+#ayynhhhmve .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -766,11 +824,11 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   width: 100%;
 }
 
-#lvypcexcrz .gt_spanner_row {
+#ayynhhhmve .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lvypcexcrz .gt_group_heading {
+#ayynhhhmve .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -796,7 +854,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   text-align: left;
 }
 
-#lvypcexcrz .gt_empty_group_heading {
+#ayynhhhmve .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -811,15 +869,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   vertical-align: middle;
 }
 
-#lvypcexcrz .gt_from_md > :first-child {
+#ayynhhhmve .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lvypcexcrz .gt_from_md > :last-child {
+#ayynhhhmve .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lvypcexcrz .gt_row {
+#ayynhhhmve .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -838,7 +896,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   overflow-x: hidden;
 }
 
-#lvypcexcrz .gt_stub {
+#ayynhhhmve .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -851,7 +909,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#lvypcexcrz .gt_stub_row_group {
+#ayynhhhmve .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -865,15 +923,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   vertical-align: top;
 }
 
-#lvypcexcrz .gt_row_group_first td {
+#ayynhhhmve .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lvypcexcrz .gt_row_group_first th {
+#ayynhhhmve .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lvypcexcrz .gt_summary_row {
+#ayynhhhmve .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -883,16 +941,16 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#lvypcexcrz .gt_first_summary_row {
+#ayynhhhmve .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_first_summary_row.thick {
+#ayynhhhmve .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lvypcexcrz .gt_last_summary_row {
+#ayynhhhmve .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -902,7 +960,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_grand_summary_row {
+#ayynhhhmve .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -912,7 +970,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#lvypcexcrz .gt_first_grand_summary_row {
+#ayynhhhmve .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -922,7 +980,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-top-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_last_grand_summary_row_top {
+#ayynhhhmve .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -932,11 +990,11 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_striped {
+#ayynhhhmve .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lvypcexcrz .gt_table_body {
+#ayynhhhmve .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -945,7 +1003,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_footnotes {
+#ayynhhhmve .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -959,7 +1017,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_footnote {
+#ayynhhhmve .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -968,7 +1026,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#lvypcexcrz .gt_sourcenotes {
+#ayynhhhmve .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -982,7 +1040,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#lvypcexcrz .gt_sourcenote {
+#ayynhhhmve .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -990,72 +1048,72 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#lvypcexcrz .gt_left {
+#ayynhhhmve .gt_left {
   text-align: left;
 }
 
-#lvypcexcrz .gt_center {
+#ayynhhhmve .gt_center {
   text-align: center;
 }
 
-#lvypcexcrz .gt_right {
+#ayynhhhmve .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lvypcexcrz .gt_font_normal {
+#ayynhhhmve .gt_font_normal {
   font-weight: normal;
 }
 
-#lvypcexcrz .gt_font_bold {
+#ayynhhhmve .gt_font_bold {
   font-weight: bold;
 }
 
-#lvypcexcrz .gt_font_italic {
+#ayynhhhmve .gt_font_italic {
   font-style: italic;
 }
 
-#lvypcexcrz .gt_super {
+#ayynhhhmve .gt_super {
   font-size: 65%;
 }
 
-#lvypcexcrz .gt_footnote_marks {
+#ayynhhhmve .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lvypcexcrz .gt_asterisk {
+#ayynhhhmve .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lvypcexcrz .gt_indent_1 {
+#ayynhhhmve .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lvypcexcrz .gt_indent_2 {
+#ayynhhhmve .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lvypcexcrz .gt_indent_3 {
+#ayynhhhmve .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lvypcexcrz .gt_indent_4 {
+#ayynhhhmve .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lvypcexcrz .gt_indent_5 {
+#ayynhhhmve .gt_indent_5 {
   text-indent: 25px;
 }
 
-#lvypcexcrz .katex-display {
+#ayynhhhmve .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#lvypcexcrz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ayynhhhmve div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
