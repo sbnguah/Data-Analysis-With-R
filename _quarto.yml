@@ -25,7 +25,9 @@ book:
     - data-types.qmd
     - data-wrangling.qmd
     - data-cleaning.qmd
+    - eda.qmd
     - descriptive-stats-continuous.qmd
+    - descriptive-stats-categorical.qmd
     - risk-and-odds.qmd
     - normality.qmd
     - hypothesis-testing.qmd
@@ -89,6 +91,7 @@ book:
         - gr-barplot.qmd
         - gr-scatter.qmd
         - gr-line-plot.qmd
+        - gr-curvelinear-plot.qmd
         - gr-forest-plot.qmd
         - gr-population-pyramid.qmd
         - gr-miscellaneous.qmd

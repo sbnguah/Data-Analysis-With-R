@@ -1,0 +1,88 @@
+---
+title: "Curvilinear Plots"
+---
+
+Read in data
+
+```{r}
+#| echo: false
+#| message: false
+
+library(tidyverse)
+df_data1 <- 
+    read_csv("C:/Dataset/data1.csv") %>%
+    drop_na()
+
+```
+
+## Linear
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "lm", formula = y ~ x, se = FALSE)+
+    theme_bw()
+```
+
+## Polynomial
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "lm", formula = y ~ poly(x, 2), se = F)+
+    theme_bw()
+```
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "lm", formula = y ~ poly(x, 3))+
+    theme_bw()
+```
+
+## Loess
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "loess", formula = y ~ x)+
+    theme_bw()
+```
+
+## Splines
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "gam", formula = y ~ splines::ns(x, 2))+
+    theme_bw()
+```
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "gam", formula = y ~ splines::ns(x, 3))+
+    theme_bw()
+```
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "gam", formula = y ~ splines::bs(x, 3))+
+    theme_bw()
+```
+
+```{r}
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_smooth(method = "lm", formula = y ~ quantreg::qr(.5))+
+    theme_bw()
+```

@@ -1,5 +1,5 @@
 ---
-title: "Descriptive Statistics - Continuous"
+title: "Descriptive Statistics: Continuous"
 ---
 
 The initial analysis of numeric data is usually a description of the data at hand without making

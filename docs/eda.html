@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Exploratory Data Analysis – Data Analysis With R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./descriptive-stats-continuous.html" rel="next">
+<link href="./data-cleaning.html" rel="prev">
+<link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+
+<script src="site_libs/tabwid-1.1.3/tabwid.js"></script>
+
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./eda.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Contents</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data analysis with R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-importation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Importation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Wrangling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptive-stats-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Continuous</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptive-stats-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Categorical</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./confounding-and-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Generalised Additive Modelling</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gam-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gam-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gam-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Polynomial Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">GQuantile Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qr-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qr-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qr-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-curvelinear-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Curvilinear Plots</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link active" data-scroll-target="#missing-data"><span class="header-section-number">7.1</span> Missing data</a></li>
+  <li><a href="#categorical-variables" id="toc-categorical-variables" class="nav-link" data-scroll-target="#categorical-variables"><span class="header-section-number">7.2</span> Categorical variables</a></li>
+  <li><a href="#continuous-variables" id="toc-continuous-variables" class="nav-link" data-scroll-target="#continuous-variables"><span class="header-section-number">7.3</span> Continuous variables</a></li>
+  <li><a href="#outliers" id="toc-outliers" class="nav-link" data-scroll-target="#outliers"><span class="header-section-number">7.4</span> Outliers</a></li>
+  <li><a href="#correlation" id="toc-correlation" class="nav-link" data-scroll-target="#correlation"><span class="header-section-number">7.5</span> Correlation</a></li>
+  <li><a href="#scatterplots" id="toc-scatterplots" class="nav-link" data-scroll-target="#scatterplots"><span class="header-section-number">7.6</span> Scatterplots</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter introduces the initial graphical exploration of data using the <code>DataExplorer</code> package. We begin by importing the babies data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="ot">&lt;-</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"C:/Dataset/Schisto.xlsx"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="fu">across</span>(<span class="fu">where</span>(is.character), as.factor),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">mcv =</span> <span class="fu">as.numeric</span>(mcv)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(q5tribe, q1date, serial_no))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>We begin with a general overview of the data</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">introduce</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                      [,1]
+rows                   367
+columns                 22
+discrete_columns        13
+continuous_columns       9
+all_missing_columns      0
+total_missing_values   641
+complete_rows          158
+total_observations    8074
+memory_usage         58264</code></pre>
+</div>
+</div>
+<p>And then plot this overview</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_intro</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    dlookr<span class="sc">::</span><span class="fu">describe</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    flextable<span class="sc">::</span><span class="fu">flextable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Registered S3 methods overwritten by 'dlookr':
+  method          from  
+  plot.transform  scales
+  print.transform scales</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-4997685a{}.cl-498120c2{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-49882b88{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-49882b9c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-49885446{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-49885450{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4988545a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4988545b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4988545c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-49885464{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-4997685a"><thead><tr style="overflow-wrap:break-word;"><th class="cl-49885446"><p class="cl-49882b88"><span class="cl-498120c2">described_variables</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">n</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">na</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">mean</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">sd</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">se_mean</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">IQR</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">skewness</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">kurtosis</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p00</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p01</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p05</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p10</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p20</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p25</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p30</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p40</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p50</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p60</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p70</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p75</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p80</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p90</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p95</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p99</span></p></th><th class="cl-49885450"><p class="cl-49882b9c"><span class="cl-498120c2">p100</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">q3age</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">367</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">12.531335</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">2.793136</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.1458005</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">4.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">-0.07205703</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">-0.5034971</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">7.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">7.000</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">8.000</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">8.60</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">10.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">10.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">11.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">12.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">13.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">14.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">14.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">14.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">15.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">16.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">17.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">18.000</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">22.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">q35weight</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">366</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">1</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">35.425683</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">11.048049</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.5774908</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">18.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.52434890</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">-0.3813894</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">14.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">17.825</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">20.625</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">23.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">25.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">26.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">28.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">30.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">34.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">37.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">41.05</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">44.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">45.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">51.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">55.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">60.350</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">73.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">q36height</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">365</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">2</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">143.345479</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">17.106426</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.8953912</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">22.90</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">-2.70944834</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">20.4208986</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">1.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">115.320</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">122.000</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">125.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">130.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">132.10</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">135.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">140.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">144.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">150.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">153.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">155.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">157.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">162.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">165.80</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">172.720</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">179.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">wbc</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">323</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">44</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">6.970588</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">4.315331</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.2401114</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">2.20</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">10.40838291</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">139.1739083</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">3.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">3.600</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">4.200</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">4.60</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">5.2</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">5.50</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">5.70</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">6.1</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">6.4</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">6.7</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">7.20</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">7.70</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">8.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">8.98</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">10.19</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">14.368</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">69.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">plt</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">323</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">44</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">208.133127</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">63.026816</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">3.5069059</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">86.50</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.03390020</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.2611866</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">17.60</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">52.200</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">105.400</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">136.20</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">161.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">165.50</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">173.60</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">188.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">206.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">224.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">240.40</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">252.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">260.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">287.80</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">313.40</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">359.560</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">379.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">mch</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">323</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">44</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">27.288235</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">6.525848</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.3631079</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">2.95</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">6.78869882</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">64.6967164</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">0.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">20.132</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">22.220</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">23.52</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">25.1</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">25.35</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">25.70</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">26.5</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">26.9</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">27.5</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">28.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">28.30</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">28.9</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">29.96</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">31.38</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">34.940</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">91.8</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">mcv</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">323</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">44</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">90.597523</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">42.733308</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">2.3777449</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">64.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">-0.13964072</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">-0.8285419</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">1.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">4.220</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">17.100</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">31.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">49.4</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">61.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">68.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">81.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">91.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">102.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">117.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">125.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">130.6</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">149.00</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">157.90</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">167.780</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">171.0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545a"><p class="cl-49882b88"><span class="cl-498120c2">hct</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">323</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">44</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">35.524892</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">23.434231</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">1.3039155</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">4.45</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">12.05002913</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">152.0238221</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">4.64</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">25.720</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">28.520</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">29.74</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">31.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">31.40</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">31.70</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">32.5</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">33.2</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">34.0</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">35.40</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">35.85</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">36.5</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">38.30</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">40.80</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">46.702</span></p></td><td class="cl-4988545b"><p class="cl-49882b9c"><span class="cl-498120c2">354.7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4988545c"><p class="cl-49882b88"><span class="cl-498120c2">hb</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">323</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">44</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">12.056099</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">6.914894</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">0.3847550</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">1.70</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">11.42540136</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">142.0263060</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">0.00</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">8.544</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">9.710</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">10.00</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">10.5</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">10.60</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">10.76</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">11.0</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">11.3</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">11.7</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">12.20</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">12.30</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">12.7</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">13.30</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">14.10</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">19.420</span></p></td><td class="cl-49885464"><p class="cl-49882b9c"><span class="cl-498120c2">106.0</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<section id="missing-data" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">7.1</span> Missing data</h2>
+<p>Next, we derive explore the missing data. The plot outlines the percentage of missing data for each with the legend showing if the number of missing is good, ok or bad.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_missing</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df_schisto %&gt;% dlookr::plot_na_hclust()</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># df_schisto %&gt;% dlookr::plot_na_pareto()</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># df_schisto %&gt;% dlookr::plot_na_intersect()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="categorical-variables" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="categorical-variables"><span class="header-section-number">7.2</span> Categorical variables</h2>
+<p>We begin by exploring the categorical variables</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    dlookr<span class="sc">::</span><span class="fu">diagnose_category</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    flextable<span class="sc">::</span><span class="fu">flextable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-4a9812c2{}.cl-4a87507c{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4a8d2de4{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4a8d2df8{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4a8d5936{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a8d5940{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a8d594a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a8d594b{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a8d5954{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4a8d5955{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-4a9812c2"><thead><tr style="overflow-wrap:break-word;"><th class="cl-4a8d5936"><p class="cl-4a8d2de4"><span class="cl-4a87507c">variables</span></p></th><th class="cl-4a8d5936"><p class="cl-4a8d2de4"><span class="cl-4a87507c">levels</span></p></th><th class="cl-4a8d5940"><p class="cl-4a8d2df8"><span class="cl-4a87507c">N</span></p></th><th class="cl-4a8d5940"><p class="cl-4a8d2df8"><span class="cl-4a87507c">freq</span></p></th><th class="cl-4a8d5940"><p class="cl-4a8d2df8"><span class="cl-4a87507c">ratio</span></p></th><th class="cl-4a8d5940"><p class="cl-4a8d2df8"><span class="cl-4a87507c">rank</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q4sex</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Male</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">194</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">52.8610354</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q4sex</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Female</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">173</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">47.1389646</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q6religion</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Christianity</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">310</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">84.4686649</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q6religion</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Islam</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">54</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">14.7138965</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q6religion</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Other</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">0.8174387</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">educationalstatus</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Primary</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">235</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">64.0326975</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">educationalstatus</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">JSS</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">132</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">35.9673025</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8haematuria</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">No</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">186</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">50.6811989</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8haematuria</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Yes</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">164</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">44.6866485</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8haematuria</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c"></span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">17</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">4.6321526</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8dysuria</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">No</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">201</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">54.7683924</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8dysuria</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Yes</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">145</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">39.5095368</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8dysuria</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c"></span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">21</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">5.7220708</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8abdominal_pain</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">No</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">207</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">56.4032698</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8abdominal_pain</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Yes</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">132</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">35.9673025</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8abdominal_pain</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c"></span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">28</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">7.6294278</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8fever</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">No</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">262</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">71.3896458</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8fever</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Yes</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">57</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">15.5313351</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q8fever</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c"></span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">48</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">13.0790191</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q15pipe_borne</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Yes</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">335</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">91.2806540</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q15pipe_borne</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">No</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">32</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">8.7193460</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q15well</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">No</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">238</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">64.8501362</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q15well</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Yes</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">129</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">35.1498638</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q15river</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Yes</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">256</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">69.7547684</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">q15river</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">No</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">111</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">30.2452316</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">sh</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c"></span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">175</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">47.6839237</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">sh</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">++</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">101</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">27.5204360</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">sh</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">+</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">60</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">16.3487738</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">sh</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">+++</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">17</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">4.6321526</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">sh</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">_</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">9</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2.4523161</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">sh</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">-</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">0.8174387</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">sh</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">++++</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">0.5449591</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">7</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">colour</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">straw</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">282</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">76.8392371</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">colour</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c"></span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">41</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">11.1716621</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">colour</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Amber</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">19</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">5.1771117</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">colour</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">L/amber</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">11</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2.9972752</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">colour</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">B/Stained</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">6</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1.6348774</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">colour</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Bloody</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">4</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1.0899183</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">colour</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Red</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">4</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1.0899183</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">6</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">appearance</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Clear</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">188</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">51.2261580</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">appearance</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Hazy</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">81</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">22.0708447</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">appearance</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c"></span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">44</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">11.9891008</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">appearance</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Cloudy</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">43</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">11.7166213</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">4</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">appearance</span></p></td><td class="cl-4a8d594a"><p class="cl-4a8d2de4"><span class="cl-4a87507c">Bloody</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">10</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">2.7247956</span></p></td><td class="cl-4a8d594b"><p class="cl-4a8d2df8"><span class="cl-4a87507c">5</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4a8d5954"><p class="cl-4a8d2de4"><span class="cl-4a87507c">appearance</span></p></td><td class="cl-4a8d5954"><p class="cl-4a8d2de4"><span class="cl-4a87507c">S/cloudy</span></p></td><td class="cl-4a8d5955"><p class="cl-4a8d2df8"><span class="cl-4a87507c">367</span></p></td><td class="cl-4a8d5955"><p class="cl-4a8d2df8"><span class="cl-4a87507c">1</span></p></td><td class="cl-4a8d5955"><p class="cl-4a8d2df8"><span class="cl-4a87507c">0.2724796</span></p></td><td class="cl-4a8d5955"><p class="cl-4a8d2df8"><span class="cl-4a87507c">6</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<p>Next we visualise categorical variable with a barplot</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_bar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="continuous-variables" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="continuous-variables"><span class="header-section-number">7.3</span> Continuous variables</h2>
+<p>Now to continuous variables</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    dlookr<span class="sc">::</span><span class="fu">diagnose_numeric</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    flextable<span class="sc">::</span><span class="fu">flextable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-4d007734{}.cl-4cdde50c{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4cecbe42{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4cecbe6a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4ced2774{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4ced2792{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4ced279c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4ced27a6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4ced27ba{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4ced27c4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-4d007734"><thead><tr style="overflow-wrap:break-word;"><th class="cl-4ced2774"><p class="cl-4cecbe42"><span class="cl-4cdde50c">variables</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">min</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">Q1</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">mean</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">median</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">Q3</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">max</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">zero</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">minus</span></p></th><th class="cl-4ced2792"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">outlier</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">q3age</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">7.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">10.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">12.531335</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">13.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">14.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">22.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">q35weight</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">14.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">26.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">35.425683</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">34.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">44.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">73.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">1</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">q36height</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">1.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">132.10</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">143.345479</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">144.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">155.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">179.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">2</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">wbc</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">3.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">5.50</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">6.970588</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">6.4</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">7.70</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">69.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">11</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">plt</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">17.60</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">165.50</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">208.133127</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">206.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">252.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">379.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">3</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">mch</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">25.35</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">27.288235</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">26.9</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">28.30</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">91.8</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">1</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">9</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">mcv</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">1.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">61.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">90.597523</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">91.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">125.00</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">171.0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced279c"><p class="cl-4cecbe42"><span class="cl-4cdde50c">hct</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">4.64</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">31.40</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">35.524892</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">33.2</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">35.85</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">354.7</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27a6"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">14</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-4ced27ba"><p class="cl-4cecbe42"><span class="cl-4cdde50c">hb</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0.00</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">10.60</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">12.056099</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">11.3</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">12.30</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">106.0</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">1</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">0</span></p></td><td class="cl-4ced27c4"><p class="cl-4cecbe6a"><span class="cl-4cdde50c">11</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_boxplot</span>(<span class="at">by =</span> <span class="st">"q4sex"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 267 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_density</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_qq</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 267 rows containing non-finite outside the scale range
+(`stat_qq()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 267 rows containing non-finite outside the scale range
+(`stat_qq_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_qq</span>( <span class="at">by =</span> <span class="st">"q4sex"</span>, )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 267 rows containing non-finite outside the scale range
+(`stat_qq()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 267 rows containing non-finite outside the scale range
+(`stat_qq_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="outliers" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="outliers"><span class="header-section-number">7.4</span> Outliers</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    dlookr<span class="sc">::</span><span class="fu">diagnose_outlier</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    flextable<span class="sc">::</span><span class="fu">flextable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="tabwid"><style>.cl-5850c0d0{}.cl-582da708{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-583967f0{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-58396818{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-5839c95c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5839c97a{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5839c984{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5839c98e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5839c98f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-5839c998{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table data-quarto-disable-processing="true" class="cl-5850c0d0"><thead><tr style="overflow-wrap:break-word;"><th class="cl-5839c95c"><p class="cl-583967f0"><span class="cl-582da708">variables</span></p></th><th class="cl-5839c97a"><p class="cl-58396818"><span class="cl-582da708">outliers_cnt</span></p></th><th class="cl-5839c97a"><p class="cl-58396818"><span class="cl-582da708">outliers_ratio</span></p></th><th class="cl-5839c97a"><p class="cl-58396818"><span class="cl-582da708">outliers_mean</span></p></th><th class="cl-5839c97a"><p class="cl-58396818"><span class="cl-582da708">with_mean</span></p></th><th class="cl-5839c97a"><p class="cl-58396818"><span class="cl-582da708">without_mean</span></p></th></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">q3age</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">1</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">0.2724796</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">22.00000</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">12.531335</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">12.505464</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">q35weight</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">1</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">0.2724796</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">73.00000</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">35.425683</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">35.322740</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">q36height</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">2</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">0.5449591</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">7.50000</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">143.345479</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">144.093939</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">wbc</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">11</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">2.9972752</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">20.62727</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">6.970588</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">6.489103</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">plt</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">3</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">0.8174387</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">19.00000</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">208.133127</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">209.906250</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">mch</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">9</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">2.4523161</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">40.27778</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">27.288235</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">26.915924</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">mcv</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">0</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">0.0000000</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708"></span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">90.597523</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">90.597523</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c984"><p class="cl-583967f0"><span class="cl-582da708">hct</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">14</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">3.8147139</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">81.64571</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">35.524892</span></p></td><td class="cl-5839c98e"><p class="cl-58396818"><span class="cl-582da708">33.435275</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-5839c98f"><p class="cl-583967f0"><span class="cl-582da708">hb</span></p></td><td class="cl-5839c998"><p class="cl-58396818"><span class="cl-582da708">11</span></p></td><td class="cl-5839c998"><p class="cl-58396818"><span class="cl-582da708">2.9972752</span></p></td><td class="cl-5839c998"><p class="cl-58396818"><span class="cl-582da708">29.53818</span></p></td><td class="cl-5839c998"><p class="cl-58396818"><span class="cl-582da708">12.056099</span></p></td><td class="cl-5839c998"><p class="cl-58396818"><span class="cl-582da708">11.439744</span></p></td></tr></tbody></table></div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># df_schisto %&gt;% dlookr::plot_outlier()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="correlation" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="correlation"><span class="header-section-number">7.5</span> Correlation</h2>
+<p>Next, we look out for correlation in the continuous variables</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_correlation</span>(<span class="at">type =</span> <span class="st">"continuous"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="scatterplots" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="scatterplots"><span class="header-section-number">7.6</span> Scatterplots</h2>
+<p>Next is scatterplots</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df_schisto <span class="sc">%&gt;%</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_scatterplot</span>(<span class="at">by =</span> <span class="st">"q35weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 9 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 9 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 3 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda_files/figure-html/unnamed-chunk-19-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./data-cleaning.html" class="pagination-link" aria-label="Data Cleaning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./descriptive-stats-continuous.html" class="pagination-link" aria-label="Descriptive Statistics: Continuous">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Continuous</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Compiled by: Dr Samuel Blay Nguah</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

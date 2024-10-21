@@ -1,0 +1,144 @@
+---
+title: "Exploratory Data Analysis"
+---
+
+This chapter introduces the initial graphical exploration of data using the `DataExplorer` package.
+We begin by importing the babies data.
+
+```{r}
+#| message: false
+#| include: false
+
+
+library(tidyverse)
+```
+
+```{r}
+df_schisto <- 
+    readxl::read_xlsx("C:/Dataset/Schisto.xlsx") %>%
+    janitor::clean_names() %>% 
+    mutate(
+        across(where(is.character), as.factor),
+        mcv = as.numeric(mcv)) %>% 
+    select(-c(q5tribe, q1date, serial_no))
+```
+
+We begin with a general overview of the data
+
+```{r}
+df_schisto %>% 
+    DataExplorer::introduce() %>% 
+    t()
+```
+
+And then plot this overview
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_intro()
+```
+
+```{r}
+df_schisto %>% 
+    dlookr::describe() %>% 
+    flextable::flextable()
+```
+
+## Missing data
+
+Next, we derive explore the missing data. The plot outlines the percentage of missing data for each
+with the legend showing if the number of missing is good, ok or bad.
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_missing()
+```
+
+```{r}
+# df_schisto %>% dlookr::plot_na_hclust()
+# df_schisto %>% dlookr::plot_na_pareto()
+# df_schisto %>% dlookr::plot_na_intersect()
+```
+
+## Categorical variables
+
+We begin by exploring the categorical variables
+
+```{r}
+df_schisto %>% 
+    dlookr::diagnose_category() %>% 
+    flextable::flextable()
+```
+
+Next we visualise categorical variable with a barplot
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_bar()
+```
+
+## Continuous variables
+
+Now to continuous variables
+
+```{r}
+df_schisto %>% 
+    dlookr::diagnose_numeric() %>% 
+    flextable::flextable()
+```
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_histogram()
+```
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_boxplot(by = "q4sex")
+```
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_density()
+```
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_qq()
+```
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_qq( by = "q4sex", )
+```
+
+## Outliers
+
+```{r}
+df_schisto %>% 
+    dlookr::diagnose_outlier() %>% 
+    flextable::flextable()
+```
+
+```{r}
+# df_schisto %>% dlookr::plot_outlier()
+```
+
+## Correlation
+
+Next, we look out for correlation in the continuous variables
+
+```{r}
+df_schisto %>% 
+    drop_na() %>% 
+    DataExplorer::plot_correlation(type = "continuous")
+```
+
+## Scatterplots
+
+Next is scatterplots
+
+```{r}
+df_schisto %>% 
+    DataExplorer::plot_scatterplot(by = "q35weight")
+```

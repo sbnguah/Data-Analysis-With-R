@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Risk and Odds – Data Analysis With R</title>
+<title>10&nbsp; Risk and Odds – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./normality.html" rel="next">
-<link href="./descriptive-stats-continuous.html" rel="prev">
+<link href="./descriptive-stats-categorical.html" rel="prev">
 <link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -145,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./risk-and-odds.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk and Odds</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./risk-and-odds.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Risk and Odds</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -208,32 +208,44 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./descriptive-stats-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Descriptive Statistics - Continuous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Continuous</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptive-stats-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Categorical</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./normality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./hypothesis-testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./confounding-and-interaction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -248,7 +260,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
       </ul>
@@ -265,37 +277,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lin-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lin-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lin-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lin-reg-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./lin-reg-model-selection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -312,7 +324,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
   </div>
 </li>
       </ul>
@@ -329,37 +341,37 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./log-reg-model-selection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -376,7 +388,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -393,7 +405,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -410,19 +422,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gam-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gam-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gam-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -439,19 +451,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./poly-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./poly-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./poly-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -459,7 +471,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">GQuantile Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -467,20 +479,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  <a href="./qr-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  <a href="./qr-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  <a href="./qr-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -488,7 +500,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -496,8 +508,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
   </div>
 </li>
       </ul>
@@ -505,7 +529,7 @@ window.Quarto = {
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -513,56 +537,79 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-curvelinear-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Curvilinear Plots</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -583,10 +630,10 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#risk" id="toc-risk" class="nav-link active" data-scroll-target="#risk"><span class="header-section-number">8.1</span> Risk</a></li>
-  <li><a href="#risk-ratio" id="toc-risk-ratio" class="nav-link" data-scroll-target="#risk-ratio"><span class="header-section-number">8.2</span> Risk Ratio</a></li>
-  <li><a href="#odds" id="toc-odds" class="nav-link" data-scroll-target="#odds"><span class="header-section-number">8.3</span> Odds</a></li>
-  <li><a href="#odds-ratio" id="toc-odds-ratio" class="nav-link" data-scroll-target="#odds-ratio"><span class="header-section-number">8.4</span> Odds ratio</a></li>
+  <li><a href="#risk" id="toc-risk" class="nav-link active" data-scroll-target="#risk"><span class="header-section-number">10.1</span> Risk</a></li>
+  <li><a href="#risk-ratio" id="toc-risk-ratio" class="nav-link" data-scroll-target="#risk-ratio"><span class="header-section-number">10.2</span> Risk Ratio</a></li>
+  <li><a href="#odds" id="toc-odds" class="nav-link" data-scroll-target="#odds"><span class="header-section-number">10.3</span> Odds</a></li>
+  <li><a href="#odds-ratio" id="toc-odds-ratio" class="nav-link" data-scroll-target="#odds-ratio"><span class="header-section-number">10.4</span> Odds ratio</a></li>
   </ul>
 </nav>
     </div>
@@ -595,7 +642,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Risk and Odds</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Risk and Odds</span></h1>
 </div>
 
 
@@ -651,8 +698,8 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
 --------------------------------------------------------------------------</code></pre>
 </div>
 </div>
-<section id="risk" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="risk"><span class="header-section-number">8.1</span> Risk</h2>
+<section id="risk" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="risk"><span class="header-section-number">10.1</span> Risk</h2>
 <p>Risk is defined as the probability of having an outcome. Therefore, if in a the population of 100, 35 develop diabetes mellitus after a specified period of follow-up, the risk of developing diabetes in the population is</p>
 <p><span class="math display">\[\frac{35}{100} = 0.35\]</span> Tabulation of the ANC method and the occurrence of death below, we can conclude that the risk of perinatal mortality when one uses the old method is 0.11 (11.0%) and that for the new method is 0.06 (5.9%).</p>
 <div class="cell">
@@ -668,23 +715,23 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bold_labels</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="ayynhhhmve" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ayynhhhmve table {
+<div id="tjmfibylad" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tjmfibylad table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ayynhhhmve thead, #ayynhhhmve tbody, #ayynhhhmve tfoot, #ayynhhhmve tr, #ayynhhhmve td, #ayynhhhmve th {
+#tjmfibylad thead, #tjmfibylad tbody, #tjmfibylad tfoot, #tjmfibylad tr, #tjmfibylad td, #tjmfibylad th {
   border-style: none;
 }
 
-#ayynhhhmve p {
+#tjmfibylad p {
   margin: 0;
   padding: 0;
 }
 
-#ayynhhhmve .gt_table {
+#tjmfibylad .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -710,12 +757,12 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-left-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_caption {
+#tjmfibylad .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ayynhhhmve .gt_title {
+#tjmfibylad .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -727,7 +774,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-width: 0;
 }
 
-#ayynhhhmve .gt_subtitle {
+#tjmfibylad .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -739,7 +786,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-top-width: 0;
 }
 
-#ayynhhhmve .gt_heading {
+#tjmfibylad .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -751,13 +798,13 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_bottom_border {
+#tjmfibylad .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_col_headings {
+#tjmfibylad .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -772,7 +819,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_col_heading {
+#tjmfibylad .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -792,7 +839,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   overflow-x: hidden;
 }
 
-#ayynhhhmve .gt_column_spanner_outer {
+#tjmfibylad .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -804,15 +851,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 4px;
 }
 
-#ayynhhhmve .gt_column_spanner_outer:first-child {
+#tjmfibylad .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ayynhhhmve .gt_column_spanner_outer:last-child {
+#tjmfibylad .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ayynhhhmve .gt_column_spanner {
+#tjmfibylad .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -824,11 +871,11 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   width: 100%;
 }
 
-#ayynhhhmve .gt_spanner_row {
+#tjmfibylad .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ayynhhhmve .gt_group_heading {
+#tjmfibylad .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -854,7 +901,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   text-align: left;
 }
 
-#ayynhhhmve .gt_empty_group_heading {
+#tjmfibylad .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -869,15 +916,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   vertical-align: middle;
 }
 
-#ayynhhhmve .gt_from_md > :first-child {
+#tjmfibylad .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ayynhhhmve .gt_from_md > :last-child {
+#tjmfibylad .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ayynhhhmve .gt_row {
+#tjmfibylad .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -896,7 +943,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   overflow-x: hidden;
 }
 
-#ayynhhhmve .gt_stub {
+#tjmfibylad .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -909,7 +956,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#ayynhhhmve .gt_stub_row_group {
+#tjmfibylad .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -923,15 +970,15 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   vertical-align: top;
 }
 
-#ayynhhhmve .gt_row_group_first td {
+#tjmfibylad .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ayynhhhmve .gt_row_group_first th {
+#tjmfibylad .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ayynhhhmve .gt_summary_row {
+#tjmfibylad .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -941,16 +988,16 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#ayynhhhmve .gt_first_summary_row {
+#tjmfibylad .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_first_summary_row.thick {
+#tjmfibylad .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ayynhhhmve .gt_last_summary_row {
+#tjmfibylad .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -960,7 +1007,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_grand_summary_row {
+#tjmfibylad .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -970,7 +1017,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#ayynhhhmve .gt_first_grand_summary_row {
+#tjmfibylad .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -980,7 +1027,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-top-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_last_grand_summary_row_top {
+#tjmfibylad .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -990,11 +1037,11 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_striped {
+#tjmfibylad .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ayynhhhmve .gt_table_body {
+#tjmfibylad .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1003,7 +1050,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-bottom-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_footnotes {
+#tjmfibylad .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1017,7 +1064,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_footnote {
+#tjmfibylad .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1026,7 +1073,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#ayynhhhmve .gt_sourcenotes {
+#tjmfibylad .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1040,7 +1087,7 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   border-right-color: #D3D3D3;
 }
 
-#ayynhhhmve .gt_sourcenote {
+#tjmfibylad .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1048,72 +1095,72 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
   padding-right: 5px;
 }
 
-#ayynhhhmve .gt_left {
+#tjmfibylad .gt_left {
   text-align: left;
 }
 
-#ayynhhhmve .gt_center {
+#tjmfibylad .gt_center {
   text-align: center;
 }
 
-#ayynhhhmve .gt_right {
+#tjmfibylad .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ayynhhhmve .gt_font_normal {
+#tjmfibylad .gt_font_normal {
   font-weight: normal;
 }
 
-#ayynhhhmve .gt_font_bold {
+#tjmfibylad .gt_font_bold {
   font-weight: bold;
 }
 
-#ayynhhhmve .gt_font_italic {
+#tjmfibylad .gt_font_italic {
   font-style: italic;
 }
 
-#ayynhhhmve .gt_super {
+#tjmfibylad .gt_super {
   font-size: 65%;
 }
 
-#ayynhhhmve .gt_footnote_marks {
+#tjmfibylad .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ayynhhhmve .gt_asterisk {
+#tjmfibylad .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ayynhhhmve .gt_indent_1 {
+#tjmfibylad .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ayynhhhmve .gt_indent_2 {
+#tjmfibylad .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ayynhhhmve .gt_indent_3 {
+#tjmfibylad .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ayynhhhmve .gt_indent_4 {
+#tjmfibylad .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ayynhhhmve .gt_indent_5 {
+#tjmfibylad .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ayynhhhmve .katex-display {
+#tjmfibylad .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ayynhhhmve div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#tjmfibylad div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1179,8 +1226,8 @@ No   Variable   Stats / Values   Freqs (% of Valid)   Valid      Missing
 <p>This can be written as <span class="math display">\[Re = 0:06 \text{ and } Rne = 0:11\]</span></p>
 <p>Where <span class="math inline">\(Re\)</span> is the risk in the exposed group (new anc method) and <span class="math inline">\(Rne\)</span> is the risk in the non-exposed (old anc method).</p>
 </section>
-<section id="risk-ratio" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="risk-ratio"><span class="header-section-number">8.2</span> Risk Ratio</h2>
+<section id="risk-ratio" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="risk-ratio"><span class="header-section-number">10.2</span> Risk Ratio</h2>
 <p>A comparative way of expressing the risks in the two groups is by the use of the Risk Ratio or Relative Risk (RR). Where <span class="math display">\[RR = \frac{Re}{Rne}\]</span></p>
 <p>Note that by inference if the <span class="math inline">\(Re\)</span> is the same as <span class="math inline">\(Rne\)</span> then <span class="math inline">\(RR = 1\)</span>. The <span class="math inline">\(RR\)</span> of perinatal mortality of the new compared to the old method is</p>
 <p><span class="math display">\[RR = \frac{5.952381}{10.978520} = 0.5421843 \approx 0.54\]</span></p>
@@ -1214,8 +1261,8 @@ Outcome    Non-exposed Exposed Total
 <p>The next section of the output shows the risk difference (difference between the risks of the two groups), the risk ratio, the protective efficacy and the number needed to treat (NNT) together with their confidence intervals.</p>
 <p>Interpreting the analysis so far, we conclude that the risk of perinatal death when using the new anc method is significantly less than using the old method. It significantly reduces the risk of death (Risk difference) by 0.05 (5%) and halves the chances of death (RR = 0.54, 95%CI: 0.32 to 0.91). About 20 (95%CI: 11 to 95) pregnant women need to be treated with the new anc method to prevent one perinatal death (NNT).</p>
 </section>
-<section id="odds" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="odds"><span class="header-section-number">8.3</span> Odds</h2>
+<section id="odds" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="odds"><span class="header-section-number">10.3</span> Odds</h2>
 <p>Another way of expressing the risk of an outcome is using the Odds. Statistically the odds is defined as</p>
 <p><span class="math display">\[Odds = \frac{p}{1-p}\]</span></p>
 <p>Where p is the probability of the outcome occurring. Using the ANCdata the probability of death in the exposed is.</p>
@@ -1227,8 +1274,8 @@ Outcome    Non-exposed Exposed Total
 <p>And the odds of death in the non-exposed is</p>
 <p><span class="math display">\[Oddsne = \frac{0.1097852}{1-0.1097852} = 0.1233244\]</span></p>
 </section>
-<section id="odds-ratio" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="odds-ratio"><span class="header-section-number">8.4</span> Odds ratio</h2>
+<section id="odds-ratio" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="odds-ratio"><span class="header-section-number">10.4</span> Odds ratio</h2>
 <p>The comparative way of comparing the two odds is the Odds Ratio (OR). This is determined as</p>
 <p><span class="math display">\[OR = \frac{Oddse}{Oddsne} = 0.5132086 \approx 0.51\]</span></p>
 <p>Once again fortunately we do not have to go through this tedious procedure each time we need to calculate the OR. The <code>cc()</code> function in the <code>epiDisplay</code> package does this very well. Below we apply it to the analysis just done.</p>
@@ -1680,13 +1727,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./descriptive-stats-continuous.html" class="pagination-link" aria-label="Descriptive Statistics - Continuous">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Descriptive Statistics - Continuous</span></span>
+      <a href="./descriptive-stats-categorical.html" class="pagination-link" aria-label="Descriptive Statistics: Categorical">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Categorical</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./normality.html" class="pagination-link" aria-label="Normality">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Normality</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Normality</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

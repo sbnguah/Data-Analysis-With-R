@@ -1,3 +1,158 @@
 ---
 title: "Single Continuous Variable"
 ---
+
+```{r}
+#| include: false
+#| message: false
+
+library(tidyverse)
+```
+
+This section will demonstrate the use of simple linear regression to describe the relationship
+between variables. We begin by importing the `blood` data and summarizing it as below:
+
+```{r}
+#| message: false
+df_blood <- 
+    read_csv("C:/Dataset/blood.csv") %>% 
+    select(hb, hct)
+
+df_blood %>% 
+    summarytools::dfSummary(graph.col = F, labels.col = F)
+```
+
+## Plotting
+
+We begin by plotting the distribution of the variables involved
+
+```{r}
+#| label: fig-four
+#| fig-height: 3.5
+#| fig-width: 7
+#| fig-cap: "Relationship between hemoglobin and hematocrit"
+
+
+df_blood %>% 
+    pivot_longer(cols = c(hb, hct)) %>% 
+    ggplot(aes( x = value)) +
+    geom_histogram(bins = 8, fill = "gold", color = "black")+
+    facet_wrap(facets = "name", scales = "free") +
+    theme_bw()
+```
+
+Next, we plot the relationship between the `hct`and `hb` variables and note the linear relationship.
+
+```{r}
+#| label: fig-one
+#| fig-height: 4
+#| fig-width: 5
+#| fig-cap: "Relationship between hemoglobin and hematocrit"
+
+
+df_blood %>% 
+    ggplot(aes(x = hct, y = hb)) +
+    geom_point()+
+    geom_smooth(formula = y ~ x, method = "lm", se = FALSE)+
+    theme_bw()
+```
+
+## Assumptions
+
+1.  **Linearity**: The relationship between the independent variable (X) and the dependent
+    variable (Y) is linear.
+2.  **Independence**: The observations are independent of each other.
+3.  **Homoscedasticity**: The residuals (errors) have constant variance at every level of X.
+4.  **Normality**: The residuals of the model are normally distributed.
+5.  **No multicollinearity**: This is usually more relevant for multiple regression, but it means
+    the independent variables aren't too highly correlated with each other.
+
+## Model fitting
+
+```{r}
+model <- 
+    df_blood %>% 
+    lm(hb ~ hct, data = .)
+```
+
+## Visualising model
+
+### R base `summary`
+
+```{r}
+model %>% summary()
+
+```
+
+### `tab_model`
+
+```{r}
+model %>% sjPlot::tab_model() 
+```
+
+### `tidy`
+
+```{r}
+model %>% broom::tidy() %>% kableExtra::kable()
+```
+
+### `tbl_uvregression`
+
+```{r}
+df_blood %>% 
+    gtsummary::tbl_uvregression(
+        y = hb,
+        method = "lm"
+    )
+```
+
+## Checking Assumptions
+
+We see no significant violation of the model assumptions
+
+```{r}
+#| label: fig-two
+#| fig-height: 8
+#| fig-width: 7
+#| fig-cap: "Model Assumptions of simple linear regression"
+
+
+performance::check_model(model)
+```
+
+## Prediction interval
+
+```{r}
+#| label: fig-three
+#| fig-cap: Relationship between HB4 and HCT4 with fillted line, prediction and se intervals"
+#| fig-width: 6
+#| fig-height: 5
+#| warning: false
+
+
+model %>% 
+    predict(interval = "predict") %>% 
+    as_tibble() %>% 
+    bind_cols(df_blood) %>% 
+    ggplot(aes(x = hct, y = hb)) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y~x, se=T)+
+    geom_line(aes(y = lwr), col = "coral2", linetype = "dashed") +
+    geom_line(aes(y = upr), col = "coral2", linetype = "dashed") +
+    labs(
+        x = "HCT (%)", 
+        y = "HB (mg/dl)", 
+        caption = "Nurse Data 2015")+
+    theme_bw()
+```
+
+```{r}
+model %>% 
+    emmeans::emmeans(~hct, at = list(hct = c(20, 25, 30, 35)))
+```
+
+## Report
+
+```{r}
+report::report(model)
+```

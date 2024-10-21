@@ -52,8 +52,6 @@ dataF %>%
     theme_light()
 ```
 
-
-
 ```{r comment=NA}
 dataF %>% 
     select(mcv1, mcv2, mcv3, mcv4, mcv5, agecat, id) %>%
@@ -72,7 +70,6 @@ dataF %>%
                                "mcv5" = "Fifth MCV"))
     
 ```
-
 
 ```{r}
 dataF %>% 
@@ -157,7 +154,6 @@ dataF %>%
         plot.title = element_text(face = 'bold'))
 ```
 
-
 ```{r warning=FALSE}
 dataF %>% 
     ggplot(aes(hb3, mcv3), size = 0.5) +
@@ -170,7 +166,6 @@ dataF %>%
     theme_bw() +
     facet_grid(occup ~ agecat, labeller = labeller(agecat = agecat_label))
 ```
-
 
 ```{r warning=FALSE}
 dataF %>% 
@@ -194,8 +189,11 @@ df <-
     tibble(x=c(1,2,3), y=c(2,3.5,2), lab1 = c("A","B","C"), counts = 1:3)
 df %>% 
     ggplot() +
-    ggforce::geom_circle(aes(x0 = x, y0 = y, r = 1.4, fill = lab1), 
-                         alpha = .3, size = 1, colour = 'grey') +
+    ggforce::geom_circle(
+        aes(x0 = x, y0 = y, r = 1.4, fill = lab1), 
+        alpha = .3, 
+        size = 1, 
+        colour = 'grey') +
     coord_fixed() +
     theme_void() +
     scale_fill_manual(values = c('cornflowerblue', 'firebrick',  'gold')) +
@@ -206,8 +204,13 @@ df %>%
               x = c(2, 3.5, 2.7, 1.2,   2,  2, 0.3), 
               y = c(4,   2, 2.7, 2.8, 2.5, 1.5, 1.8), 
               label = 1:7, size = 5, fontface = "bold") +
-    theme(plot.title = element_text(hjust = 0.5, family = "serif", 
-                                    face = "bold", size = 16, colour = "red"),
+    theme(
+        plot.title = element_text(
+            hjust = 0.5, 
+            family = "serif", 
+            face = "bold", 
+            size = 16, 
+            colour = "red"),
           legend.position = 'bottom')
 ```
 

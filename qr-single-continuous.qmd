@@ -1,3 +1,29 @@
 ---
 title: "Single Continuous"
 ---
+
+```{r}
+#| message: false
+
+
+library(tidyverse)
+df_data1 <- read_csv("C:/Dataset/data1.csv") %>% drop_na()
+
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_quantile(formula = y ~ x)+
+    theme_bw()
+
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_quantile(formula = y ~ x, quantiles = 0.5)+
+    theme_bw()
+
+df_data1 %>% 
+    ggplot(aes(x = weight, y = height)) +
+    geom_point()+
+    geom_quantile(formula = y ~ x, quantiles = c(0.025, 0.975),)+
+    theme_bw()
+```
