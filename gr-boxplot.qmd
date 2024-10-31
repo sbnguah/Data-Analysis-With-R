@@ -192,9 +192,9 @@ And use one of the color scales
 
 ```{r}
 P + 
-	geom_boxplot() +
-  scale_color_brewer(palette="Dark2") +
-  scale_fill_brewer(palette="Dark2")
+    geom_boxplot() +
+    scale_color_brewer(palette="Dark2") +
+    scale_fill_brewer(palette="Dark2")
 ```
 
 Change the legend position
@@ -327,4 +327,38 @@ dataF %>%
         labels = c(
             "mcv1" = "First MCV", "mcv2" = "Second MCV", "mcv3" = "Third MCV", 
             "mcv4" = "Fourth MCV", "mcv5" = "Fifth MCV"))
+```
+
+```{r}
+dataF %>% 
+    select(hb1, hb2, hb3, hb4, hb5, agecat, id) %>%
+    pivot_longer(cols = hb1:hb5, names_to = "Time", values_to = "hb") %>% 
+    ggplot(aes(x = Time, y = hb, color = Time)) +
+    geom_boxplot()+
+    scale_x_discrete(
+        name = NULL,
+        labels = c(
+            "hb1" = "First HB", "hb2" = "Second HB", 
+            "hb3" = "Third HB", "hb4" = "Fourth HB", 
+            "hb5" = "Fifth HB"))+
+    scale_y_continuous(
+        name = expression(paste('Hemoglobin Concentration (', mu, 'g/dl)')),
+        limits = c(0, 30), 
+        breaks = seq(0, 30, 5), 
+        expand = c(0,0))+
+    scale_color_discrete(
+        name = NULL, 
+        labels = c(
+            "hb1" = "First HB", "hb2" = "Second HB", 
+            "hb3" = "Third HB", "hb4" = "Fourth HB", 
+            "hb5" = "Fifth HB"))+
+    guides(color=guide_legend(ncol=2,title = NULL))+
+    theme_classic()+
+    theme(
+        text = element_text(family = "serif", size = 13),
+        legend.background = element_rect(color = "black"),
+        legend.position = "inside",
+        legend.position.inside = c(0.2, 0.85),
+        legend.direction = "horizontal")
+
 ```

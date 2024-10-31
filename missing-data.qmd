@@ -75,6 +75,8 @@ df_hpt %>% mice::md.pattern(rotate.names = T)
 
 df_hpt %>% 
     visdat::vis_miss()
+
+df_hpt %>% visdat::vis_dat(palette = "cb_safe")
 ```
 
 ## Regression with `mice` imputation

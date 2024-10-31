@@ -28,10 +28,13 @@ book:
     - eda.qmd
     - descriptive-stats-continuous.qmd
     - descriptive-stats-categorical.qmd
+    - analysis-of-continuous data.qmd
+    - analysis-of-categorical-data.qmd
     - risk-and-odds.qmd
     - normality.qmd
     - hypothesis-testing.qmd
     - confounding-and-interaction.qmd
+    - diagnostic-tests.qmd
     - part: "<span style='font-weight:bold; color: black;'>Correlation</span>"
       chapters: 
         - correlation.qmd
@@ -46,6 +49,8 @@ book:
     - part: "<span style='font-weight:bold; color: black;'>Analysis of Variance</span>"
       chapters: 
         - anova-oneway.qmd
+        - anova-twoway.qmd
+        - ancova.qmd
     - part: "<span style='font-weight:bold; color: black;'>Logistic Regression</span>"
       chapters: 
         - log-reg-single-categorical.qmd
@@ -54,9 +59,16 @@ book:
         - log-reg-multivariate.qmd
         - log-reg-model-selection.qmd
         - logistic-regression.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Ordinal Logistic Regression</span>"
+      chapters:
+        - ord-log-reg-single-categorical.qmd
+        - ord-log-reg-single-continuous.qmd
+        - ord-log-reg-cont-categorical.qmd
+        - ord-log-reg-multivariate.qmd
     - part: "<span style='font-weight:bold; color: black;'>Survival Analysis</span>"
       chapters: 
         - survival-analysis.qmd
+        - cox-regression.qmd
     - part: "<span style='font-weight:bold; color: black;'>Missiing Data</span>"
       chapters: 
         - missing-data.qmd

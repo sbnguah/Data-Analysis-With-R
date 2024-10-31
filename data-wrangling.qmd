@@ -5,7 +5,20 @@ title: "Data Wrangling"
 ```{r}
 #| echo: false
 #| message: false
+#| include: false
 library(tidyverse)
+library(magrittr)
+library(gtsummary)
+library(huxtable)
+mytheme <- function(ht){
+    ht <- huxtable::theme_article(ht)
+    ht <- huxtable::set_top_padding(ht, row = "2pt")
+    ht <- huxtable::set_bottom_padding(ht, row = "2pt")
+    ht <- huxtable::set_font(
+        ht, value = "Arial, Times New Roman, Times, Serif")
+    ht <- huxtable::set_font_size(ht, value = 11)
+}
+options(huxtable.knit_print_df_theme = mytheme)
 ```
 
 In this chapter, we begin to delve into the manipulation of data in the form of a data frame or
@@ -19,8 +32,11 @@ comes from `dplyr`.
 We begin by reading in the `blood_donors.xls`
 
 ```{r comment=NA}
-df_blood <- readxl::read_xls("C:/Dataset/blood_donors_1.xls")
-df_blood
+df_blood <- 
+    readxl::read_xls("C:/Dataset/blood_donors_1.xls")
+
+df_blood %>% 
+    head(10)
 ```
 
 The output shows we have a 25-row and 6-column tibble.
@@ -43,7 +59,8 @@ order.
 
 ```{r}
 df_blood %>% 
-    arrange(bldgrp, desc(hb))
+    arrange(bldgrp, desc(hb)) %>% 
+    head(10)
 ```
 
 ## Subsetting data
@@ -65,7 +82,8 @@ is approximately three times the haemoglobin we generate a new variable, `hb_fro
 
 ```{r}
 df_blood %>% 
-    mutate(hb_from_hct = hct/3)
+    mutate(hb_from_hct = hct/3) %>% 
+    head(10)
 ```
 
 ## Aggregating data
@@ -170,3 +188,352 @@ dataA %>%
 ```
 
 ----------------------------------------------------------------------------------------------------
+
+## Reading in data
+
+```{r comment = NA}
+dataF <-
+    readxl::read_xlsx("C:/Dataset/SBPDATA.xlsx") %>% 
+    janitor::clean_names() %>% 
+    rename(
+        ageyrs = a3_how_old_are_you_years,
+        dxs_class = disease_class,
+        gender = a1_gender
+        ) %>% 
+    mutate(
+        dxs_class = factor(dxs_class),
+        gender = factor(
+            gender, 
+            levels = c(0, 1), 
+            labels = c("Male", "Female")))
+
+dat <- 
+    tribble(
+        ~"name", ~"day", ~"month", ~"year", ~"bp",
+        "Ama", 12, 05, 2020, "120/80",
+        "Kwame", 14, 02, 2019, "132/66",
+        "Akosua", 21, 12, 2010, "110/76",
+        "Yaw", 13, 03, 1982, "144/98",
+        "Yaa", 19, 08, 2000, "117/77")
+
+dataF %>% head()
+
+dat
+```
+
+## `arrange`
+
+```{r}
+dat %>% arrange(name, desc(day))
+```
+
+## `unite`
+
+```{r comment=NA}
+dat %>% 
+    unite(col = "dob", c(day, month, year), sep="/") 
+```
+
+## `seperate`
+
+```{r comment=NA}
+dat %>% 
+    separate(col = bp, into = c("sbp", "dbp"), sep = "/") 
+```
+
+```{r}
+dat %>% 
+    separate(col = bp, into = c("sbp", "dbp"), sep = "/") %>% 
+    unite(col = "dob", c(day, month, year), sep="/") %>% 
+    mutate(dob_new = lubridate::dmy(dob)) 
+```
+
+## `relocate`
+
+```{r comment=NA}
+dataF %>% 
+    relocate(ageyrs, gender, .before = sbp_0) %>% 
+    slice_head(n=10) 
+```
+
+```{r comment=NA}
+dataF %>% 
+    relocate(sid, .after = last_col()) %>% 
+    slice_head(n=10) 
+```
+
+```{r comment=NA}
+dataF %>% 
+    relocate(where(is.numeric)) %>% 
+    slice_head(n=10) 
+```
+
+```{r comment=NA}
+dataF %>% 
+    relocate(contains("sbp")) %>% 
+    slice_head(n=10) 
+```
+
+## `summarize` & `across`
+
+```{r comment = NA}
+dataF %>% 
+    summarize(across(sbp_0:sbp_8, .fns = mean, na.rm=T)) 
+```
+
+```{r}
+dataF %>% 
+    na.omit() %>% 
+    group_by(dxs_class) %>% 
+    summarize(across(where(is.numeric), ~quantile(.x))) %>% 
+    ungroup() 
+```
+
+## Distinct observations
+
+```{r}
+dataF %>% 
+    summarise(across(where(is.numeric), n_distinct)) 
+```
+
+## list of functions
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class)&!is.na(gender)) %>% 
+    group_by(dxs_class, gender) %>%
+    summarise(
+        across(
+            starts_with("sbp"), 
+            list(
+                AVG = mean, 
+                SD = sd, 
+                N_missing = ~sum(is.na(.x), na.rm=TRUE))
+            )
+        ) %>%
+    ungroup() 
+```
+
+## Summarizing by anonymous functions
+
+```{r comment=NA}
+dataF %>% 
+    filter(!is.na(dxs_class)) %>% 
+    group_by(dxs_class) %>%
+    summarise(
+        across(
+            .cols = c(sbp_0, sbp_18), 
+            .fns = list(
+                "Mean" = ~mean(.x, na.rm=T), 
+                "UpperCI" = ~(mean(.x, na.rm=T) + 
+                                  1.96*sd(.x, na.rm=T)/sqrt(n())) ,
+                "LowerCI" = ~(mean(.x, na.rm=T) - 
+                                  1.96*sd(.x, na.rm=T)/sqrt(n()))))) %>%
+    ungroup() 
+```
+
+## `expand`
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class) & !is.na(gender)) %>% 
+    expand(dxs_class, gender) 
+```
+
+## `crossing`
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class) & !is.na(gender)) %>% 
+    select(dxs_class, gender) %>% 
+    crossing() 
+```
+
+## Adding a running id
+
+```{r}
+dataF %>% 
+    filter(!is.na(dxs_class) & !is.na(gender)) %>% 
+    select(dxs_class, gender) %>%
+    mutate(running_id = row_number()) %>% 
+    slice_head(n=10) 
+```
+
+## `pivot_longer` & `pivot_wider`
+
+```{r}
+dataF_long <-
+    dataF %>% 
+    select(gender, dxs_class, sbp_0:sbp_18) %>% 
+    pivot_longer(
+        cols = starts_with("sbp"),
+        names_to = "measure",
+        values_to = "sbp",
+        values_drop_na = TRUE)
+
+dataF_long %>% 
+    slice_head(n=10) 
+```
+
+```{r}
+dataF %>% 
+    select(dxs_class, gender, sbp_0, sbp_2, sbp_4) %>%
+    na.omit() %>% 
+    group_by(dxs_class) %>% 
+    pivot_wider(
+        names_from = gender, 
+        values_from = c(sbp_0, sbp_2, sbp_4), 
+        values_fn = ~mean(.x, na.rm = TRUE)) %>% 
+    ungroup() %>% 
+    slice_head(n=10) 
+
+```
+
+## `tidyquant` tabulation
+
+```{r}
+dataF %>% 
+    select(dxs_class, gender) %>% 
+    na.omit() %>% 
+    tidyquant::pivot_table(
+        .rows = gender, .columns = dxs_class, .values = ~n()
+    ) 
+```
+
+```{r comment=NA}
+dataF %>% 
+    select(dxs_class, gender, sbp_0, sbp_2) %>% 
+    na.omit() %>% 
+    tidyquant::pivot_table(.rows = gender, 
+                           .columns = dxs_class, 
+                           .values = ~quantile(sbp_0)) %>% 
+    unnest(cols = c("DM","HPT","DM+HPT")) 
+```
+
+## `rowwise` manipulations
+
+```{r}
+dataF %>% 
+    rowwise() %>% 
+    mutate(
+        sbp_mean = mean(
+            c(sbp_0,sbp_2,sbp_4,sbp_6,sbp_8, sbp_10, sbp_12,
+                             sbp_14,sbp_16, sbp_18), na.rm=T),
+        sbp_sd = sd(
+            c(sbp_0,sbp_2,sbp_4,sbp_6,sbp_8, sbp_10, sbp_12,
+              sbp_14,sbp_16, sbp_18), na.rm=T),
+        n=n()) %>% 
+    ungroup() %>% 
+    relocate(
+        sid, dxs_class, ageyrs, gender, sbp_mean, sbp_sd, 
+        contains("sbp")) %>% 
+    slice_head(n=10) 
+```
+
+## `str_glue`
+
+```{r comment=NA}
+x <- c("Ama", "is", "a", "Girl")
+cat(x)
+```
+
+```{r comment = NA}
+name <- "Fred"
+str_glue('My name is {name}.')
+```
+
+```{r comment=NA}
+stringr_fcn <- "`stringr::str_glue()`"
+glue_fcn    <- "`glue::glue()`"
+
+str_glue('{stringr_fcn} is essentially an alias for {glue_fcn}.')
+```
+
+```{r comment=NA}
+name <- "Fred"
+age <- 50
+anniversary <- as.Date("1991-10-12")
+str_glue('My name is {name},',
+  ' my age next year is {age + 1},',
+  ' my anniversary is {format(anniversary, "%A, %B %d, %Y")}.')
+```
+
+```{r comment=NA}
+str_glue('My name is {name},',
+  ' my age next year is {age + 1},',
+  ' my anniversary is {format(anniversary, "%A, %B %d, %Y")}.',
+  name = "Joe",
+  age = 40,
+  anniversary = as.Date("2001-10-12"))
+```
+
+```{r comment=NA}
+mtcars %>% 
+    head() 
+
+head(mtcars) %>% 
+    glue::glue_data("{rownames(.)} has {hp} hp")
+```
+
+```{r comment=NA}
+head(iris) %>%
+  mutate(
+      description = str_glue(
+          "This {Species} has a petal length of {Petal.Length}"
+          )
+      ) 
+```
+
+```{r comment=NA}
+str_glue("
+    A formatted string
+    Can have multiple lines
+      with additional indention preserved
+    ")
+```
+
+```{r comment=NA}
+str_glue("
+
+  leading or trailing newlines can be added explicitly
+
+  ")
+```
+
+```{r comment=NA}
+str_glue("
+    A formatted string \\
+    can also be on a \\
+    single line
+    ")
+```
+
+```{r comment=NA}
+name <- "Fred"
+str_glue("My name is {name}, not {{name}}.")
+```
+
+```{r comment=NA}
+one <- "1"
+str_glue(
+    "The value of $e^{2\\pi i}$ is $<<one>>$.", 
+    .open = "<<", 
+    .close = ">>")
+```
+
+```{r comment=NA}
+dataF %>% 
+    filter(!is.na(sbp_0)) %>% 
+    ggplot(aes(x=sbp_0)) +
+    geom_histogram(col = "grey", fill = "wheat") +
+    labs(title = str_glue(
+        "Histogram with Mean = {mean_sbp0}mmHg and \\
+         Standard Deviation = {sd_sbp0}",
+        mean_sbp0 = mean(dataF$sbp_0, na.rm=T) %>% 
+            round(1),
+        sd_sbp0 = sd(dataF$sbp_0,   na.rm=T) %>% 
+            round(1)),
+         x = "Systolic Blood Pressure (mmHg)",
+         y = "Frequency") +
+    theme_light(base_size = 12, base_family = "serif")
+```

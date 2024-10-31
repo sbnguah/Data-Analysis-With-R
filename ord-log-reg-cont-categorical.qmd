@@ -1,0 +1,156 @@
+---
+title: "Continuous and Categorical"
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| include: false
+
+library(tidyverse)
+library(magrittr)
+library(gtsummary)
+library(huxtable)
+mytheme <- function(ht){
+    ht <- huxtable::theme_article(ht)
+    ht <- huxtable::set_top_padding(ht, row = "2pt")
+    ht <- huxtable::set_bottom_padding(ht, row = "2pt")
+    ht <- huxtable::set_font(
+        ht, 
+        value = "Arial, Times New Roman, Times, Serif")
+    ht <- huxtable::set_font_size(ht, value = 11)
+    }
+options(huxtable.knit_print_df_theme = mytheme)
+```
+
+## Importing data
+
+In this presentation, we analyse a dataset using ordinal logistic regression. We begin by reading
+the data and selecting our desired subset.
+
+```{r comment = NA}
+dataF <- 
+    dget("C:/Dataset/anemia_data") %>% 
+    select(sid, anemia_cat, community, fever, sex,
+           famsize, moccup2, foccup2, hosp_visit)
+```
+
+We then view a summary of the data
+
+```{r comment = NA}
+dataF %>% glimpse()
+
+```
+
+Note that the `anemia_cat` variable is an ordered factor variable. For completeness the single
+missing observation for the variable `hosp_adm` will be recoded to `No`.
+
+```{r comment = NA}
+dataF <- dataF %>% 
+    mutate(hosp_visit = forcats::fct_explicit_na(hosp_visit, na_level = "No"))
+summary(dataF)
+```
+
+## Model specification
+
+Now we begin the ordinal regression by fixing the first model, the Null model.
+
+```{r comment = NA}
+Model_0 <- ordinal::clm(anemia_cat ~ 1, data = dataF, link = "logit")
+summary(Model_0)
+```
+
+Subsequently, we introduce the fever variable as independent and express the results as OR with
+95%CI
+
+```{r comment=NA}
+Model_1 <- ordinal::clm(anemia_cat ~ fever, data = dataF, link = "logit")
+
+broom::tidy(Model_1, conf.int = TRUE, exponentiate = TRUE)%>% 
+    flextable::as_flextable() %>% 
+    flextable::colformat_double(
+        j = c("estimate", "std.error", "statistic", "p.value", 
+              "conf.low", "conf.high"), 
+        digits = 3)
+```
+
+Results indicate a significant association between fever and the degree of anaemia (OR=1.46, 95%CI:
+1.02 to 2.09). Performing an ANOVA test to see if there exists a difference between the 2 models.
+
+```{r comment = NA}
+anova(Model_0, Model_1)
+```
+
+The results indicate adding fever to the Null model significantly improves the null model.
+
+Next, we add the community variable
+
+```{r comment = NA}
+Model_2 <- 
+     ordinal::clm(anemia_cat ~ fever + community, data = dataF, link = "logit")
+
+broom::tidy(Model_2, conf.int = TRUE, exponentiate = TRUE)%>% 
+    flextable::as_flextable() %>% 
+    flextable::colformat_double(
+        j = c("estimate", "std.error", "statistic", "p.value", 
+              "conf.low", "conf.high"), 
+        digits = 3)
+```
+
+## Checking proportional odds assumption for the model
+
+Here we check the proportional odd assumption for our second model
+
+```{r comment = NA}
+ordinal::nominal_test(Model_2)
+```
+
+The significant p-value for the `community` variable indicates a breach of the proportional odd
+assumption
+
+## Prediction
+
+In this section, we will use the model created above to predict an observation in a specific anaemia
+severity group. First, we begin by forming the prediction data we call `newData`.
+
+```{r comment = NA}
+NewData <- expand.grid(community = levels(dataF$community),
+                       fever = levels(dataF$fever))
+NewData
+```
+
+We now predict the probability that the specific predictor combination falls within the specific
+outcome category (anaemia category)
+
+```{r comment=NA}
+(preds <- predict(Model_2, newdata = NewData, type = "prob"))
+```
+
+For better visualisation, we bind the original data with the predictions
+
+```{r comment=NA}
+bind_cols(NewData, preds$fit) %>% 
+    kableExtra::kbl(caption = "Probabilities", booktabs = T, digits = 3) %>%
+    kableExtra::kable_classic(full_width = F, html_font = "Cambria") %>% 
+    kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Visualising the model
+
+Below we visualize the model by using the `MASS` and `effects` packages. We begin by fitting the
+model again with `polr` function.
+
+```{r comment = NA}
+pol_model.1 <- MASS::polr(anemia_cat ~ community, data = dataF)
+pol_model.2 <- MASS::polr(anemia_cat ~ fever*community, data = dataF)
+```
+
+And then we visualise the probability of having various forms of anaemia giving one belonging to the
+various groups.
+
+```{r  comment = NA}
+M1 <- effects::Effect(focal.predictors = "community", mod=pol_model.1)
+M2 <- effects::Effect(focal.predictors = c("community", "fever"), mod=pol_model.2)
+plot(M1)
+plot(M2)
+```

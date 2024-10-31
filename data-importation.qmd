@@ -5,7 +5,22 @@ title: "Data Importation"
 ```{r}
 #| echo: false
 #| message: false
+#| include: false
+
 library(tidyverse)
+library(magrittr)
+library(gtsummary)
+library(huxtable)
+mytheme <- function(ht){
+    ht <- huxtable::theme_article(ht)
+    ht <- huxtable::set_top_padding(ht, row = "2pt")
+    ht <- huxtable::set_bottom_padding(ht, row = "2pt")
+    ht <- huxtable::set_font(
+        ht, 
+        value = "Arial, Times New Roman, Times, Serif")
+    ht <- huxtable::set_font_size(ht, value = 11)
+    }
+options(huxtable.knit_print_df_theme = mytheme)
 ```
 
 In this chapter, we discuss ways of getting data into R, either by directly entering it into R or
@@ -24,16 +39,13 @@ will be to make the data available in the R session as below
 data("Oswego", package = "epiDisplay")
 ```
 
-Now that the data is available in the working environment, we can visualise the first 6 rows below
+Now that the data is available in the working environment, we can visualize the first 4 rows of the
+fist three variables below
 
 ```{r}
-Oswego %>% head()
-```
-
-And finally visualise the details of the data by using the `help()` function as below
-
-```{r eval = F}
-help(Oswego)
+Oswego %>% 
+    select(age, sex, timesupper, ill) %>% 
+    head()
 ```
 
 ## Direct entry into R
