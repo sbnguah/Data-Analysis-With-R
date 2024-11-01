@@ -207,6 +207,8 @@ dataF <-
             levels = c(0, 1), 
             labels = c("Male", "Female")))
 
+dataF %>% select(1:5) %>% head()
+
 dat <- 
     tribble(
         ~"name", ~"day", ~"month", ~"year", ~"bp",
@@ -215,8 +217,6 @@ dat <-
         "Akosua", 21, 12, 2010, "110/76",
         "Yaw", 13, 03, 1982, "144/98",
         "Yaa", 19, 08, 2000, "117/77")
-
-dataF %>% head()
 
 dat
 ```
@@ -253,6 +253,7 @@ dat %>%
 ```{r comment=NA}
 dataF %>% 
     relocate(ageyrs, gender, .before = sbp_0) %>% 
+    select(1:8) %>% 
     slice_head(n=10) 
 ```
 
@@ -279,6 +280,7 @@ dataF %>%
 ```{r comment = NA}
 dataF %>% 
     summarize(across(sbp_0:sbp_8, .fns = mean, na.rm=T)) 
+
 ```
 
 ```{r}

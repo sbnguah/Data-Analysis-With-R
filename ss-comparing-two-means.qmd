@@ -1,0 +1,57 @@
+---
+title: "Comparing two means"
+---
+
+This sample size compilation is for comparing two means:
+
+## Pre-requisite
+
+1.   Mean and standard deviation in group 1 ($\mu_1$, $\sigma_1$)
+2.  Mean and standard deviation in group 2 ($\mu_2$, $\sigma_2$)
+3.  Allowable Type I ($\alpha$) and Type II ($\beta$) errors allowable
+4.  The ratio between the two groups ($r =\frac{n_1}{n_2}$)
+
+## Preamble
+
+A researcher set out to determine the minimum sample size required for a study designed to determine
+if there is a significant difference in the weight of males and females in a community. To do this
+he researched and found out from a previous study:
+
+1.  The mean and SD of weight in males were 3.5kg and 1
+2.  The mean and SD of weight in females were 3kg and 1.2
+3.  Type I and II error rates of 0.05 and 0.2 were chosen.
+4.  The researcher decides based on availability to recruit twice the number of males compared to
+    females
+
+## Formula
+
+We use the formula[^ss-comparing-two-means-1]
+
+[^ss-comparing-two-means-1]: Chow S, Shao J, Wang H. 2008. *Sample Size Calculations in Clinical
+    Research*. 2nd Ed. Chapman & Hall/CRC Biostatistics Series. **page 58**
+
+$$
+n_1 = r*n_2 \;\text{ and }\; n_2=\left(1+\frac{1}{r}\right) \left(\sigma\frac{z_{1-\alpha/2}+z_{1-\beta}}{\mu_A-\mu_B}\right)^2
+$$
+
+## Calculation
+
+Inputting into the formula we have
+
+```{r}
+mu1 = 3.5
+mu2 = 3
+r = 2
+sd = (1.2+1*2)/3
+alpha = 0.05
+beta  = 0.20
+
+n2 <- (1+1/r)*(sd*(qnorm(1-alpha/2)+qnorm(1-beta))/(mu1-mu2))^2
+
+n1 <- r*n2
+
+glue::glue(
+    "The number of Males and Females required are ", 
+    {ceiling(n1)}, " and ", {ceiling(n2)}, " respectively.")
+glue::glue("Total sample size = ", {ceiling(n2)+ceiling(n1)})
+```

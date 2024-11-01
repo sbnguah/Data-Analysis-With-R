@@ -95,6 +95,8 @@ book:
     - part: "<span style='font-weight:bold; color: black;'>Sample Size</span>"
       chapters: 
         - ss-matched-case-control.qmd
+        - ss-comparing-two-means.qmd
+        - ss-single-mean-to-reference-value.qmd
     - part: "<span style='font-weight:bold; color: black;'>Graphics</span>"
       chapters: 
         - gr-histogram.qmd

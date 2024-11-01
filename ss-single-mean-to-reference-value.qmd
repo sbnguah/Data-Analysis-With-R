@@ -1,0 +1,37 @@
+---
+title: "Mean Difference - One sample"
+---
+
+Testing to see if a mean is equal to a reference value
+
+$$
+n=\\left(\\sigma\\frac{z\_{1-\\alpha/2}+z\_{1-\\beta}}{\\mu-\\mu_0}\\right)\^2 \
+\$\$1-\\beta= \\Phi\\left(z-z\_{1-\\alpha/2}\\right)+\\Phi\\left(-z-z\_{1-\\alpha/2}\\right) \\quad
+,\\quad z=\\frac{\\mu-\\mu_0}{\\sigma/\\sqrt{n}} $
+
+-   \$n\$ is sample size
+
+-   \$\\sigma\$ is standard deviation
+
+-   \$\\Phi\$ is the [standard Normal](http://en.wikipedia.org/wiki/Standard_normal_distribution)
+    [distribution function](http://en.wikipedia.org/wiki/Cumulative_distribution_function)
+
+-   \$\\Phi\^{-1}\$ is the [standard
+    Normal](http://en.wikipedia.org/wiki/Standard_normal_distribution) [quantile
+    function](http://en.wikipedia.org/wiki/Quantile_function)
+
+-   \$\\alpha\$ is Type I error
+
+-   \$\\beta\$ is Type II error, meaning \$1-\\beta\$ is power
+
+```{r}
+mu=2
+mu0=1.5
+sd=1
+alpha=0.05
+beta=0.20
+(n=(sd*(qnorm(1-alpha/2)+qnorm(1-beta))/(mu-mu0))^2)
+ceiling(n)# 32
+z=(mu-mu0)/sd*sqrt(n)
+(Power=pnorm(z-qnorm(1-alpha/2))+pnorm(-z-qnorm(1-alpha/2)))
+```

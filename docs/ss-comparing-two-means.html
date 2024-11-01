@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>52&nbsp; Matched Case-Control – Data Analysis With R</title>
+<title>53&nbsp; Comparing two means – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -50,8 +64,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./ss-comparing-two-means.html" rel="next">
-<link href="./pkg-nlme.html" rel="prev">
+<link href="./ss-single-mean-to-reference-value.html" rel="next">
+<link href="./ss-matched-case-control.html" rel="prev">
 <link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -131,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ss-matched-case-control.html"><span style="font-weight:bold; color: black;">Sample Size</span></a></li><li class="breadcrumb-item"><a href="./ss-matched-case-control.html"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ss-matched-case-control.html"><span style="font-weight:bold; color: black;">Sample Size</span></a></li><li class="breadcrumb-item"><a href="./ss-comparing-two-means.html"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Comparing two means</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -594,13 +608,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link active">
+  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-comparing-two-means.html" class="sidebar-item-text sidebar-link">
+  <a href="./ss-comparing-two-means.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Comparing two means</span></span></a>
   </div>
 </li>
@@ -699,19 +713,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#objective" id="toc-objective" class="nav-link active" data-scroll-target="#objective"><span class="header-section-number">52.1</span> Objective</a></li>
-  <li><a href="#hypothesis" id="toc-hypothesis" class="nav-link" data-scroll-target="#hypothesis"><span class="header-section-number">52.2</span> Hypothesis</a></li>
-  <li><a href="#formula" id="toc-formula" class="nav-link" data-scroll-target="#formula"><span class="header-section-number">52.3</span> Formula</a></li>
-  <li><a href="#determination" id="toc-determination" class="nav-link" data-scroll-target="#determination"><span class="header-section-number">52.4</span> Determination</a></li>
+  <li><a href="#pre-requisite" id="toc-pre-requisite" class="nav-link active" data-scroll-target="#pre-requisite"><span class="header-section-number">53.1</span> Pre-requisite</a></li>
+  <li><a href="#preamble" id="toc-preamble" class="nav-link" data-scroll-target="#preamble"><span class="header-section-number">53.2</span> Preamble</a></li>
+  <li><a href="#formula" id="toc-formula" class="nav-link" data-scroll-target="#formula"><span class="header-section-number">53.3</span> Formula</a></li>
+  <li><a href="#calculation" id="toc-calculation" class="nav-link" data-scroll-target="#calculation"><span class="header-section-number">53.4</span> Calculation</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ss-matched-case-control.html"><span style="font-weight:bold; color: black;">Sample Size</span></a></li><li class="breadcrumb-item"><a href="./ss-matched-case-control.html"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./ss-matched-case-control.html"><span style="font-weight:bold; color: black;">Sample Size</span></a></li><li class="breadcrumb-item"><a href="./ss-comparing-two-means.html"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Comparing two means</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></h1>
+<h1 class="title"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Comparing two means</span></h1>
 </div>
 
 
@@ -728,44 +742,73 @@ window.Quarto = {
 </header>
 
 
-<section id="objective" class="level2" data-number="52.1">
-<h2 data-number="52.1" class="anchored" data-anchor-id="objective"><span class="header-section-number">52.1</span> Objective</h2>
-<p>To determine if being HIV positive (exposure) is associated with malnutrition (outcome) in children on admission at a specialized nutritional rehabilitation center. A researcher intends to conduct a matched case-control study he selects children with malnutrition and matches them to controls of children without malnutrition at a ratio of 1:2.</p>
+<p>This sample size compilation is for comparing two means:</p>
+<section id="pre-requisite" class="level2" data-number="53.1">
+<h2 data-number="53.1" class="anchored" data-anchor-id="pre-requisite"><span class="header-section-number">53.1</span> Pre-requisite</h2>
+<ol type="1">
+<li>Mean and standard deviation in group 1 (<span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\sigma_1\)</span>)</li>
+<li>Mean and standard deviation in group 2 (<span class="math inline">\(\mu_2\)</span>, <span class="math inline">\(\sigma_2\)</span>)</li>
+<li>Allowable Type I (<span class="math inline">\(\alpha\)</span>) and Type II (<span class="math inline">\(\beta\)</span>) errors allowable</li>
+<li>The ratio between the two groups (<span class="math inline">\(r =\frac{n_1}{n_2}\)</span>)</li>
+</ol>
 </section>
-<section id="hypothesis" class="level2" data-number="52.2">
-<h2 data-number="52.2" class="anchored" data-anchor-id="hypothesis"><span class="header-section-number">52.2</span> Hypothesis</h2>
-<p><span class="math inline">\(H_0\)</span>: There is no association between being malnourished and being HIV positive</p>
+<section id="preamble" class="level2" data-number="53.2">
+<h2 data-number="53.2" class="anchored" data-anchor-id="preamble"><span class="header-section-number">53.2</span> Preamble</h2>
+<p>A researcher set out to determine the minimum sample size required for a study designed to determine if there is a significant difference in the weight of males and females in a community. To do this he researched and found out from a previous study:</p>
+<ol type="1">
+<li>The mean and SD of weight in males were 3.5kg and 1</li>
+<li>The mean and SD of weight in females were 3kg and 1.2</li>
+<li>Type I and II error rates of 0.05 and 0.2 were chosen.</li>
+<li>The researcher decides based on availability to recruit twice the number of males compared to females</li>
+</ol>
 </section>
-<section id="formula" class="level2" data-number="52.3">
-<h2 data-number="52.3" class="anchored" data-anchor-id="formula"><span class="header-section-number">52.3</span> Formula</h2>
-<p>We use the formula below by <span class="citation" data-cites="wang2020">Wang and Ji (<a href="references.html#ref-wang2020" role="doc-biblioref">2020</a>)</span>.</p>
+<section id="formula" class="level2" data-number="53.3">
+<h2 data-number="53.3" class="anchored" data-anchor-id="formula"><span class="header-section-number">53.3</span> Formula</h2>
+<p>We use the formula<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p><span class="math display">\[
-n = (\frac{Z_{\alpha/2} + Z_\beta}{P_1 - P_2})^2 \times (1 + \frac{1}{k})
+n_1 = r*n_2 \;\text{ and }\; n_2=\left(1+\frac{1}{r}\right) \left(\sigma\frac{z_{1-\alpha/2}+z_{1-\beta}}{\mu_A-\mu_B}\right)^2
 \]</span></p>
-<p>Where:</p>
-<ul>
-<li><span class="math inline">\(n\)</span> is the number of matched pairs needed</li>
-<li><span class="math inline">\(Z_{\alpha/2}\)</span> is the critical value of the standard normal distribution at the desired significance level such that a 95% confidence level will correspond to 1.96</li>
-<li><span class="math inline">\(Z_{\beta}\)</span> is the critical value of the standard normal distribution at the desired power such that an 80% power will correspond to a value of 0.84.</li>
-<li><span class="math inline">\(P_1\)</span> is the proportion of exposure in cases. This can be obtained from similar prior studies</li>
-<li><span class="math inline">\(P_0\)</span> is the proportion of exposure in controls, This can be obtained from similar prior studies</li>
-<li><span class="math inline">\(k\)</span> is the number of controls per case such that for a 1:1 match <span class="math inline">\(k\)</span> =1</li>
-</ul>
 </section>
-<section id="determination" class="level2" data-number="52.4">
-<h2 data-number="52.4" class="anchored" data-anchor-id="determination"><span class="header-section-number">52.4</span> Determination</h2>
-<p>Assuming in the literature the proportion of HIV positive in non-malnourished children ( <span class="math inline">\(P_0\)</span>) was 0.25 and that for malnourished children (<span class="math inline">\(P_1\)</span>) was 0.3. Also, the investigator decides the use a 95% confidence interval and a power of 80%. The sample size is determined as below</p>
-<p><span class="math display">\[
-n = (\frac{1.96 + 0.84}{0.3 - 0.25})^2 \times (1 + \frac{1}{2})
-\]</span></p>
-<p>Thus a minimum total of 4710 study subjects will be included. This will consist of 3140 controls and 1570 cases.</p>
-
-
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-wang2020" class="csl-entry" role="listitem">
-Wang, Xiaofeng, and Xinge Ji. 2020. <span>“Sample Size Estimation in Clinical Research.”</span> <em>Chest</em> 158 (1): S12–20. <a href="https://doi.org/10.1016/j.chest.2020.03.010">https://doi.org/10.1016/j.chest.2020.03.010</a>.
+<section id="calculation" class="level2" data-number="53.4">
+<h2 data-number="53.4" class="anchored" data-anchor-id="calculation"><span class="header-section-number">53.4</span> Calculation</h2>
+<p>Inputting into the formula we have</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mu1 <span class="ot">=</span> <span class="fl">3.5</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>mu2 <span class="ot">=</span> <span class="dv">3</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>r <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sd <span class="ot">=</span> (<span class="fl">1.2</span><span class="sc">+</span><span class="dv">1</span><span class="sc">*</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">3</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>beta  <span class="ot">=</span> <span class="fl">0.20</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>n2 <span class="ot">&lt;-</span> (<span class="dv">1</span><span class="sc">+</span><span class="dv">1</span><span class="sc">/</span>r)<span class="sc">*</span>(sd<span class="sc">*</span>(<span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>)<span class="sc">+</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta))<span class="sc">/</span>(mu1<span class="sc">-</span>mu2))<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> r<span class="sc">*</span>n2</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>(</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"The number of Males and Females required are "</span>, </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    {<span class="fu">ceiling</span>(n1)}, <span class="st">" and "</span>, {<span class="fu">ceiling</span>(n2)}, <span class="st">" respectively."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>The number of Males and Females required are 108 and 54 respectively.</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"Total sample size = "</span>, {<span class="fu">ceiling</span>(n2)<span class="sc">+</span><span class="fu">ceiling</span>(n1)})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Total sample size = 162</code></pre>
 </div>
 </div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Chow S, Shao J, Wang H. 2008.&nbsp;<em>Sample Size Calculations in Clinical Research</em>. 2nd Ed. Chapman &amp; Hall/CRC Biostatistics Series.&nbsp;<strong>page 58</strong><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -1191,13 +1234,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./pkg-nlme.html" class="pagination-link" aria-label="`nlme`">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span>
+      <a href="./ss-matched-case-control.html" class="pagination-link" aria-label="Matched Case-Control">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./ss-comparing-two-means.html" class="pagination-link" aria-label="Comparing two means">
-        <span class="nav-page-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Comparing two means</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./ss-single-mean-to-reference-value.html" class="pagination-link" aria-label="Mean Difference - One sample">
+        <span class="nav-page-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Mean Difference - One sample</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

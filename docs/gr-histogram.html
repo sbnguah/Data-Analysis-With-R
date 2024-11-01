@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>53&nbsp; Histogram – Data Analysis With R</title>
+<title>55&nbsp; Histogram – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./gr-densityplot.html" rel="next">
-<link href="./ss-matched-case-control.html" rel="prev">
+<link href="./ss-single-mean-to-reference-value.html" rel="prev">
 <link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-histogram.html"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Histogram</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-histogram.html"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Histogram</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -583,6 +583,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-comparing-two-means.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Comparing two means</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-single-mean-to-reference-value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Mean Difference - One sample</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -597,61 +609,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-curvelinear-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">Curvilinear Plots</span></span></a>
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title">Curvilinear Plots</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -672,19 +684,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#read-in-data" id="toc-read-in-data" class="nav-link active" data-scroll-target="#read-in-data"><span class="header-section-number">53.0.1</span> Read in Data</a></li>
-  <li><a href="#simple-histogram" id="toc-simple-histogram" class="nav-link" data-scroll-target="#simple-histogram"><span class="header-section-number">53.0.2</span> Simple histogram</a></li>
-  <li><a href="#histogram-with-normal-curve" id="toc-histogram-with-normal-curve" class="nav-link" data-scroll-target="#histogram-with-normal-curve"><span class="header-section-number">53.0.3</span> Histogram with normal curve</a></li>
-  <li><a href="#panel-histogram" id="toc-panel-histogram" class="nav-link" data-scroll-target="#panel-histogram"><span class="header-section-number">53.0.4</span> Panel histogram</a></li>
+  <li><a href="#read-in-data" id="toc-read-in-data" class="nav-link active" data-scroll-target="#read-in-data"><span class="header-section-number">55.0.1</span> Read in Data</a></li>
+  <li><a href="#simple-histogram" id="toc-simple-histogram" class="nav-link" data-scroll-target="#simple-histogram"><span class="header-section-number">55.0.2</span> Simple histogram</a></li>
+  <li><a href="#histogram-with-normal-curve" id="toc-histogram-with-normal-curve" class="nav-link" data-scroll-target="#histogram-with-normal-curve"><span class="header-section-number">55.0.3</span> Histogram with normal curve</a></li>
+  <li><a href="#panel-histogram" id="toc-panel-histogram" class="nav-link" data-scroll-target="#panel-histogram"><span class="header-section-number">55.0.4</span> Panel histogram</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-histogram.html"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Histogram</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-histogram.html"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Histogram</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Histogram</span></h1>
+<h1 class="title"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Histogram</span></h1>
 </div>
 
 
@@ -701,8 +713,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="read-in-data" class="level3" data-number="53.0.1">
-<h3 data-number="53.0.1" class="anchored" data-anchor-id="read-in-data"><span class="header-section-number">53.0.1</span> Read in Data</h3>
+<section id="read-in-data" class="level3" data-number="55.0.1">
+<h3 data-number="55.0.1" class="anchored" data-anchor-id="read-in-data"><span class="header-section-number">55.0.1</span> Read in Data</h3>
 <p>We begin by importing the data into R Studio and then summarizing it.</p>
 <div class="cell">
 <details class="code-fold">
@@ -746,8 +758,8 @@ No   Variable    Stats / Values           Freqs (% of Valid)   Valid      Missin
 </div>
 </div>
 </section>
-<section id="simple-histogram" class="level3" data-number="53.0.2">
-<h3 data-number="53.0.2" class="anchored" data-anchor-id="simple-histogram"><span class="header-section-number">53.0.2</span> Simple histogram</h3>
+<section id="simple-histogram" class="level3" data-number="55.0.2">
+<h3 data-number="55.0.2" class="anchored" data-anchor-id="simple-histogram"><span class="header-section-number">55.0.2</span> Simple histogram</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -769,15 +781,15 @@ No   Variable    Stats / Values           Freqs (% of Valid)   Valid      Missin
 <img src="gr-histogram_files/figure-html/fig-fig1-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;53.1: Distribution of the first hemoglobins concentration
+Figure&nbsp;55.1: Distribution of the first hemoglobins concentration
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="histogram-with-normal-curve" class="level3" data-number="53.0.3">
-<h3 data-number="53.0.3" class="anchored" data-anchor-id="histogram-with-normal-curve"><span class="header-section-number">53.0.3</span> Histogram with normal curve</h3>
+<section id="histogram-with-normal-curve" class="level3" data-number="55.0.3">
+<h3 data-number="55.0.3" class="anchored" data-anchor-id="histogram-with-normal-curve"><span class="header-section-number">55.0.3</span> Histogram with normal curve</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -805,15 +817,15 @@ Figure&nbsp;53.1: Distribution of the first hemoglobins concentration
 <img src="gr-histogram_files/figure-html/fig-fig2-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;53.2: Distribution of the first hemoglobins concentration
+Figure&nbsp;55.2: Distribution of the first hemoglobins concentration
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="panel-histogram" class="level3" data-number="53.0.4">
-<h3 data-number="53.0.4" class="anchored" data-anchor-id="panel-histogram"><span class="header-section-number">53.0.4</span> Panel histogram</h3>
+<section id="panel-histogram" class="level3" data-number="55.0.4">
+<h3 data-number="55.0.4" class="anchored" data-anchor-id="panel-histogram"><span class="header-section-number">55.0.4</span> Panel histogram</h3>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -860,7 +872,7 @@ Figure&nbsp;53.2: Distribution of the first hemoglobins concentration
 <img src="gr-histogram_files/figure-html/fig-fig3-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;53.3: Distribution of the first hemoglobins concentration
+Figure&nbsp;55.3: Distribution of the first hemoglobins concentration
 </figcaption>
 </figure>
 </div>
@@ -1293,13 +1305,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./ss-matched-case-control.html" class="pagination-link" aria-label="Matched Case-Control">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span>
+      <a href="./ss-single-mean-to-reference-value.html" class="pagination-link" aria-label="Mean Difference - One sample">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Mean Difference - One sample</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./gr-densityplot.html" class="pagination-link" aria-label="Density Plot">
-        <span class="nav-page-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Density Plot</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Density Plot</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
