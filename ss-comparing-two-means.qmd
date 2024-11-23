@@ -6,7 +6,7 @@ This sample size compilation is for comparing two means:
 
 ## Pre-requisite
 
-1.   Mean and standard deviation in group 1 ($\mu_1$, $\sigma_1$)
+1.  Mean and standard deviation in group 1 ($\mu_1$, $\sigma_1$)
 2.  Mean and standard deviation in group 2 ($\mu_2$, $\sigma_2$)
 3.  Allowable Type I ($\alpha$) and Type II ($\beta$) errors allowable
 4.  The ratio between the two groups ($r =\frac{n_1}{n_2}$)
@@ -31,7 +31,7 @@ We use the formula[^ss-comparing-two-means-1]
     Research*. 2nd Ed. Chapman & Hall/CRC Biostatistics Series. **page 58**
 
 $$
-n_1 = r*n_2 \;\text{ and }\; n_2=\left(1+\frac{1}{r}\right) \left(\sigma\frac{z_{1-\alpha/2}+z_{1-\beta}}{\mu_A-\mu_B}\right)^2
+n_1 = r*n_2 \;\text{ and }\; n_2=\left(1+\frac{1}{r}\right) \left(\sigma\frac{z_{1-\alpha/2}+z_{1-\beta}}{\mu_1-\mu_2}\right)^2
 $$
 
 ## Calculation

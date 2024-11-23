@@ -375,3 +375,76 @@ dataF %>%
           axis.title = element_text(size = 10, face = "bold.italic"),
           plot.title = element_text(face = "bold"))
 ```
+
+```{r}
+dataF %>% 
+    ggplot(aes(x = mcv1, y = mch1, size = mcv1)) +
+    geom_point(shape = 23, aes(fill = agecat), alpha =.2) +
+    scale_x_continuous(name = "Initial Mean Corpuscular Volume",
+                       breaks = seq(50, 130, 10),
+                       labels = c("50.0","60.0","70.0", "80.0", "90.0", "100.0", 
+                                  "110.0","120.0", "130.0"), 
+                       position = "top") +
+    scale_y_continuous(name = "Mean Corpuscular Hemoglobin", 
+                       limits = c(15,45),
+                       breaks = c(15, 30, 45), 
+                       labels = c("15.00","30.00","45.00"),
+                       position = "right") +
+    scale_fill_manual(name = "Age Category", 
+                      values = c("blue", "red", "green", "brown")) +
+    scale_size_continuous(name = "MCV",
+                          range = c(1,4), 
+                          limits = c(50, 140), 
+                          breaks = c(80, 120, 140),
+                          labels = c("Microcyte", "Normocyte", "Macrocyte"))
+```
+
+```{r}
+agecat_label <- 
+    c("Age: 10-19 years", "Age: 20-29 years",
+      "Age: 30-39 years","Age: 40-49 years")
+
+names(agecat_label) <- c("10-19", "20-29", "30-39", "50-59")
+
+dataF %>%
+    ggplot(aes(hb3, mcv3), size = 0.5) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y~x) +
+    labs(
+        title = "Relationship between hemoglobin and mean corpuscular volume",
+        x =  "Hemoglobin (mg/dl)",
+        y = "Mean Corpuscular Volume (fl)")+
+    theme_bw()+
+    facet_wrap(facets = .~agecat, labeller = labeller(agecat = agecat_label))+
+    theme(
+        text = element_text(family = "serif"),
+        strip.text = element_text(face = "bold"),
+        strip.background = element_rect(fill = "white"),
+        plot.title = element_text(face = 'bold'))
+```
+
+```{r}
+dataF %>% 
+    ggplot(aes(hb3, mcv3), size = 0.5) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y~x) +
+    labs(
+        title = "Relationship between hemoglobin and mean corpuscular volume",
+        x =  "Hemoglobin (mg/dl)",
+        y = "Mean Corpuscular Volume (fl)")+
+    theme_bw() +
+    facet_grid(occup ~ agecat, labeller = labeller(agecat = agecat_label))
+```
+
+```{r}
+dataF %>% 
+    ggplot(aes(hb3, mcv3), size = 0.5) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y~x) +
+    labs(
+        title = "Relationship between hemoglobin and mean corpuscular volume",
+        x =  "Hemoglobin (mg/dl)",
+        y = "Mean Corpuscular Volume (fl)")+
+    theme_bw() +
+    facet_wrap(c("occup", "agecat"), nrow = 3, labeller = labeller(agecat = agecat_label))
+```

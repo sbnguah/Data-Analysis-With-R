@@ -107,6 +107,7 @@ book:
         - gr-line-plot.qmd
         - gr-curvelinear-plot.qmd
         - gr-forest-plot.qmd
+        - gr-venn-diagram.qmd
         - gr-population-pyramid.qmd
         - gr-miscellaneous.qmd
     - references.qmd

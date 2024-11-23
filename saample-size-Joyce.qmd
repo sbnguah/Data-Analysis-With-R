@@ -1,0 +1,49 @@
+---
+title: "Sample size"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+```
+
+In a study by Mlay et al, 2020, the mean weight gain and standard deviation for babies whose first
+feed was within 48 hours of life was 14.3g/kg/day and 4.8. Mean weight gain and standard deviation
+for babies whose first feed was more than 48 hours of life was 10.2g/kg/day, and 4.8. Using a Type 1
+error ($\alpha$) of 0.05, a Type 2 error ($\beta$) of 20%, an average weight gain of 15g/kg/day in
+those without the exposure, and 12.5g/kg/day for those with the exposure, and assuming the number of
+neonates without the exposure will be twice those with exposure, we determine the sample size using
+the formula by Chow et al below: $$
+n_1 = r*n_2 \;\text{ and }\; n_2=\left(1+\frac{1}{r}\right) \left(\sigma\frac{z_{1-\alpha/2}+z_{1-\beta}}{\mu_1-\mu_2}\right)^2
+$$ Where, $\mu_1$ and $\sigma_1$ are the mean and standard deviation of weight gain in infants
+without exposure. $\mu_2$ and $\sigma_2$ are the mean and standard deviation of weight gain in
+infants with exposure $\alpha$ is Type I error $\beta$ is Type II error, thus power is $1-\beta$ and
+$r$ is the ratio of the numbers unexposed to the exposed.
+
+Substituting into the formula:
+
+```{r}
+#| echo: false
+mu1 = 12.5
+mu2 =15
+r = 2
+sd = 4.8
+alpha = 0.05
+beta  = 0.20
+
+n2 <- (1+1/r)*(sd*(qnorm(1-alpha/2)+qnorm(1-beta))/(mu1-mu2))^2
+
+n1 <- r*n2
+
+glue::glue(
+    "The number of unexposed and exposed neonates required are ", 
+    {ceiling(n1)}, " and ", {ceiling(n2)}, " respectively.")
+glue::glue("Total sample size = ", {ceiling(n2)+ceiling(n1)})
+```
+
+```{r}
+#| echo: false
+n = ceiling(n2)+ceiling(n1)
+z = 20
+glue::glue("Adjusting for ", {z}, "% non-response rate we have a final sample size of ", {(n/(1-(z/100))) %>% ceiling()})
+```

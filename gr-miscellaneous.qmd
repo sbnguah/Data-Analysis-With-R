@@ -17,144 +17,12 @@ dataF %>%
     summarytools::dfSummary(labels.col = F, graph.col = F)
 ```
 
-```{r}
-dataF %>% 
-    ggplot(aes(x = hb1, y = hb2, color = educ, shape = educ)) +
-    geom_point() +
-    geom_smooth(formula = y ~ x, method = "lm") +
-    theme_light()
-```
-
-```{r}
-dataF %>% 
-    select(starts_with("hb"), fpreg) %>% 
-    GGally::ggpairs(columns = 1:5, aes(colour = fpreg)) + 
-    scale_fill_brewer(palette = "Set1") +
-    scale_colour_brewer(palette = "Set1")
-```
-
-```{r}
-dataF %>% 
-    mutate(mcv_cat_1 = case_when(mcv1 < 80 ~ "Microcyte",
-                                 mcv1 >= 80 & mcv1 <= 90 ~ "Normal",
-                                 mcv1 > 90 ~ "Macrocyte") %>% 
-               factor(levels = c("Microcyte", "Normal", "Macrocyte"))) %>% 
-    ggplot(aes(x = hb1, y = hb2)) +
-    geom_point(aes(size = mcv_cat_1, col = mcv_cat_1), alpha = .5) +
-    geom_smooth(formula = y ~ x, method = "lm", color = "black") +
-    geom_vline(xintercept = 10, color = "red", size = 0.5, linetype = "dashed") +
-    geom_hline(yintercept = 10, color = "red", size = 0.5, linetype = "dashed") +
-    geom_abline(intercept = 0, slope = 1, color = "brown", size = 0.5, 
-                linetype = "dashed") +
-    labs(x = "First Hemoglobin", 
-         y = "Second Hemoglobin", 
-         title = "Hemoglobin on Hemoglobin Distribution") +
-    theme_light()
-```
-
-```{r comment=NA}
-dataF %>% 
-    select(mcv1, mcv2, mcv3, mcv4, mcv5, agecat, id) %>%
-    pivot_longer(cols = mcv1:mcv5, names_to = "Time", values_to = "MCV") %>% 
-    ggplot(aes(x = Time, y = MCV, col = Time), fill = "snow1") +
-    geom_boxplot(outlier.color = "white", outlier.alpha = 0) +
-    geom_jitter(width =.2, alpha = .2, col=1) +
-    labs(x = "Time of Sample taking", 
-         y = "Mean Corpuscular Volume",
-         title = "Sequential changes in MCV over the study duration") +
-    theme_bw() +
-    scale_x_discrete(labels =c("mcv1" = "First MCV", 
-                               "mcv2" = "Second MCV", 
-                               "mcv3" = "Third MCV",
-                               "mcv4" = "Fourth MCV",
-                               "mcv5" = "Fifth MCV"))
-    
-```
-
-```{r}
-dataF %>% 
-    ggplot(aes(x = mcv1, y = mch1, size = mcv1)) +
-    geom_point(shape = 23, aes(fill = agecat), alpha =.2) +
-    scale_x_continuous(name = "Initial Mean Corpuscular Volume",
-                       breaks = seq(50, 130, 10),
-                       labels = c("50.0","60.0","70.0", "80.0", "90.0", "100.0", 
-                                  "110.0","120.0", "130.0"), 
-                       position = "top") +
-    scale_y_continuous(name = "Mean Corpuscular Hemoglobin", 
-                       limits = c(15,45),
-                       breaks = c(15, 30, 45), 
-                       labels = c("15.00","30.00","45.00"),
-                       position = "right") +
-    scale_fill_manual(name = "Age Category", 
-                      values = c("blue", "red", "green", "brown")) +
-    scale_size_continuous(name = "MCV",
-                          range = c(1,4), 
-                          limits = c(50, 140), 
-                          breaks = c(80, 120, 140),
-                          labels = c("Microcyte", "Normocyte", "Macrocyte"))
-```
-
-#### Elipse to show grouping
-
-```{r}
-dataF %>% 
-    ggplot(size = 0.5) +
-    geom_point(aes(hb3, mcv3, color = mcv1, size = occup, shape = educ)) + 
-    guides(color = guide_colorbar(title = "First MCV"),
-           shape = guide_legend(title = "Educational level"), 
-           size = guide_legend(title = "Occupation"))
-```
-
-#### Histogram with density overlay
-
-```{r comment=NA, warning=FALSE}
-dataF %>% 
-    ggplot(aes(x = hb1, y = ..density..)) +
-    geom_histogram(fill = "skyblue", col = "black", bins = 15)+
-    geom_density(aes(y = ..density..), col = "red", size= 1) +
-    labs(x = "First HB", y = "Density", title = "Distribution of HgB")+
-    theme_classic()
-```
-
-#### Histogram with normal overlay
-
-```{r comment=NA}
-dataF %>% 
-    ggplot(aes(x = hb2))+
-    geom_histogram(aes(y = ..density..), bins=10, fill = "snow", col = "red") +
-    stat_function(fun = dnorm, 
-                  args = list(mean = mean(dataF$hb2, na.rm=T), 
-                              sd = sd(dataF$hb2)), col = "blue",
-                  size = 1.5)
-```
-
 #### Scatter plot by the various age groups - Facetting
 
-```{r}
+```{r warning=FALSE}
 agecat_label <- 
     c("Age: 10-19 years", "Age: 20-29 years",
       "Age: 30-39 years","Age: 40-49 years")
-
-names(agecat_label) <- c("10-19", "20-29", "30-39", "50-59")
-
-dataF %>%
-    ggplot(aes(hb3, mcv3), size = 0.5) +
-    geom_point() +
-    geom_smooth(method = "lm", formula = y~x) +
-    labs(
-        title = "Relationship between hemoglobin and mean corpuscular volume",
-        x =  "Hemoglobin (mg/dl)",
-        y = "Mean Corpuscular Volume (fl)")+
-    theme_bw()+
-    facet_wrap(facets = .~agecat, labeller = labeller(agecat = agecat_label))+
-    theme(
-        text = element_text(family = "serif"),
-        strip.text = element_text(face = "bold"),
-        strip.background = element_rect(fill = "white"),
-        plot.title = element_text(face = 'bold'))
-```
-
-```{r warning=FALSE}
 dataF %>% 
     ggplot(aes(hb3, mcv3), size = 0.5) +
     geom_point() +
@@ -166,55 +34,6 @@ dataF %>%
     theme_bw() +
     facet_grid(occup ~ agecat, labeller = labeller(agecat = agecat_label))
 ```
-
-```{r warning=FALSE}
-dataF %>% 
-    ggplot(aes(hb3, mcv3), size = 0.5) +
-    geom_point() +
-    geom_smooth(method = "lm", formula = y~x) +
-    labs(
-        title = "Relationship between hemoglobin and mean corpuscular volume",
-        x =  "Hemoglobin (mg/dl)",
-        y = "Mean Corpuscular Volume (fl)")+
-    theme_bw() +
-    facet_wrap(c("occup", "agecat"), nrow = 3, labeller = labeller(agecat = agecat_label))
-```
-
-----------------------------------------------------------------------------------------------------
-
-#### Venn Diagram
-
-```{r Venn Diagram}
-df <- 
-    tibble(x=c(1,2,3), y=c(2,3.5,2), lab1 = c("A","B","C"), counts = 1:3)
-df %>% 
-    ggplot() +
-    ggforce::geom_circle(
-        aes(x0 = x, y0 = y, r = 1.4, fill = lab1), 
-        alpha = .3, 
-        size = 1, 
-        colour = 'grey') +
-    coord_fixed() +
-    theme_void() +
-    scale_fill_manual(values = c('cornflowerblue', 'firebrick',  'gold')) +
-    scale_colour_manual(values = c('cornflowerblue', 'firebrick', 'gold'), 
-                        guide = "none") +
-    labs(fill = NULL, title = "My Venn Diagram I") + 
-     annotate("text", 
-              x = c(2, 3.5, 2.7, 1.2,   2,  2, 0.3), 
-              y = c(4,   2, 2.7, 2.8, 2.5, 1.5, 1.8), 
-              label = 1:7, size = 5, fontface = "bold") +
-    theme(
-        plot.title = element_text(
-            hjust = 0.5, 
-            family = "serif", 
-            face = "bold", 
-            size = 16, 
-            colour = "red"),
-          legend.position = 'bottom')
-```
-
-----------------------------------------------------------------------------------------------------
 
 #### Correlation Plot
 
@@ -251,12 +70,6 @@ lm(hb4 ~ hct4, data = dataLM) %>%
     labs(title = "Relationship between HB4 and HCT4 with fillted line, prediction and se intervals",
          x = "HCT 4 (%)", y = "HB 4 (mg/dl)", caption = "Nurse Data 2015")+
     theme_bw()
-```
-
-#### Color Palletes
-
-```{r fig.height=6, fig.width=6}
-RColorBrewer::display.brewer.all()
 ```
 
 ----------------------------------------------------------------------------------------------------

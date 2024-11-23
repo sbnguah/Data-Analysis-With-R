@@ -656,14 +656,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./gr-venn-diagram.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Venn Diagram</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -688,6 +694,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#simple-histogram" id="toc-simple-histogram" class="nav-link" data-scroll-target="#simple-histogram"><span class="header-section-number">55.0.2</span> Simple histogram</a></li>
   <li><a href="#histogram-with-normal-curve" id="toc-histogram-with-normal-curve" class="nav-link" data-scroll-target="#histogram-with-normal-curve"><span class="header-section-number">55.0.3</span> Histogram with normal curve</a></li>
   <li><a href="#panel-histogram" id="toc-panel-histogram" class="nav-link" data-scroll-target="#panel-histogram"><span class="header-section-number">55.0.4</span> Panel histogram</a></li>
+  <li><a href="#histogram-with-density-overlay" id="toc-histogram-with-density-overlay" class="nav-link" data-scroll-target="#histogram-with-density-overlay"><span class="header-section-number">55.0.5</span> Histogram with density overlay</a></li>
   </ul>
 </nav>
     </div>
@@ -874,6 +881,35 @@ Figure&nbsp;55.2: Distribution of the first hemoglobins concentration
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fig3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;55.3: Distribution of the first hemoglobins concentration
 </figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="histogram-with-density-overlay" class="level3" data-number="55.0.5">
+<h3 data-number="55.0.5" class="anchored" data-anchor-id="histogram-with-density-overlay"><span class="header-section-number">55.0.5</span> Histogram with density overlay</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_histo <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hb1, <span class="at">y =</span> ..density..)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>, <span class="at">col =</span> <span class="st">"black"</span>, <span class="at">bins =</span> <span class="dv">15</span>)<span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">size=</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"First HB"</span>, <span class="at">y =</span> <span class="st">"Density"</span>, <span class="at">title =</span> <span class="st">"Distribution of HgB"</span>)<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+ℹ Please use `linewidth` instead.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The dot-dot notation (`..density..`) was deprecated in ggplot2 3.4.0.
+ℹ Please use `after_stat(density)` instead.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="gr-histogram_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

@@ -106,3 +106,14 @@ df_temp %>%
         strip.background = element_rect(fill = "#4C4CBD"),
         plot.title = element_text(face = 'bold'))
 ```
+
+### Histogram with density overlay
+
+```{r}
+df_histo %>% 
+    ggplot(aes(x = hb1, y = ..density..)) +
+    geom_histogram(fill = "skyblue", col = "black", bins = 15)+
+    geom_density(aes(y = ..density..), col = "red", size= 1) +
+    labs(x = "First HB", y = "Density", title = "Distribution of HgB")+
+    theme_classic()
+```

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>63&nbsp; Population Pyramid – Data Analysis With R</title>
+<title>64&nbsp; Population Pyramid – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,7 +65,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./gr-miscellaneous.html" rel="next">
-<link href="./gr-forest-plot.html" rel="prev">
+<link href="./gr-venn-diagram.html" rel="prev">
 <link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-population-pyramid.html"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Population Pyramid</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-population-pyramid.html"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Population Pyramid</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -656,14 +656,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./gr-venn-diagram.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Venn Diagram</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span></a>
   </div>
 </li>
       </ul>
@@ -685,9 +691,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-population-pyramid.html"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Population Pyramid</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./gr-histogram.html"><span style="font-weight:bold; color: black;">Graphics</span></a></li><li class="breadcrumb-item"><a href="./gr-population-pyramid.html"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Population Pyramid</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Population Pyramid</span></h1>
+<h1 class="title"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Population Pyramid</span></h1>
 </div>
 
 
@@ -704,8 +710,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="population-pyramid" class="level4" data-number="63.0.0.1">
-<h4 data-number="63.0.0.1" class="anchored" data-anchor-id="population-pyramid"><span class="header-section-number">63.0.0.1</span> Population Pyramid</h4>
+<section id="population-pyramid" class="level4" data-number="64.0.0.1">
+<h4 data-number="64.0.0.1" class="anchored" data-anchor-id="population-pyramid"><span class="header-section-number">64.0.0.1</span> Population Pyramid</h4>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -741,7 +747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <img src="gr-population-pyramid_files/figure-html/fig-1-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;63.1: Population pyramid of Ghana (2020)
+Figure&nbsp;64.1: Population pyramid of Ghana (2020)
 </figcaption>
 </figure>
 </div>
@@ -1174,13 +1180,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./gr-forest-plot.html" class="pagination-link" aria-label="Forest Plot">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title">Forest Plot</span></span>
+      <a href="./gr-venn-diagram.html" class="pagination-link" aria-label="Venn Diagram">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Venn Diagram</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./gr-miscellaneous.html" class="pagination-link" aria-label="Miscellaneous">
-        <span class="nav-page-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title">Miscellaneous</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
