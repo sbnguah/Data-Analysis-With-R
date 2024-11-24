@@ -22,7 +22,7 @@ df %>%
     ggforce::geom_circle(
         aes(x0 = x, y0 = y, r = 1.4, fill = lab1), 
         alpha = .3, 
-        size = 1, 
+        linewidth = 1, 
         colour = 'grey') +
     coord_fixed() +
     theme_void() +

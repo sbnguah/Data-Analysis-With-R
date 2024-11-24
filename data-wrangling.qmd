@@ -259,43 +259,46 @@ dataF %>%
 
 ```{r comment=NA}
 dataF %>% 
+    select(1:4) %>% 
     relocate(sid, .after = last_col()) %>% 
     slice_head(n=10) 
 ```
 
 ```{r comment=NA}
 dataF %>% 
+    select(1:7) %>% 
     relocate(where(is.numeric)) %>% 
     slice_head(n=10) 
 ```
 
 ```{r comment=NA}
 dataF %>% 
+    select(1:6) %>% 
     relocate(contains("sbp")) %>% 
     slice_head(n=10) 
 ```
 
-## `summarize` & `across`
+## reframe & `across`
 
 ```{r comment = NA}
 dataF %>% 
-    summarize(across(sbp_0:sbp_8, .fns = mean, na.rm=T)) 
+    reframe(across(sbp_2:sbp_8, ~mean(.x, na.rm=T)))
 
 ```
 
 ```{r}
 dataF %>% 
     na.omit() %>% 
+    select(dxs_class, sbp_0:sbp_6) %>% 
     group_by(dxs_class) %>% 
-    summarize(across(where(is.numeric), ~quantile(.x))) %>% 
-    ungroup() 
+    reframe(across(where(is.numeric), ~quantile(.x))) 
 ```
 
 ## Distinct observations
 
 ```{r}
 dataF %>% 
-    summarise(across(where(is.numeric), n_distinct)) 
+    reframe(across(where(is.numeric), n_distinct)) 
 ```
 
 ## list of functions
@@ -304,16 +307,13 @@ dataF %>%
 dataF %>% 
     filter(!is.na(dxs_class)&!is.na(gender)) %>% 
     group_by(dxs_class, gender) %>%
-    summarise(
+    reframe(
         across(
             starts_with("sbp"), 
             list(
                 AVG = mean, 
                 SD = sd, 
-                N_missing = ~sum(is.na(.x), na.rm=TRUE))
-            )
-        ) %>%
-    ungroup() 
+                N_missing = ~sum(is.na(.x), na.rm=TRUE)))) 
 ```
 
 ## Summarizing by anonymous functions
@@ -322,16 +322,15 @@ dataF %>%
 dataF %>% 
     filter(!is.na(dxs_class)) %>% 
     group_by(dxs_class) %>%
-    summarise(
+    reframe(
         across(
-            .cols = c(sbp_0, sbp_18), 
+            .cols = c(sbp_0), 
             .fns = list(
-                "Mean" = ~mean(.x, na.rm=T), 
-                "UpperCI" = ~(mean(.x, na.rm=T) + 
-                                  1.96*sd(.x, na.rm=T)/sqrt(n())) ,
-                "LowerCI" = ~(mean(.x, na.rm=T) - 
-                                  1.96*sd(.x, na.rm=T)/sqrt(n()))))) %>%
-    ungroup() 
+                "Mean"    = ~mean(.x, na.rm=T), 
+                "UpperCI" = ~mean(
+                    .x, na.rm=T) + 1.96*sd(.x, na.rm=T)/sqrt(n()) ,
+                "LowerCI" = ~mean(
+                    .x, na.rm=T) - 1.96*sd(.x, na.rm=T)/sqrt(n())))) 
 ```
 
 ## `expand`
@@ -379,21 +378,21 @@ dataF_long %>%
 
 ```{r}
 dataF %>% 
-    select(dxs_class, gender, sbp_0, sbp_2, sbp_4) %>%
+    select(dxs_class, gender, sbp_0, sbp_4) %>%
     na.omit() %>% 
     group_by(dxs_class) %>% 
     pivot_wider(
         names_from = gender, 
-        values_from = c(sbp_0, sbp_2, sbp_4), 
+        values_from = c(sbp_0, sbp_4), 
         values_fn = ~mean(.x, na.rm = TRUE)) %>% 
-    ungroup() %>% 
-    slice_head(n=10) 
+    ungroup()  
 
 ```
 
 ## `tidyquant` tabulation
 
 ```{r}
+#| message: false
 dataF %>% 
     select(dxs_class, gender) %>% 
     na.omit() %>% 
@@ -403,12 +402,14 @@ dataF %>%
 ```
 
 ```{r comment=NA}
+#| warning: false
 dataF %>% 
     select(dxs_class, gender, sbp_0, sbp_2) %>% 
     na.omit() %>% 
-    tidyquant::pivot_table(.rows = gender, 
-                           .columns = dxs_class, 
-                           .values = ~quantile(sbp_0)) %>% 
+    tidyquant::pivot_table(
+        .rows = gender, 
+        .columns = dxs_class, 
+        .values = ~quantile(sbp_0)) %>% 
     unnest(cols = c("DM","HPT","DM+HPT")) 
 ```
 
@@ -420,15 +421,14 @@ dataF %>%
     mutate(
         sbp_mean = mean(
             c(sbp_0,sbp_2,sbp_4,sbp_6,sbp_8, sbp_10, sbp_12,
-                             sbp_14,sbp_16, sbp_18), na.rm=T),
+              sbp_14,sbp_16, sbp_18), na.rm=T),
         sbp_sd = sd(
             c(sbp_0,sbp_2,sbp_4,sbp_6,sbp_8, sbp_10, sbp_12,
               sbp_14,sbp_16, sbp_18), na.rm=T),
-        n=n()) %>% 
+        n = n()) %>% 
     ungroup() %>% 
-    relocate(
-        sid, dxs_class, ageyrs, gender, sbp_mean, sbp_sd, 
-        contains("sbp")) %>% 
+    select(sid, dxs_class, sbp_mean, sbp_sd, 
+        sbp_0:sbp_4) %>% 
     slice_head(n=10) 
 ```
 

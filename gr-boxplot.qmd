@@ -16,7 +16,9 @@ rm(list = ls(all = TRUE))
 dat <- 
     foreign::read.dta("C:/Dataset/bea_organ_damage_28122013.dta")
 dataF <- 
-    readstata13::read.dta13("C:/Dataset/olivia_data_wide.dta")
+    readstata13::read.dta13(
+        "C:/Dataset/olivia_data_wide.dta",
+        nonint.factors = TRUE)
 ```
 
 # Boxplot
@@ -78,7 +80,6 @@ Here we use a different dataset to draw the next boxplot
 
 ```{r comment = NA}
 df1 <- read.csv("C:/Dataset/booking1.csv")
-glimpse(df1)
 ```
 
 Next we plot two boxplots on one graph
@@ -102,16 +103,13 @@ data(ToothGrowth)
 ToothGrowth <-
   ToothGrowth %>% 
   mutate(dose = factor(dose))
-glimpse(ToothGrowth)
-```
 
-And then we form the ggplot object
-
-```{r}
 p <- 
   ToothGrowth %>% 
   ggplot(aes(x = dose, y = len))
 ```
+
+And then we form the ggplot object
 
 Other renditions of the boxplot is as shown below. First rotated one
 
@@ -128,25 +126,22 @@ p + geom_boxplot(notch=TRUE)
 Customizaton of the outlier
 
 ```{r comment = NA}
-p + geom_boxplot(outlier.colour="red", 
-                 outlier.shape=8, 
-                 outlier.size=4)
+p + geom_boxplot(
+    outlier.colour="red", outlier.shape=8, outlier.size=4)
 ```
 
 We add a statistic to the plot here
 
 ```{r}
 p + geom_boxplot() + 
-	stat_summary(fun = mean, 
-	             geom = "point", 
-	             shape = 18, 
-	             size = 4, 
-	             col = "red")
+	stat_summary(
+	    fun = mean, geom = "point", shape = 18, size = 4, col = "red")
 ```
 
 And then limit the categories the x axis
 
 ```{r}
+#| warning: false
 p + 
   geom_boxplot() + 
   scale_x_discrete(limits=c("0.5", "2"))
@@ -157,21 +152,17 @@ Next a boxplot with a superimposed dotplot
 ```{r}
 p + 
   geom_boxplot() + 
-  geom_dotplot(binaxis='y', 
-               stackdir='center', 
-               dotsize=0.5, 
-               binwidth = 1,
-               col = "red",
-               fill = "red")
+  geom_dotplot(
+      binaxis='y', stackdir='center', dotsize=0.5, binwidth = 1, col = "red") 
 ```
+
 
 And a boxplot with superimposed jittered points
 
-```{r comment = NA}
+```{r}
 p + 
   geom_boxplot() +
   geom_jitter(shape=16, position=position_jitter(0.2))
-rm(p)
 ```
 
 Next we manually set out own color scale
@@ -180,9 +171,7 @@ Next we manually set out own color scale
 P <- 
   ToothGrowth %>% 
   ggplot(aes(factor(dose), len, color=dose))
-```
 
-```{r}
 P + 
 	geom_boxplot() +
   scale_color_manual(values=c("#999999", "#E69F00", "#56B4E9"))
@@ -221,14 +210,6 @@ P +
   scale_x_discrete(limits=c("2", "0.5", "1"))
 ```
 
-Box plot with multiple groups: Change box plot colors by groups
-
-```{r comment = NA}
-ggplot(ToothGrowth, aes(x=dose, y=len, fill=supp)) + 
-	geom_boxplot()
-rm(P)
-```
-
 Change the position of the boxes
 
 ```{r comment = NA}
@@ -241,9 +222,7 @@ P
 And then we add dots
 
 ```{r comment = NA}
-P + geom_dotplot(binaxis='y', 
-                 stackdir='center', 
-                 position=position_dodge(1),
+P + geom_dotplot(binaxis='y', stackdir='center', position=position_dodge(1),
                  binwidth = 1)
 ```
 
