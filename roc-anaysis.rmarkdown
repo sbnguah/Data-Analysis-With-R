@@ -1,0 +1,196 @@
+---
+title: "ROC Analysis"
+---
+
+```{r}
+#| echo: false
+#| include: false
+library(tidyverse)
+```
+
+
+
+We begin by importing data.
+
+
+
+```{r}
+df_data <- 
+    readxl::read_xlsx("C:\\Dataset\\SBPDATA.xlsx") %>% 
+    janitor::clean_names() %>% 
+    select(
+        disease_class, a1_gender, sbp_0, sbp_6, sbp_12, sbp_18) %>% 
+    mutate(
+        a1_gender = factor(
+            a1_gender, 
+            levels = c(0,1), 
+            labels = c("Female","Male")),
+        hpt = case_when(
+            str_detect(disease_class, "HPT") ~ "Yes",
+            TRUE ~ "No"),
+        dm = case_when(
+            str_detect(disease_class, "DM") ~ "Yes",
+            TRUE ~ "No")) %>% 
+    select(hpt, dm, a1_gender, sbp_0) %>% 
+    drop_na()
+
+
+df_data %>% head()
+```
+
+
+
+Next, we look at the distribution of systolic blood pressure for those with and without hypertension
+pressure.
+
+
+
+```{r}
+cut_one <- 
+    df_data %>% 
+    cutpointr::cutpointr(x = sbp_0, class = hpt)
+
+
+cut_one %>% summary() 
+```
+
+
+
+We then visualise the ROC curve.
+
+
+
+```{r}
+cut_one %>% 
+    cutpointr::plot_roc() +
+    theme_bw() 
+```
+
+
+
+We can visualise the sensitivity \_ specificity at all the cut-offs below.
+
+
+
+```{r}
+cut_one %>% 
+    cutpointr::plot_metric(add_unsmoothed = T) +
+    theme_bw()
+```
+
+
+
+The analysis below can show multiple cut-off points, whereas we have only one here.
+
+
+
+```{r}
+cutoff_2 <- 
+    cutpointr::cutpointr(
+        data = df_data,
+        x = sbp_0,
+        class = dm,
+        method = cutpointr::maximize_metric,
+        metric = cutpointr::sum_sens_spec,
+        break_ties = c) 
+
+summary(cutoff_2)
+
+cutpointr::plot_roc(cutoff_2)
+```
+
+
+
+The confidence interval of the cutoff can be determined by bootstrapping as below:
+
+
+
+```{r}
+set.seed(999)
+cutoff_3 <- 
+    cutpointr::cutpointr(
+        data = df_data,
+        x = sbp_0,
+        class = dm,
+        boot_runs = 500) 
+
+summary(cutoff_3)
+
+cutpointr::plot_metric(cutoff_3)
+
+cutpointr::plot_cut_boot(cutoff_3)
+```
+
+
+
+Two different cutoffs could mean clustering. We, therefore, run cutoffs by sex to see
+
+
+
+```{r}
+set.seed(999)
+cutoff_4 <- 
+    cutpointr::cutpointr(
+        data = df_data,
+        x = sbp_0,
+        class = dm,
+        boot_runs = 500,
+        subgroup = a1_gender) 
+```
+
+
+
+We then summarise it.
+
+
+
+```{r}
+cutoff_4 %>% summary()
+```
+
+
+
+And then plot it
+
+
+
+```{r}
+cutpointr::plot_roc(cutoff_4)
+```
+
+
+
+And the we determine the cut-offs
+
+
+
+```{r}
+cutpointr::plot_metric(cutoff_4)
+```
+
+
+
+Multiple plot is a single command
+
+
+
+```{r}
+cutoff_4 %>% 
+    cutpointr::plot_sensitivity_specificity()
+```
+
+
+
+And even more
+
+
+
+```{r}
+cutoff_4 %>% 
+    cutpointr::plot_precision_recall()
+```
+
+```{r}
+cutoff_4 %>% plot()
+```
+

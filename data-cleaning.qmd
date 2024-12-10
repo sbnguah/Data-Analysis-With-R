@@ -157,6 +157,7 @@ blood3 <-
 ```{r comment=NA}
 B <-
     blood3 %>% 
+    drop_na(hb) %>% 
     ggplot(aes(y = hb)) +
     geom_boxplot(fill = "grey") +
     labs(y = "Hemoglobin (mg/dl)",
@@ -277,7 +278,12 @@ Often after cleaning individual variables a data analyst will be required to gen
 from the old ones. We will put this into practice by generating the presence of Anemia if the hb is
 less than 11g/dl.
 
-\`\`\`{r comment=NA} blood3 \<- blood3 %\>% mutate(anemia = case_when(hb \< 11 \~ "Yes", hb \>= 11
-\~ "No") %\>% factor())
+```{r}
+blood3 <- 
+    blood3 %>% 
+    mutate(
+        anemia = case_when(hb < 11 ~ "Yes", hb >= 11 ~ "No") %>% 
+            factor())
 
 summarytools::dfSummary(blood3)
+```
