@@ -35,7 +35,7 @@ book:
     - hypothesis-testing.qmd
     - confounding-and-interaction.qmd
     - diagnostic-tests.qmd
-    - roc-analysis-qmd
+    - roc-analysis.qmd
     - part: "<span style='font-weight:bold; color: black;'>Correlation</span>"
       chapters: 
         - correlation.qmd

@@ -304,3 +304,38 @@ babies %>%
         label = c("LOW", "MEDIUM", "HIGH"))+
     theme_bw()
 ```
+
+Graph of binomial confiedence intervals
+
+```{r}
+#| message: false
+#| label: fig-10
+#| fig-cap: "Percentage of Allo-Allergens (95%CI)"
+
+tibble(
+    alg = c(
+        "D farina", "D pteronyssinus", "American Cockroach", 
+	    "Dog","Alternaria","Rye grass"),
+	n = c(125, 118, 62, 3, 3, 0)) %>% 
+    mutate(N = rep(161, 6)) %>% 
+    mutate(xx = epiDisplay::ci.binomial(n, N)) %>% 
+    unnest(xx) %>% 
+    ggplot(
+        aes(
+            x = alg, y = probability, color = alg, 
+            ymin = exact.lower95ci, ymax = exact.upper95ci)) + 
+    geom_col(
+        fill = "steelblue", 
+        color = "steelblue", alpha = 0.4) +
+    geom_errorbar(color = "steelblue",  width = 0.15)+
+    labs(
+        y = "Percentage (%)", 
+        x = NULL,
+        caption = "Asthma study (2023)")+
+    theme_bw()+
+    scale_y_continuous(br = seq(0, 1, 0.2), labels = seq(0, 100, 20))+
+    theme(
+       axis.text.x = element_text(
+           angle = 90, hjust = 1, vjust = 0.05, 
+           face = "italic"))
+```
