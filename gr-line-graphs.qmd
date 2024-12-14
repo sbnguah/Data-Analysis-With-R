@@ -71,3 +71,30 @@ dataF %>%
     theme_bw()+
     theme(legend.position = "bottom")
 ```
+
+```{r}
+temp <-
+    dataF %>% 
+    group_by(educ) %>% 
+    summarize(across(c(hb1, hb2, hb3, hb4, hb5), mean)) 
+
+temp.2 <- tibble(x = rep(5,4), y = temp$hb5, z = temp$educ)
+    
+temp %>% 
+    pivot_longer(col = hb1:hb5, names_to = "Period", values_to = "hgb") %>% 
+    ggplot(aes(x = Period, y = hgb)) +
+    geom_line(aes(color = educ, group = educ), size = 1)+
+    geom_point(aes(color = educ, group = educ, shape = educ), size =2)+
+    labs(title = "Average Hemoglobin for each educational level", x=NULL)+
+    scale_y_continuous(name = "Hemoglobin (mg/dL)", limits = c(10,16)) +
+    scale_x_discrete(labels = c("hb1" = "First \nMeasure",
+                                "hb2" = "Second \nMeasure",
+                                "hb3" = "Third \nMeasure",
+                                "hb4" = "Fourth \nMeasure",
+                                "hb5" = "Fifth \nMeasure"))+
+    ggrepel::geom_label_repel(data = temp.2, aes(x = x, y = y, label = z))+
+    theme_bw()+
+    theme(legend.position = "none",
+          plot.title = element_text(family="serif",colour = "red", 
+                               hjust =0.5, face = "bold", size=16))
+```

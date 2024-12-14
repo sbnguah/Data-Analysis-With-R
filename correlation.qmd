@@ -3,7 +3,6 @@ title: "Correlation"
 author: "Dr Samuel Blay Nguah"
 ---
 
-
 ```{r}
 #| label: setup
 #| include: false

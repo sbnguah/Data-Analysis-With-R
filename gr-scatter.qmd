@@ -448,3 +448,59 @@ dataF %>%
     theme_bw() +
     facet_wrap(c("occup", "agecat"), nrow = 3, labeller = labeller(agecat = agecat_label))
 ```
+
+```{r}
+dataLM <- dataF %>% select(hct4, hb4)
+
+lm(hb4 ~ hct4, data = dataLM) %>% 
+    predict(interval = "predict") %>% 
+    as_tibble() %>% 
+    bind_cols(dataLM) %>% 
+    ggplot(aes(x = hct4, y = hb4)) +
+    geom_point() +
+    geom_smooth(method = "lm", formula = y~x, se=T)+
+    geom_line(aes(y = lwr), col = "coral2", linetype = "dashed") +
+    geom_line(aes(y = upr), col = "coral2", linetype = "dashed") +
+    labs(title = "Relationship between HB4 and HCT4 with fillted line, prediction and se intervals",
+         x = "HCT 4 (%)", y = "HB 4 (mg/dl)", caption = "Nurse Data 2015")+
+    theme_bw()
+```
+
+```{r}
+dataH <- 
+    readxl::read_xlsx(
+        "C:/Dataset/Red cell indices against ferritin.xlsx"
+        ) %>% 
+    mutate(
+        lg.fer = log(Ferritin), 
+        MCH = ifelse(is.na(MCH), median(MCH, na.rm=T), MCH)
+        )
+
+preds <- 
+    rbind(
+        predict(lm(lg.fer ~ RBC, data = dataH), interval = "prediction"),
+        predict(lm(lg.fer ~ HGB, data = dataH), interval = "prediction"), 
+        predict(lm(lg.fer ~ HCT, data = dataH), interval = "prediction"),
+        predict(lm(lg.fer ~ MCV, data = dataH), interval = "prediction"), 
+        predict(lm(lg.fer ~ MCH, data = dataH), interval = "prediction")
+        ) %>% 
+    as_tibble()
+
+dataH %>% 
+    pivot_longer(cols=RBC:MCH, names_to = "bld.ind") %>% 
+    mutate(
+        bld.ind = factor(bld.ind, levels = c("RBC", "HGB", "HCT", "MCV", "MCH"))
+        ) %>% 
+    arrange(bld.ind) %>% 
+    bind_cols(preds) %>% 
+    ggplot(aes(x = value)) + 
+    geom_point(aes(y = lg.fer)) +
+    geom_smooth(aes(y = lg.fer), se=T, method = "lm", formula = y~x) +
+    geom_line(aes(y = upr), col = "red", linetype = "dashed") +
+    geom_line(aes(y = lwr), col = "red", linetype = "dashed") +
+    facet_wrap(vars(bld.ind), nrow = 2, scales = "free") +
+    labs(
+        title = "Blood indices with prediction lines (red), regression line (blue) and regression error",
+        y = "Log of serum ferritin concentration",
+        x = NULL)
+```

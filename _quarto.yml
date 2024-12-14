@@ -108,8 +108,10 @@ book:
         - gr-line-plot.qmd
         - gr-curvelinear-plot.qmd
         - gr-forest-plot.qmd
+        - gr-followup-plot.qmd
         - gr-venn-diagram.qmd
         - gr-population-pyramid.qmd
+        - gr-lollipop.qmd
         - gr-miscellaneous.qmd
     - references.qmd
 

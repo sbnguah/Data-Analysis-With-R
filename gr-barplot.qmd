@@ -4,9 +4,13 @@ title: "Barplot"
 
 ```{r}
 #| include: false
+#| message: false
 
-rm(list=ls(all.names=TRUE))
+rm(list=ls(all.names = TRUE))
 library(tidyverse)
+
+dataF <- 
+    readstata13::read.dta13("C:/Dataset/olivia_data_wide.dta")
 ```
 
 To start we create a fictitious data
@@ -338,4 +342,61 @@ tibble(
        axis.text.x = element_text(
            angle = 90, hjust = 1, vjust = 0.05, 
            face = "italic"))
+```
+
+```{r}
+dataF %>% 
+    mutate(avehb_cat = case_when(avehb < median(avehb) ~ "Low HB",
+                                 avehb >= median(avehb) ~ "High HB") %>% 
+               factor(levels = c("Low HB", "High HB"))) %>% 
+    select(starts_with("mcv"), avehb_cat) %>% 
+    pivot_longer(cols = c(mcv1:mcv5), values_to = "mcv", names_to = "measure") %>% 
+    group_by(avehb_cat, measure) %>% 
+    mutate(mean_mcv = mean(mcv), 
+           low_mcv = mean_mcv - 1.96*sd(mcv)/sqrt(n()),
+           high_mcv = mean_mcv + 1.96*sd(mcv)/sqrt(n())) %>% 
+    ggplot(aes(y = mean_mcv, x = measure, fill = avehb_cat)) +
+    geom_bar(stat = "identity", position = position_dodge(0.9)) +
+    geom_errorbar(aes(ymin = low_mcv, ymax = high_mcv), size = 0.8, 
+                  width = 0.3, 
+                  position = position_dodge(0.9)) +
+    labs(y = "Mean Corpuscular Volume",
+         x = NULL,
+         title = "Variation in MCV per review period (95%CI)",
+         caption = "Source: Data One")+
+    scale_fill_manual(name = "HGB Status", values = c("grey", "grey45"))+
+    scale_x_discrete(labels = toupper(c("First", "Second", "Third", "Fourth", "Fifth")))+
+    scale_y_continuous(limits = c(0,130), breaks = seq(0, 130, 10))+
+    theme(
+        panel.background = element_rect(colour = "black", fill = "white"),
+        plot.background  = element_rect(fill = "grey"),
+        plot.title = element_text(face = "bold", hjust = 0.5, family = "serif"),
+        axis.text = element_text(face = "bold", family = "serif"),
+        axis.title = element_text(family = "serif", face = "bold"),
+        plot.caption = element_text(family = "serif", face = "bold"),
+        legend.text = element_text(family = "serif", face = "bold"),
+        legend.title = element_text(family = "serif", face = "bold")
+        )
+```
+
+```{r}
+dataF %>% 
+    group_by(anemia1, agecat) %>% 
+    mutate(
+        Anemia.1 = case_when(
+            anemia1 == 0 ~ "No", 
+            anemia1 == 1 ~ "Yes") %>% as_factor()) %>% 
+    reframe(
+        across(
+            c(hb1,hb2), 
+            list(Mean = mean, SD = sd, se = ~sd(.x)/sqrt(n())))) %>% 
+    ggplot(aes(x = anemia1, y=hb1_Mean, fill = agecat)) +  
+    geom_errorbar(aes(ymin = hb1_Mean - 1.96*hb1_SD, ymax = hb1_Mean + 1.96*hb1_SD),
+                  position = position_dodge(0.9), width = 0.2, size = 0.8) + 
+    geom_bar(stat = "identity", position = position_dodge(0.9), col = "black") +
+    labs(x = "First Anemia Present", y = "Mean of First HgB (mg/dL)",
+         title = "Average initial HgB for first anemia and Age Categories") +
+    theme_bw()+
+    scale_fill_brewer(name = "Age Group", palette = "Dark2",
+                      labels= c("10-19 yrs", "20-29 yrs", "30-39 yrs", "40-49 yrs"))
 ```
