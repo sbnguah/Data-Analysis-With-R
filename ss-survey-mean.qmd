@@ -1,0 +1,59 @@
+---
+title: "Survey: Single mean"
+bibliography: references.bib
+---
+
+## Introduction
+
+Surveys are a standard and straightforward study methodology when one wishes to investigate the
+prevalence of a condition or the average within a population. In this example, we will determine the
+sample for a population proportion.
+
+## Scenario
+
+An investigator wishes to determine the prevalence of anaemia among children under 5 years old in a
+community. To do this, he needs to obtain a representative sample. Thus, he is confronted with the
+challenge of knowing how many children must be samples.
+
+## Requirements
+
+To determine the sample size required, the investigator needs to pre-define and specify the
+following:
+
+1.  **Estimated prevalence**: This can be obtained from a previous study evaluating the proportion
+    in the same population, a similar population, or one reasonably close to the population to be
+    investigated. If none of these is obtainable, the proportion that divides the maximum sample
+    size should be chosen.
+2.  **Margin of Error**: This expresses how precise one wants his estimate to be. An error of 0.05,
+    for instance, will represent an allowable error of 5%.
+3.  **Confidence level**: A confidence level represents the degree of certainty or probability that
+    the population parameter (such as the actual proportion) falls within the computed confidence
+    interval. For instance, if we were to calculate confidence intervals for 100 distinct samples,
+    we would anticipate that approximately 95 would contain the actual population value if we used a
+    95% confidence level. The traditional confidence level for most studies is 95%.
+4.  **The Z-value**, also known as the Z-score, corresponds to the number of standard deviations a
+    data point is from the mean in a standard normal distribution (bell curve). Common Z-values
+    include 1.96 for the 95% confidence level, meaning 95% of the data falls within 1.96 standard
+    deviations from the mean in a normal distribution. Others include 2.576 for the 99% Confidence
+    Level and 1.645 for the 90% confidence level.
+5.  Here, we use the Cochrane formula[@richter1963].
+
+$$n = \frac{Z^2 P(1-P)}{e^2}$$
+
+## Determination
+
+For the study above, a background search indicated that 45% of children less than 5 years old had
+anaemia in a survey done 2 years ago in the same population. The investigator decided to estimate
+this to a precision of 5% and use the 95% confidence limit.
+
+```{r}
+p <- 0.45
+a <- 0.05
+e <- 0.05
+
+n = (qnorm(1-a/2)^2)*p*(1-p)/(e^2)
+n = ceiling(n)
+
+```
+
+Slotting these into the formula, we have a minimum of **`r n`** children required for the study.

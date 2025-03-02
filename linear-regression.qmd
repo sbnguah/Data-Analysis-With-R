@@ -173,7 +173,7 @@ pr.3 <-
     ggeffects::ggpredict(lm.3, terms = c("ageyrs", "sex"))
 
 pr.3 %>% 
-  plot(ci = TRUE, add.data = TRUE) +
+  plot() +
   labs(
       x = "Age in years", 
       y = "CCA thickness", 
@@ -204,7 +204,7 @@ Next, we make a plot of the marginal effects after
 ```{r comment = NA}
 pr.4 <- ggeffects::ggpredict(lm.4, terms = c("ageyrs", "sex", "resid"))
 pr.4 %>% 
-  plot(ci = TRUE, add.data = TRUE, dot.size = .5, dot.alpha = .5) +
+  plot() +
   labs(x = "Age in years", y = "CCA thickness", title = "Marginal relationship")
 ```
 

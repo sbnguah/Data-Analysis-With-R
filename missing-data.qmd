@@ -246,7 +246,7 @@ lm1 <-
     glm(syst1 ~ sex+ ageyrs + waist + hgt, data = df_hpt, family = "gaussian")
 lm1 %>% performance::check_heteroscedasticity()
 lm1 %>% performance::check_normality() %>% plot()
-lm1 %>% performance::check_posterior_predictions()
+lm1 %>% performance::check_predictions()
 lm1 %>% performance::check_outliers() %>% plot()
 lm1 %>% performance::check_collinearity() %>% plot() 
 lm1 %>% 
@@ -265,7 +265,7 @@ lm2 <-
     glm(waist ~ sex* ageyrs, data = df_hpt, family = "gaussian")
 lm2 %>% performance::check_heteroscedasticity()
 lm2 %>% performance::check_normality() %>% plot()
-lm2 %>% performance::check_posterior_predictions()
+lm2 %>% performance::check_predictions()
 lm2 %>% performance::check_outliers() %>% plot()
 lm2 %>% performance::check_collinearity() %>% plot() 
 lm2 %>% 
@@ -275,6 +275,5 @@ lm2 %>%
     sjPlot::tab_model(
         p.style = "numeric_stars", 
         show.reflvl = T, 
-        show.intercept = F
-        )
+        show.intercept = F)
 ```

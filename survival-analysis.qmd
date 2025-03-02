@@ -8,7 +8,7 @@ title: "Survival Analysis"
 library(tidyverse)
 ```
 
-# Reading and cleaning data
+## Reading and cleaning data
 
 ```{r comment=NA}
 df_mbu <-
@@ -53,7 +53,7 @@ df_mbu <-
     filter(adm_year != "2012" & !is.na(adm_dura_hrs))
 ```
 
-# Labelling data
+## Labelling data
 
 ```{r comment=NA}
 labelled::var_label(df_mbu) <-
@@ -74,14 +74,14 @@ labelled::var_label(df_mbu) <-
     )
 ```
 
-# Summarizing data
+## Summarizing data
 
 ```{r comment=NA}
 df_mbu %>% 
     summarytools::dfSummary(graph.col = F, labels.col = FALSE)
 ```
 
-# Summarizing by outcome
+## Summarizing by outcome
 
 ```{r comment=NA}
 # gtsummary::theme_gtsummary_compact()
@@ -103,7 +103,7 @@ df_mbu %>%
     gtsummary::bold_labels()
 ```
 
-# Overall Kaplan-Meier survival
+## Overall Kaplan-Meier survival
 
 ```{r comment=NA}
 km1 <- 
@@ -131,7 +131,7 @@ km1 %>%
         tables.theme = survminer::theme_cleantable())
 ```
 
-# Kaplan-Meier survival by sex
+## Kaplan-Meier survival by sex
 
 ```{r comment=NA}
 km_by_sex <- 
@@ -171,7 +171,7 @@ km_by_sex %>%
         surv.scale = "percent")
 ```
 
-# Cox's regression
+## Cox's regression
 
 ```{r comment=NA}
 cox_by_sex <- 
@@ -183,7 +183,7 @@ cox_by_sex <-
 summary(cox_by_sex)
 ```
 
-# Univariate Cox regression
+### Univariate Cox regression
 
 ```{r comment=NA}
 cox_by_sex %>% 
@@ -196,7 +196,7 @@ cox_by_sex %>%
     gtsummary::modify_caption("Univariate Cox regression with sex")
 ```
 
-# Univariate Cox regression multiple variables at a time
+### Univariate Cox regression multiple variables at a time
 
 ```{r}
 df_mbu %>% 
@@ -210,7 +210,7 @@ df_mbu %>%
     gtsummary::bold_labels()
 ```
 
-# Multivariate Cox regression
+### Multivariate Cox regression
 
 ```{r comment=NA}
 cox_1 <- 
@@ -256,9 +256,9 @@ violated. These violations will have to be dealt with.
 cox_1 %>% survival::cox.zph() %>% survminer::ggcoxzph()
 ```
 
-# Combining Univariate and multivariate Cox regression
+## Combining Univariate and multivariate Cox regression
 
-## Without gestational age
+### Without gestational age
 
 ```{r comment=NA}
 cox_1A <-
@@ -291,7 +291,7 @@ gtsummary::tbl_merge(
         "Combined Univariate and Multivariate Cox regression with sex")
 ```
 
-## With gestational age
+### With gestational age
 
 ```{r comment=NA}
 cox_2A <-

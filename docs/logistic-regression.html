@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>33&nbsp; Logistic Regression – Data Analysis With R</title>
+<title>34&nbsp; Logistic Regression – Data Analysis With R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,7 +116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./log-reg-single-categorical.html"><span style="font-weight:bold; color: black;">Logistic Regression</span></a></li><li class="breadcrumb-item"><a href="./logistic-regression.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Logistic Regression</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./log-reg-single-categorical.html"><span style="font-weight:bold; color: black;">Logistic Regression</span></a></li><li class="breadcrumb-item"><a href="./logistic-regression.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Logistic Regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -231,22 +231,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./diagnostic-tests.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Diagnostics Tests</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./roc-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ROC Analysis</span></span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Diagnostic Tests</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -254,8 +242,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  <a href="./diagnostic-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Diagnostics Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roc-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ROC Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bland-altman.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Bland and Altman Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -263,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -271,38 +271,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./lin-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lin-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lin-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lin-reg-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./lin-reg-model-selection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
   </div>
 </li>
       </ul>
@@ -310,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -318,20 +288,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+  <a href="./lin-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./anova-twoway.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Two-way ANOVA</span></span></a>
+  <a href="./lin-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ancova.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span></a>
+  <a href="./lin-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -339,7 +327,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -347,38 +335,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
+  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  <a href="./anova-twoway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Two-way ANOVA</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./log-reg-model-selection.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  <a href="./ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span></a>
   </div>
 </li>
       </ul>
@@ -386,7 +356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Ordinal Logistic Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -394,26 +364,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ord-log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  <a href="./log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ord-log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  <a href="./log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ord-log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Continuous and Categorical</span></span></a>
+  <a href="./log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ord-log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  <a href="./log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -421,7 +403,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Ordinal Logistic Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -429,14 +411,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  <a href="./ord-log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Cox Regression</span></span></a>
+  <a href="./ord-log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ord-log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Continuous and Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ord-log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -444,7 +438,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -452,8 +446,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Cox Regression</span></span></a>
   </div>
 </li>
       </ul>
@@ -461,7 +461,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Generalised Additive Modelling</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -469,20 +469,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gam-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gam-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./gam-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
   </div>
 </li>
       </ul>
@@ -490,7 +478,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Polynomial Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Generalised Additive Modelling</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -498,20 +486,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poly-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  <a href="./gam-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poly-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  <a href="./gam-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./poly-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  <a href="./gam-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -519,7 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">GQuantile Regression</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Polynomial Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -527,20 +515,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./qr-single-categorical.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  <a href="./poly-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./qr-single-continuous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  <a href="./poly-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./qr-multivariate.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  <a href="./poly-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -548,7 +536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Quantile Regression</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -556,20 +544,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  <a href="./qr-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  <a href="./qr-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  <a href="./qr-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
   </div>
 </li>
       </ul>
@@ -577,7 +565,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -585,20 +573,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-comparing-two-means.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Comparing two means</span></span></a>
+  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./ss-single-mean-to-reference-value.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Mean Difference - One sample</span></span></a>
+  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
   </div>
 </li>
       </ul>
@@ -606,7 +594,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
- <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -614,80 +602,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./ss-survey-proportion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Survey: Single proportion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-survey-mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Survey: Single mean</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-comparing-two-means.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Comparing two means</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-single-mean-to-reference-value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Mean Difference - One sample</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-dot-chart.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title">Dot Chart</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-curvelinear-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title">Curvilinear Plots</span></span></a>
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title">Curvilinear Plots</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./gr-forest-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Forest Plot</span></span></a>
+  <a href="./gr-error-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title">Error Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-followup-plot.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Followup Plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title">Followup Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-venn-diagram.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title">Venn Diagram</span></span></a>
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title">Venn Diagram</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-lollipop.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title">Lollipop plot</span></span></a>
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title">Lollipop plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-dumbell-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title">Dumbell Plot</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title"><code>ggstatsplot</code> Package</span></span></a>
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><code>ggstatsplot</code> Package</span></span></a>
   </div>
 </li>
       </ul>
@@ -708,27 +749,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#reading-and-visualizing-data" id="toc-reading-and-visualizing-data" class="nav-link active" data-scroll-target="#reading-and-visualizing-data"><span class="header-section-number">33.1</span> Reading and visualizing data</a></li>
-  <li><a href="#assumptions-for-a-logistic-regression" id="toc-assumptions-for-a-logistic-regression" class="nav-link" data-scroll-target="#assumptions-for-a-logistic-regression"><span class="header-section-number">33.2</span> Assumptions for a logistic regression</a></li>
-  <li><a href="#building-the-model" id="toc-building-the-model" class="nav-link" data-scroll-target="#building-the-model"><span class="header-section-number">33.3</span> Building the model</a></li>
-  <li><a href="#visualizing-the-model-and-its-properties" id="toc-visualizing-the-model-and-its-properties" class="nav-link" data-scroll-target="#visualizing-the-model-and-its-properties"><span class="header-section-number">33.4</span> Visualizing the model and its properties</a></li>
-  <li><a href="#plotting-coefficients" id="toc-plotting-coefficients" class="nav-link" data-scroll-target="#plotting-coefficients"><span class="header-section-number">33.5</span> Plotting coefficients</a></li>
-  <li><a href="#predictions-for-the-model---extracting-and-plotting" id="toc-predictions-for-the-model---extracting-and-plotting" class="nav-link" data-scroll-target="#predictions-for-the-model---extracting-and-plotting"><span class="header-section-number">33.6</span> Predictions for the model - Extracting and plotting</a></li>
-  <li><a href="#comparing-two-nested-models" id="toc-comparing-two-nested-models" class="nav-link" data-scroll-target="#comparing-two-nested-models"><span class="header-section-number">33.7</span> Comparing two nested models</a>
+  <li><a href="#reading-and-visualizing-data" id="toc-reading-and-visualizing-data" class="nav-link active" data-scroll-target="#reading-and-visualizing-data"><span class="header-section-number">34.1</span> Reading and visualizing data</a></li>
+  <li><a href="#assumptions-for-a-logistic-regression" id="toc-assumptions-for-a-logistic-regression" class="nav-link" data-scroll-target="#assumptions-for-a-logistic-regression"><span class="header-section-number">34.2</span> Assumptions for a logistic regression</a></li>
+  <li><a href="#building-the-model" id="toc-building-the-model" class="nav-link" data-scroll-target="#building-the-model"><span class="header-section-number">34.3</span> Building the model</a></li>
+  <li><a href="#visualizing-the-model-and-its-properties" id="toc-visualizing-the-model-and-its-properties" class="nav-link" data-scroll-target="#visualizing-the-model-and-its-properties"><span class="header-section-number">34.4</span> Visualizing the model and its properties</a></li>
+  <li><a href="#plotting-coefficients" id="toc-plotting-coefficients" class="nav-link" data-scroll-target="#plotting-coefficients"><span class="header-section-number">34.5</span> Plotting coefficients</a></li>
+  <li><a href="#predictions-for-the-model---extracting-and-plotting" id="toc-predictions-for-the-model---extracting-and-plotting" class="nav-link" data-scroll-target="#predictions-for-the-model---extracting-and-plotting"><span class="header-section-number">34.6</span> Predictions for the model - Extracting and plotting</a></li>
+  <li><a href="#comparing-two-nested-models" id="toc-comparing-two-nested-models" class="nav-link" data-scroll-target="#comparing-two-nested-models"><span class="header-section-number">34.7</span> Comparing two nested models</a>
   <ul class="collapse">
-  <li><a href="#roc-curves-for-model" id="toc-roc-curves-for-model" class="nav-link" data-scroll-target="#roc-curves-for-model"><span class="header-section-number">33.7.1</span> ROC curves for model</a></li>
+  <li><a href="#roc-curves-for-model" id="toc-roc-curves-for-model" class="nav-link" data-scroll-target="#roc-curves-for-model"><span class="header-section-number">34.7.1</span> ROC curves for model</a></li>
   </ul></li>
-  <li><a href="#the-lessr-logit-function" id="toc-the-lessr-logit-function" class="nav-link" data-scroll-target="#the-lessr-logit-function"><span class="header-section-number">33.8</span> The <code>lessR</code> Logit function</a></li>
-  <li><a href="#selecting-the-best-model" id="toc-selecting-the-best-model" class="nav-link" data-scroll-target="#selecting-the-best-model"><span class="header-section-number">33.9</span> Selecting the best model</a></li>
+  <li><a href="#the-lessr-logit-function" id="toc-the-lessr-logit-function" class="nav-link" data-scroll-target="#the-lessr-logit-function"><span class="header-section-number">34.8</span> The <code>lessR</code> Logit function</a></li>
+  <li><a href="#selecting-the-best-model" id="toc-selecting-the-best-model" class="nav-link" data-scroll-target="#selecting-the-best-model"><span class="header-section-number">34.9</span> Selecting the best model</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./log-reg-single-categorical.html"><span style="font-weight:bold; color: black;">Logistic Regression</span></a></li><li class="breadcrumb-item"><a href="./logistic-regression.html"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Logistic Regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./log-reg-single-categorical.html"><span style="font-weight:bold; color: black;">Logistic Regression</span></a></li><li class="breadcrumb-item"><a href="./logistic-regression.html"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Logistic Regression</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Logistic Regression</span></h1>
+<h1 class="title"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Logistic Regression</span></h1>
 </div>
 
 
@@ -745,8 +786,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="reading-and-visualizing-data" class="level2" data-number="33.1">
-<h2 data-number="33.1" class="anchored" data-anchor-id="reading-and-visualizing-data"><span class="header-section-number">33.1</span> Reading and visualizing data</h2>
+<section id="reading-and-visualizing-data" class="level2" data-number="34.1">
+<h2 data-number="34.1" class="anchored" data-anchor-id="reading-and-visualizing-data"><span class="header-section-number">34.1</span> Reading and visualizing data</h2>
 <p>First, we read the data and visualize it</p>
 <div class="cell">
 <details class="code-fold">
@@ -791,8 +832,8 @@ No   Variable    Stats / Values              Freqs (% of Valid)    Valid      Mi
 </div>
 </div>
 </section>
-<section id="assumptions-for-a-logistic-regression" class="level2" data-number="33.2">
-<h2 data-number="33.2" class="anchored" data-anchor-id="assumptions-for-a-logistic-regression"><span class="header-section-number">33.2</span> Assumptions for a logistic regression</h2>
+<section id="assumptions-for-a-logistic-regression" class="level2" data-number="34.2">
+<h2 data-number="34.2" class="anchored" data-anchor-id="assumptions-for-a-logistic-regression"><span class="header-section-number">34.2</span> Assumptions for a logistic regression</h2>
 <ol type="1">
 <li>Cases are randomly sampled</li>
 <li>Data free of bivariate or multivariate outliers</li>
@@ -801,8 +842,8 @@ No   Variable    Stats / Values              Freqs (% of Valid)    Valid      Mi
 <li>Model-free of collinearity</li>
 </ol>
 </section>
-<section id="building-the-model" class="level2" data-number="33.3">
-<h2 data-number="33.3" class="anchored" data-anchor-id="building-the-model"><span class="header-section-number">33.3</span> Building the model</h2>
+<section id="building-the-model" class="level2" data-number="34.3">
+<h2 data-number="34.3" class="anchored" data-anchor-id="building-the-model"><span class="header-section-number">34.3</span> Building the model</h2>
 <p>Then we build a logistic regression model using the rank variable as a numeric variable</p>
 <div class="cell">
 <details class="code-fold">
@@ -812,8 +853,8 @@ No   Variable    Stats / Values              Freqs (% of Valid)    Valid      Mi
 </details>
 </div>
 </section>
-<section id="visualizing-the-model-and-its-properties" class="level2" data-number="33.4">
-<h2 data-number="33.4" class="anchored" data-anchor-id="visualizing-the-model-and-its-properties"><span class="header-section-number">33.4</span> Visualizing the model and its properties</h2>
+<section id="visualizing-the-model-and-its-properties" class="level2" data-number="34.4">
+<h2 data-number="34.4" class="anchored" data-anchor-id="visualizing-the-model-and-its-properties"><span class="header-section-number">34.4</span> Visualizing the model and its properties</h2>
 <p>A summary of the model can be visualized from the <code>summary()</code> function. Next, we use the <code>broom</code> package to display various properties of the model in a tabular form. These can then be used for further analysis.</p>
 <div class="cell">
 <details class="code-fold">
@@ -861,23 +902,23 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">gt</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="ikzeitnjvz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ikzeitnjvz table {
+<div id="cemfersuby" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#cemfersuby table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ikzeitnjvz thead, #ikzeitnjvz tbody, #ikzeitnjvz tfoot, #ikzeitnjvz tr, #ikzeitnjvz td, #ikzeitnjvz th {
+#cemfersuby thead, #cemfersuby tbody, #cemfersuby tfoot, #cemfersuby tr, #cemfersuby td, #cemfersuby th {
   border-style: none;
 }
 
-#ikzeitnjvz p {
+#cemfersuby p {
   margin: 0;
   padding: 0;
 }
 
-#ikzeitnjvz .gt_table {
+#cemfersuby .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -903,12 +944,12 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_caption {
+#cemfersuby .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ikzeitnjvz .gt_title {
+#cemfersuby .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -920,7 +961,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-width: 0;
 }
 
-#ikzeitnjvz .gt_subtitle {
+#cemfersuby .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -932,7 +973,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-top-width: 0;
 }
 
-#ikzeitnjvz .gt_heading {
+#cemfersuby .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -944,13 +985,13 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_bottom_border {
+#cemfersuby .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_col_headings {
+#cemfersuby .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -965,7 +1006,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_col_heading {
+#cemfersuby .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -985,7 +1026,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   overflow-x: hidden;
 }
 
-#ikzeitnjvz .gt_column_spanner_outer {
+#cemfersuby .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -997,15 +1038,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 4px;
 }
 
-#ikzeitnjvz .gt_column_spanner_outer:first-child {
+#cemfersuby .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ikzeitnjvz .gt_column_spanner_outer:last-child {
+#cemfersuby .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ikzeitnjvz .gt_column_spanner {
+#cemfersuby .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1017,11 +1058,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
   width: 100%;
 }
 
-#ikzeitnjvz .gt_spanner_row {
+#cemfersuby .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ikzeitnjvz .gt_group_heading {
+#cemfersuby .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1047,7 +1088,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   text-align: left;
 }
 
-#ikzeitnjvz .gt_empty_group_heading {
+#cemfersuby .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1062,15 +1103,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   vertical-align: middle;
 }
 
-#ikzeitnjvz .gt_from_md > :first-child {
+#cemfersuby .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ikzeitnjvz .gt_from_md > :last-child {
+#cemfersuby .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ikzeitnjvz .gt_row {
+#cemfersuby .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1089,7 +1130,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   overflow-x: hidden;
 }
 
-#ikzeitnjvz .gt_stub {
+#cemfersuby .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1102,7 +1143,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#ikzeitnjvz .gt_stub_row_group {
+#cemfersuby .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1116,15 +1157,15 @@ Number of Fisher Scoring iterations: 4</code></pre>
   vertical-align: top;
 }
 
-#ikzeitnjvz .gt_row_group_first td {
+#cemfersuby .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ikzeitnjvz .gt_row_group_first th {
+#cemfersuby .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ikzeitnjvz .gt_summary_row {
+#cemfersuby .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1134,16 +1175,16 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#ikzeitnjvz .gt_first_summary_row {
+#cemfersuby .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_first_summary_row.thick {
+#cemfersuby .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ikzeitnjvz .gt_last_summary_row {
+#cemfersuby .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1153,7 +1194,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_grand_summary_row {
+#cemfersuby .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1163,7 +1204,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#ikzeitnjvz .gt_first_grand_summary_row {
+#cemfersuby .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1173,7 +1214,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_last_grand_summary_row_top {
+#cemfersuby .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1183,11 +1224,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_striped {
+#cemfersuby .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ikzeitnjvz .gt_table_body {
+#cemfersuby .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1196,7 +1237,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_footnotes {
+#cemfersuby .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1210,7 +1251,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_footnote {
+#cemfersuby .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1219,7 +1260,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#ikzeitnjvz .gt_sourcenotes {
+#cemfersuby .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1233,7 +1274,7 @@ Number of Fisher Scoring iterations: 4</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#ikzeitnjvz .gt_sourcenote {
+#cemfersuby .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1241,72 +1282,72 @@ Number of Fisher Scoring iterations: 4</code></pre>
   padding-right: 5px;
 }
 
-#ikzeitnjvz .gt_left {
+#cemfersuby .gt_left {
   text-align: left;
 }
 
-#ikzeitnjvz .gt_center {
+#cemfersuby .gt_center {
   text-align: center;
 }
 
-#ikzeitnjvz .gt_right {
+#cemfersuby .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ikzeitnjvz .gt_font_normal {
+#cemfersuby .gt_font_normal {
   font-weight: normal;
 }
 
-#ikzeitnjvz .gt_font_bold {
+#cemfersuby .gt_font_bold {
   font-weight: bold;
 }
 
-#ikzeitnjvz .gt_font_italic {
+#cemfersuby .gt_font_italic {
   font-style: italic;
 }
 
-#ikzeitnjvz .gt_super {
+#cemfersuby .gt_super {
   font-size: 65%;
 }
 
-#ikzeitnjvz .gt_footnote_marks {
+#cemfersuby .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ikzeitnjvz .gt_asterisk {
+#cemfersuby .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ikzeitnjvz .gt_indent_1 {
+#cemfersuby .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ikzeitnjvz .gt_indent_2 {
+#cemfersuby .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ikzeitnjvz .gt_indent_3 {
+#cemfersuby .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ikzeitnjvz .gt_indent_4 {
+#cemfersuby .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ikzeitnjvz .gt_indent_5 {
+#cemfersuby .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ikzeitnjvz .katex-display {
+#cemfersuby .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ikzeitnjvz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#cemfersuby div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1318,12 +1359,12 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <th id="gmat" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">gmat</th>
 <th id="gpa" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">gpa</th>
 <th id="rank" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">rank</th>
-<th id=".fitted" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.fitted</th>
-<th id=".resid" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.resid</th>
-<th id=".hat" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.hat</th>
-<th id=".sigma" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.sigma</th>
-<th id=".cooksd" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.cooksd</th>
-<th id=".std.resid" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.std.resid</th>
+<th id="a.fitted" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.fitted</th>
+<th id="a.resid" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.resid</th>
+<th id="a.hat" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.hat</th>
+<th id="a.sigma" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.sigma</th>
+<th id="a.cooksd" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.cooksd</th>
+<th id="a.std.resid" class="gt_col_heading gt_columns_bottom_border gt_right" data-quarto-table-cell-role="th" scope="col">.std.resid</th>
 </tr>
 </thead>
 <tbody class="gt_table_body">
@@ -1478,8 +1519,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 <p>None of the variables has a significant interaction and hence the linearity between the variable and the logit of the outcome can be assumed.</p>
 <p>Residuals are referred to as deviant residuals. Also, we have out beta estimates and significance (p-values). Null deviance is a measure of error if you estimate only the model with the intercept term and not the x variable at all at the right. So we compare the value of the Residual deviance to the Null deviance. Also, we can use the AIC, smaller is better here.</p>
 </section>
-<section id="plotting-coefficients" class="level2" data-number="33.5">
-<h2 data-number="33.5" class="anchored" data-anchor-id="plotting-coefficients"><span class="header-section-number">33.5</span> Plotting coefficients</h2>
+<section id="plotting-coefficients" class="level2" data-number="34.5">
+<h2 data-number="34.5" class="anchored" data-anchor-id="plotting-coefficients"><span class="header-section-number">34.5</span> Plotting coefficients</h2>
 <p>The coefficient of the regression can be plotted using the <code>coefplot</code>package. This is illustrated below</p>
 <div class="cell">
 <details class="code-fold">
@@ -1507,8 +1548,8 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 </div>
 </section>
-<section id="predictions-for-the-model---extracting-and-plotting" class="level2" data-number="33.6">
-<h2 data-number="33.6" class="anchored" data-anchor-id="predictions-for-the-model---extracting-and-plotting"><span class="header-section-number">33.6</span> Predictions for the model - Extracting and plotting</h2>
+<section id="predictions-for-the-model---extracting-and-plotting" class="level2" data-number="34.6">
+<h2 data-number="34.6" class="anchored" data-anchor-id="predictions-for-the-model---extracting-and-plotting"><span class="header-section-number">34.6</span> Predictions for the model - Extracting and plotting</h2>
 <p>Predictions from the model can be obtained with the <code>effects</code> package. This is illustrated below. First, we predict the model using the <code>gpa</code>, convert it to a <em>tibble</em>, plot the predicted probabilities and finally compare the plotted probabilities for the persons ranked as 1 to 5.</p>
 <div class="cell">
 <details class="code-fold">
@@ -1586,8 +1627,8 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
 </div>
 </div>
 </section>
-<section id="comparing-two-nested-models" class="level2" data-number="33.7">
-<h2 data-number="33.7" class="anchored" data-anchor-id="comparing-two-nested-models"><span class="header-section-number">33.7</span> Comparing two nested models</h2>
+<section id="comparing-two-nested-models" class="level2" data-number="34.7">
+<h2 data-number="34.7" class="anchored" data-anchor-id="comparing-two-nested-models"><span class="header-section-number">34.7</span> Comparing two nested models</h2>
 <p>We can compare the two models using the <code>anova</code> function in R. The first one is the Null Mode and the other includes the <code>gpa</code> variable. This we do with the analysis of the deviance table as below. Remember these must be nested in each other.</p>
 <div class="cell">
 <details class="code-fold">
@@ -1602,23 +1643,23 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    gt<span class="sc">::</span><span class="fu">opt_stylize</span>(<span class="at">style =</span> <span class="dv">6</span>, <span class="at">color =</span> <span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="qkhqskowod" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#qkhqskowod table {
+<div id="ymqxarhskl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ymqxarhskl table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#qkhqskowod thead, #qkhqskowod tbody, #qkhqskowod tfoot, #qkhqskowod tr, #qkhqskowod td, #qkhqskowod th {
+#ymqxarhskl thead, #ymqxarhskl tbody, #ymqxarhskl tfoot, #ymqxarhskl tr, #ymqxarhskl td, #ymqxarhskl th {
   border-style: none;
 }
 
-#qkhqskowod p {
+#ymqxarhskl p {
   margin: 0;
   padding: 0;
 }
 
-#qkhqskowod .gt_table {
+#ymqxarhskl .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1644,12 +1685,12 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-left-color: #D3D3D3;
 }
 
-#qkhqskowod .gt_caption {
+#ymqxarhskl .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#qkhqskowod .gt_title {
+#ymqxarhskl .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1661,7 +1702,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-bottom-width: 0;
 }
 
-#qkhqskowod .gt_subtitle {
+#ymqxarhskl .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1673,7 +1714,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-top-width: 0;
 }
 
-#qkhqskowod .gt_heading {
+#ymqxarhskl .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1685,13 +1726,13 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-right-color: #D3D3D3;
 }
 
-#qkhqskowod .gt_bottom_border {
+#ymqxarhskl .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #5F5F5F;
 }
 
-#qkhqskowod .gt_col_headings {
+#ymqxarhskl .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #5F5F5F;
@@ -1706,7 +1747,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-right-color: #D3D3D3;
 }
 
-#qkhqskowod .gt_col_heading {
+#ymqxarhskl .gt_col_heading {
   color: #FFFFFF;
   background-color: #5F5F5F;
   font-size: 100%;
@@ -1726,7 +1767,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   overflow-x: hidden;
 }
 
-#qkhqskowod .gt_column_spanner_outer {
+#ymqxarhskl .gt_column_spanner_outer {
   color: #FFFFFF;
   background-color: #5F5F5F;
   font-size: 100%;
@@ -1738,15 +1779,15 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   padding-right: 4px;
 }
 
-#qkhqskowod .gt_column_spanner_outer:first-child {
+#ymqxarhskl .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qkhqskowod .gt_column_spanner_outer:last-child {
+#ymqxarhskl .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qkhqskowod .gt_column_spanner {
+#ymqxarhskl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #5F5F5F;
@@ -1758,11 +1799,11 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   width: 100%;
 }
 
-#qkhqskowod .gt_spanner_row {
+#ymqxarhskl .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#qkhqskowod .gt_group_heading {
+#ymqxarhskl .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1788,7 +1829,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   text-align: left;
 }
 
-#qkhqskowod .gt_empty_group_heading {
+#ymqxarhskl .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1803,15 +1844,15 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   vertical-align: middle;
 }
 
-#qkhqskowod .gt_from_md > :first-child {
+#ymqxarhskl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qkhqskowod .gt_from_md > :last-child {
+#ymqxarhskl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qkhqskowod .gt_row {
+#ymqxarhskl .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1830,7 +1871,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   overflow-x: hidden;
 }
 
-#qkhqskowod .gt_stub {
+#ymqxarhskl .gt_stub {
   color: #333333;
   background-color: #D5D5D5;
   font-size: 100%;
@@ -1843,7 +1884,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   padding-right: 5px;
 }
 
-#qkhqskowod .gt_stub_row_group {
+#ymqxarhskl .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1857,15 +1898,15 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   vertical-align: top;
 }
 
-#qkhqskowod .gt_row_group_first td {
+#ymqxarhskl .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#qkhqskowod .gt_row_group_first th {
+#ymqxarhskl .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#qkhqskowod .gt_summary_row {
+#ymqxarhskl .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1875,16 +1916,16 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   padding-right: 5px;
 }
 
-#qkhqskowod .gt_first_summary_row {
+#ymqxarhskl .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #5F5F5F;
 }
 
-#qkhqskowod .gt_first_summary_row.thick {
+#ymqxarhskl .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#qkhqskowod .gt_last_summary_row {
+#ymqxarhskl .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1894,7 +1935,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-bottom-color: #5F5F5F;
 }
 
-#qkhqskowod .gt_grand_summary_row {
+#ymqxarhskl .gt_grand_summary_row {
   color: #333333;
   background-color: #D5D5D5;
   text-transform: inherit;
@@ -1904,7 +1945,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   padding-right: 5px;
 }
 
-#qkhqskowod .gt_first_grand_summary_row {
+#ymqxarhskl .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1914,7 +1955,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-top-color: #5F5F5F;
 }
 
-#qkhqskowod .gt_last_grand_summary_row_top {
+#ymqxarhskl .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1924,11 +1965,11 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-bottom-color: #5F5F5F;
 }
 
-#qkhqskowod .gt_striped {
+#ymqxarhskl .gt_striped {
   background-color: #F4F4F4;
 }
 
-#qkhqskowod .gt_table_body {
+#ymqxarhskl .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #5F5F5F;
@@ -1937,7 +1978,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-bottom-color: #5F5F5F;
 }
 
-#qkhqskowod .gt_footnotes {
+#ymqxarhskl .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1951,7 +1992,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-right-color: #D3D3D3;
 }
 
-#qkhqskowod .gt_footnote {
+#ymqxarhskl .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1960,7 +2001,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   padding-right: 5px;
 }
 
-#qkhqskowod .gt_sourcenotes {
+#ymqxarhskl .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1974,7 +2015,7 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   border-right-color: #D3D3D3;
 }
 
-#qkhqskowod .gt_sourcenote {
+#ymqxarhskl .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1982,72 +2023,72 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
   padding-right: 5px;
 }
 
-#qkhqskowod .gt_left {
+#ymqxarhskl .gt_left {
   text-align: left;
 }
 
-#qkhqskowod .gt_center {
+#ymqxarhskl .gt_center {
   text-align: center;
 }
 
-#qkhqskowod .gt_right {
+#ymqxarhskl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qkhqskowod .gt_font_normal {
+#ymqxarhskl .gt_font_normal {
   font-weight: normal;
 }
 
-#qkhqskowod .gt_font_bold {
+#ymqxarhskl .gt_font_bold {
   font-weight: bold;
 }
 
-#qkhqskowod .gt_font_italic {
+#ymqxarhskl .gt_font_italic {
   font-style: italic;
 }
 
-#qkhqskowod .gt_super {
+#ymqxarhskl .gt_super {
   font-size: 65%;
 }
 
-#qkhqskowod .gt_footnote_marks {
+#ymqxarhskl .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#qkhqskowod .gt_asterisk {
+#ymqxarhskl .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#qkhqskowod .gt_indent_1 {
+#ymqxarhskl .gt_indent_1 {
   text-indent: 5px;
 }
 
-#qkhqskowod .gt_indent_2 {
+#ymqxarhskl .gt_indent_2 {
   text-indent: 10px;
 }
 
-#qkhqskowod .gt_indent_3 {
+#ymqxarhskl .gt_indent_3 {
   text-indent: 15px;
 }
 
-#qkhqskowod .gt_indent_4 {
+#ymqxarhskl .gt_indent_4 {
   text-indent: 20px;
 }
 
-#qkhqskowod .gt_indent_5 {
+#ymqxarhskl .gt_indent_5 {
   text-indent: 25px;
 }
 
-#qkhqskowod .katex-display {
+#ymqxarhskl .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#qkhqskowod div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ymqxarhskl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2091,8 +2132,8 @@ Not all rows are shown in the output. Use `print(..., n = Inf)` to show
 </details>
 </div>
 <p>Results indicate a significant improvement between the Null model and the one with the <code>gpa</code> as a predictor</p>
-<section id="roc-curves-for-model" class="level3" data-number="33.7.1">
-<h3 data-number="33.7.1" class="anchored" data-anchor-id="roc-curves-for-model"><span class="header-section-number">33.7.1</span> ROC curves for model</h3>
+<section id="roc-curves-for-model" class="level3" data-number="34.7.1">
+<h3 data-number="34.7.1" class="anchored" data-anchor-id="roc-curves-for-model"><span class="header-section-number">34.7.1</span> ROC curves for model</h3>
 <p>Next, we compute the predicted probabilities of being admitted for each individual. And then generate ROC curves after we re-categorize standard error of the <code>Rank</code> variable into <em>High</em> and <em>Low</em>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -2290,8 +2331,8 @@ AIC value = 470.5175</code></pre>
 </div>
 </section>
 </section>
-<section id="the-lessr-logit-function" class="level2" data-number="33.8">
-<h2 data-number="33.8" class="anchored" data-anchor-id="the-lessr-logit-function"><span class="header-section-number">33.8</span> The <code>lessR</code> Logit function</h2>
+<section id="the-lessr-logit-function" class="level2" data-number="34.8">
+<h2 data-number="34.8" class="anchored" data-anchor-id="the-lessr-logit-function"><span class="header-section-number">34.8</span> The <code>lessR</code> Logit function</h2>
 <p>The <code>lessR</code> package gives a detailed output for logistic regression. This is shown below.</p>
 <div class="cell">
 <details class="code-fold">
@@ -2436,8 +2477,8 @@ Precision: 59.18 </code></pre>
 </div>
 </div>
 </section>
-<section id="selecting-the-best-model" class="level2" data-number="33.9">
-<h2 data-number="33.9" class="anchored" data-anchor-id="selecting-the-best-model"><span class="header-section-number">33.9</span> Selecting the best model</h2>
+<section id="selecting-the-best-model" class="level2" data-number="34.9">
+<h2 data-number="34.9" class="anchored" data-anchor-id="selecting-the-best-model"><span class="header-section-number">34.9</span> Selecting the best model</h2>
 <p>To select the best model we first run a stepwise backward regression</p>
 <div class="cell">
 <details class="code-fold">
@@ -2986,12 +3027,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./log-reg-model-selection.html" class="pagination-link" aria-label="Model Selection">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Model Selection</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Model Selection</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./ord-log-reg-single-categorical.html" class="pagination-link" aria-label="Single Categorical">
-        <span class="nav-page-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Single Categorical</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Single Categorical</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

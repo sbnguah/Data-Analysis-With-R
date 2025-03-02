@@ -1,0 +1,2058 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>18&nbsp; Bland and Altman Analysis – Data Analysis With R</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./correlation.html" rel="next">
+<link href="./roc-analysis.html" rel="prev">
+<link href="./R-logo.jpeg" rel="icon" type="image/jpeg">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./diagnostic-tests.html"><span style="font-weight:bold; color: black;">Diagnostic Tests</span></a></li><li class="breadcrumb-item"><a href="./bland-altman.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Bland and Altman Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Contents</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Data analysis with R</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-importation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Data Importation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Types</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-wrangling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Data Wrangling</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptive-stats-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Continuous</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./descriptive-stats-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Descriptive Statistics: Categorical</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis-of-continuous data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Analysis of Numeric Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./analysis-of-categorical-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Analysis of Categorical Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./risk-and-odds.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Risk and Odds</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Normality</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./hypothesis-testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Hypothesis Testing</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./confounding-and-interaction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Confounding &amp; Interaction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Diagnostic Tests</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./diagnostic-tests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Diagnostics Tests</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./roc-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ROC Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bland-altman.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Bland and Altman Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Correlation</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Correlation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Linear Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Single Categorical Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Single Continuous Variable</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Continuous &amp; Categorical Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./lin-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./linear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Linear Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Analysis of Variance</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova-oneway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Oneway ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./anova-twoway.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Two-way ANOVA</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ancova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Analysis of Covariance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Logistic Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Single Categorical Predictor</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Categorical &amp; Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./log-reg-model-selection.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Model Selection</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./logistic-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">34</span>&nbsp; <span class="chapter-title">Logistic Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Ordinal Logistic Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ord-log-reg-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">35</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ord-log-reg-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">36</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ord-log-reg-cont-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">37</span>&nbsp; <span class="chapter-title">Continuous and Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ord-log-reg-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">38</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Survival Analysis</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./survival-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">39</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cox-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">40</span>&nbsp; <span class="chapter-title">Cox Regression</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Missiing Data</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./missing-data.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">41</span>&nbsp; <span class="chapter-title">Visualization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Generalised Additive Modelling</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gam-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">42</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gam-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">43</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gam-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">44</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Polynomial Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">45</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">46</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./poly-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">47</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Quantile Regression</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qr-single-categorical.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">48</span>&nbsp; <span class="chapter-title">Single Categorical</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qr-single-continuous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">49</span>&nbsp; <span class="chapter-title">Single Continuous</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./qr-multivariate.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">50</span>&nbsp; <span class="chapter-title">Multivariate</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Specific Packages</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-dplyr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">51</span>&nbsp; <span class="chapter-title"><code>dplyr</code> Package</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-gtsummary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">52</span>&nbsp; <span class="chapter-title"><code>gtsummary</code></span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pkg-nlme.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">53</span>&nbsp; <span class="chapter-title"><code>nlme</code></span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Sample Size</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-13" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-13" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-survey-proportion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">54</span>&nbsp; <span class="chapter-title">Survey: Single proportion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-survey-mean.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">55</span>&nbsp; <span class="chapter-title">Survey: Single mean</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-matched-case-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">56</span>&nbsp; <span class="chapter-title">Matched Case-Control</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-comparing-two-means.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">57</span>&nbsp; <span class="chapter-title">Comparing two means</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./ss-single-mean-to-reference-value.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">58</span>&nbsp; <span class="chapter-title">Mean Difference - One sample</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true">
+ <span class="menu-text"><span style="font-weight:bold; color: black;">Graphics</span></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-14" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-14" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-histogram.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">59</span>&nbsp; <span class="chapter-title">Histogram</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-densityplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">60</span>&nbsp; <span class="chapter-title">Density Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-boxplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">61</span>&nbsp; <span class="chapter-title">Boxplot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-barplot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">62</span>&nbsp; <span class="chapter-title">Barplot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-scatter.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">63</span>&nbsp; <span class="chapter-title">Scatter Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-line-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">64</span>&nbsp; <span class="chapter-title">Line Graphs</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-dot-chart.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">65</span>&nbsp; <span class="chapter-title">Dot Chart</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-curvelinear-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">66</span>&nbsp; <span class="chapter-title">Curvilinear Plots</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-error-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">67</span>&nbsp; <span class="chapter-title">Error Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-followup-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">68</span>&nbsp; <span class="chapter-title">Followup Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-venn-diagram.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">69</span>&nbsp; <span class="chapter-title">Venn Diagram</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-population-pyramid.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">70</span>&nbsp; <span class="chapter-title">Population Pyramid</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-lollipop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">71</span>&nbsp; <span class="chapter-title">Lollipop plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-dumbell-plot.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">72</span>&nbsp; <span class="chapter-title">Dumbell Plot</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./gr-miscellaneous.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">73</span>&nbsp; <span class="chapter-title"><code>ggstatsplot</code> Package</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">18.1</span> Introduction</a></li>
+  <li><a href="#case-scenario" id="toc-case-scenario" class="nav-link" data-scroll-target="#case-scenario"><span class="header-section-number">18.2</span> Case scenario</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./diagnostic-tests.html"><span style="font-weight:bold; color: black;">Diagnostic Tests</span></a></li><li class="breadcrumb-item"><a href="./bland-altman.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Bland and Altman Analysis</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Bland and Altman Analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">18.1</span> Introduction</h2>
+<p>Correlation quantifies the degree to which two variables are related. However, a high correlation does not automatically imply good agreement between the two methods. The correlation coefficient and regression technique are sometimes inadequate and can be misleading when assessing agreement because they evaluate only the linear association of two sets of observations. The r measures the strength of a relation between two variables, not their agreement. Similarly, r2, named the coefficient of determination, only tells us the proportion of variance the two variables have in common. Finally, the significance test may show that the two methods are related, but it is evident that two methods designed to measure the same variable are related.</p>
+</section>
+<section id="case-scenario" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="case-scenario"><span class="header-section-number">18.2</span> Case scenario</h2>
+<p>A Bland-Altman analysis, also known as a Bland-Altman plot or Tukey mean-difference plot compares two different measurement techniques or instruments. It’s commonly used in analytical chemistry and biomedicine to assess the agreement between two assays or measurement methods.</p>
+<p>Key Components: X-Axis: Displays the average of the measurements from the two methods.</p>
+<p>Y-Axis: Displays the difference between the measurements from the two methods.</p>
+<p>Mean Difference (Bias): A horizontal line representing the average difference between the two methods.</p>
+<p>Limits of Agreement: Lines representing the upper and lower limits of the differences, typically calculated as the mean difference ± 1.96 times the standard deviation of the differences.</p>
+<p>Interpretation: Bias: Indicates if there is a systematic difference between the two methods.</p>
+<p>Limits of Agreement: Provides an estimate of the range in which 95% of the differences between the two methods fall.</p>
+<p>This analysis helps identify any systematic bias between the methods and assesses the typical range of agreement. It’s beneficial for determining if two measurement techniques can be used interchangeably.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df_poap <span class="ot">&lt;-</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"C:/Dataset/pawper.xlsx"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">weight =</span> <span class="fu">parse_number</span>(weight), </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">id =</span> <span class="fu">row_number</span>()) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(id <span class="sc">!=</span> <span class="dv">343</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>id)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Exploration</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df_poap <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    DataExplorer<span class="sc">::</span><span class="fu">plot_histogram</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>(),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom_histogram_args =</span> <span class="fu">list</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">fill =</span> <span class="st">"steelblue"</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">"blue"</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">bins =</span> <span class="dv">12</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bland-altman_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df_poap <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> weight, <span class="at">y =</span> pxl_wgt))<span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Actual weight (kgs)"</span>, <span class="at">y =</span> <span class="st">"Pawper-XL weight (kgs)"</span>)<span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bland-altman_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df_temp <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    df_poap <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(pxl_wgt, weight) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">means =</span> (pxl_wgt <span class="sc">+</span> weight)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">diffs =</span> (pxl_wgt <span class="sc">-</span> weight),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">bias =</span> <span class="fu">mean</span>(diffs),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_diffs =</span> <span class="fu">sd</span>(diffs),</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_loa =</span> bias <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> sd_diffs,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_loa =</span> bias <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> sd_diffs) </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>ula <span class="ot">=</span> <span class="fu">mean</span>(df_temp<span class="sc">$</span>upper_loa)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>lla <span class="ot">=</span> <span class="fu">mean</span>(df_temp<span class="sc">$</span>lower_loa)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>mn <span class="ot">=</span> <span class="fu">mean</span>(df_temp<span class="sc">$</span>bias)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">=</span> <span class="fu">max</span>(df_temp<span class="sc">$</span>means)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>df_temp <span class="sc">%&gt;%</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> means, <span class="at">y =</span> diffs)) <span class="sc">+</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(<span class="at">yintercept =</span> upper_loa),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#2369BD"</span>)<span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> lower_loa),</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#2369BD"</span>) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> bias),</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#2369BD"</span>) <span class="sc">+</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">'mean+1.96*SD'</span>, </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> ula, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">str_glue</span>({<span class="fu">round</span>(ula, <span class="dv">2</span>)}), </span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> ula, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">1.2</span>, </span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">'mean-1.96*SD'</span>, </span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> lla, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">str_glue</span>({<span class="fu">round</span>(lla, <span class="dv">2</span>)}), </span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> lla, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">1.2</span>, </span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">'Bias'</span>, </span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> mn, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">str_glue</span>({<span class="fu">round</span>(mn, <span class="dv">2</span>)}), </span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> mn, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">1.2</span>, </span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Mean of Pawper-XL and actual weight (kgs)"</span>,</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Difference"</span>)<span class="sc">+</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bland-altman_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df_temp <span class="ot">&lt;-</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    df_poap <span class="sc">%&gt;%</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(pxl_wgt, weight) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">drop_na</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">means =</span> (pxl_wgt <span class="sc">+</span> weight)<span class="sc">/</span><span class="dv">2</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">diffs =</span> (pxl_wgt <span class="sc">-</span> weight)<span class="sc">/</span>weight<span class="sc">*</span><span class="dv">100</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">bias =</span> <span class="fu">mean</span>(diffs),</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">sd_diffs =</span> <span class="fu">sd</span>(diffs),</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">upper_loa =</span> bias <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> sd_diffs,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">lower_loa =</span> bias <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> sd_diffs) </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>ula <span class="ot">=</span> <span class="fu">mean</span>(df_temp<span class="sc">$</span>upper_loa)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>lla <span class="ot">=</span> <span class="fu">mean</span>(df_temp<span class="sc">$</span>lower_loa)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>mn <span class="ot">=</span> <span class="fu">mean</span>(df_temp<span class="sc">$</span>bias)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>xx <span class="ot">=</span> <span class="fu">max</span>(df_temp<span class="sc">$</span>means)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>df_temp <span class="sc">%&gt;%</span> </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> means, <span class="at">y =</span> diffs)) <span class="sc">+</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        <span class="fu">aes</span>(<span class="at">yintercept =</span> upper_loa),</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#2369BD"</span>)<span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>     <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> lower_loa),</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#2369BD"</span>) <span class="sc">+</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> bias),</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">linetype =</span> <span class="dv">2</span>, <span class="at">color =</span> <span class="st">"#2369BD"</span>) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">'mean+1.96*SD'</span>, </span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> ula, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">str_glue</span>({<span class="fu">round</span>(ula, <span class="dv">2</span>)}), </span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> ula, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">1.2</span>, </span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">'mean-1.96*SD'</span>, </span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> lla, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">str_glue</span>({<span class="fu">round</span>(lla, <span class="dv">2</span>)}), </span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> lla, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">1.2</span>, </span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="st">'Bias'</span>, </span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> mn, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        <span class="at">geom =</span> <span class="st">'text'</span>, </span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>        <span class="at">label =</span> <span class="fu">str_glue</span>({<span class="fu">round</span>(mn, <span class="dv">2</span>)}), </span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> xx, <span class="at">y =</span> mn, <span class="at">hjust =</span> <span class="dv">1</span>, <span class="at">vjust =</span> <span class="fl">1.2</span>, </span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"#2369BD"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">family =</span> <span class="st">"serif"</span>)<span class="sc">+</span></span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>        <span class="at">x =</span> <span class="st">"Mean of Pawper-XL and actual weight (kgs)"</span>,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>        <span class="at">y =</span> <span class="st">"Percentage Difference"</span>)<span class="sc">+</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_classic</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bland-altman_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'magrittr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:purrr':
+
+    set_names</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following object is masked from 'package:tidyr':
+
+    extract</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_poap <span class="sc">%$%</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    BlandAltmanLeh<span class="sc">::</span><span class="fu">bland.altman.stats</span>(</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">group1 =</span> weight, <span class="at">group2 =</span> pxl_wgt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>$means
+  [1] 23.075 16.375 12.725 18.275  6.950 11.600 10.475 11.900  8.550  8.200
+ [11]  3.175  8.900  8.625 16.850 11.255 13.250 12.000 34.725  9.550  9.875
+ [21] 31.800 17.150 17.850 19.875  9.775 14.000 25.350  8.500 37.350 28.175
+ [31] 34.575 14.725 28.975 15.400 14.600  5.900 14.200 14.865  8.100 31.550
+ [41] 29.350  8.105 10.400 23.405  8.150  8.465  5.060 11.975  7.000 11.000
+ [51]  7.950 32.950 23.100 20.425 26.700 20.475 18.850 31.725 17.950  5.650
+ [61] 11.350  3.500 27.750  6.125  7.750  6.500 26.900 18.000  7.650 17.800
+ [71] 30.425 13.800  7.850 12.100 29.400 16.285 35.000 16.400 16.400  6.400
+ [81] 15.900  6.050 16.650  9.600  9.875 59.050 14.425 18.750 11.000 27.750
+ [91]  8.550 17.100  8.850 11.900 14.800  9.050 10.500 31.500 11.750 35.000
+[101] 35.000  9.600 20.700  6.700 18.250 29.200  5.500 20.000 36.200  7.750
+[111]  7.300 29.250 14.500 28.100 28.000 24.250 36.000 27.900 31.500 33.300
+[121]  8.150  6.700 12.450 21.250 25.500  9.800  6.150 24.000 11.950 11.750
+[131] 33.000 31.250 25.500 22.000 32.075  9.675 26.725 17.425 44.075 21.475
+[141] 11.800 10.175 14.050 10.600 14.400 29.875 17.275 30.125 17.925 17.725
+[151]  4.050  8.300 13.000 11.625  8.750 11.050 37.350 16.225 13.325 10.400
+[161] 20.200 36.025 13.550  6.550 12.000  8.175 13.650  8.575 27.975 25.575
+[171] 12.625 19.900 11.425 13.000 19.500  8.375 30.000 22.900 20.200 21.350
+[181] 20.275 18.425 19.125 14.000 26.900 21.575 44.525 10.500 11.325 13.900
+[191] 20.925 11.150 18.225  8.600 19.125  6.515 14.000 14.875  9.275 19.900
+[201] 11.775 10.900 35.825  8.575  9.550 21.000 14.175 21.800 11.575 11.575
+[211]  8.450 11.450  9.825  6.600 10.650 19.925 14.475 32.925 24.375  6.425
+[221] 19.750  9.850  5.950  9.600  9.450 10.525 12.875 28.350 13.975 13.975
+[231] 31.275  9.500 22.325 10.375 14.050  9.740 33.125 17.950  5.000 14.625
+[241] 10.180 12.400  7.100  4.400 24.400 32.450 10.465 11.275 29.700 15.325
+[251] 12.600 14.450 28.725 11.700 31.725 36.525  3.565 13.200 26.950 14.350
+[261] 30.800  7.915 12.750 10.700 16.325 25.975 30.525 32.525  7.800 15.700
+[271] 12.050 16.625 15.550 13.900  3.930 20.675 32.775 17.900 18.900 14.475
+[281] 16.100 10.025 10.575  9.250  6.650  7.650  5.950 11.950 11.125 17.200
+[291] 11.050 24.000 12.025 16.925  9.950 12.675 15.375 22.475 34.250 16.150
+[301]  8.750 12.525 53.500 20.750  8.950 44.125  7.175 42.675  4.085 15.100
+[311] 24.450 27.925 35.350  9.840  7.285 12.950 16.200 15.350  8.250  9.450
+[321] 17.125  9.000 12.925 57.200 25.825 54.150 13.975  4.450  6.250  6.550
+[331]  6.950 24.100 31.500 18.500 10.000 27.000 15.500 35.500 27.750  7.400
+[341] 32.300 11.300 13.150 16.500  6.600  8.500 13.750 14.650 17.600 20.250
+[351] 20.750  8.650  2.500 36.200  5.200 12.800  7.750 11.400 19.650  8.750
+[361] 18.350 38.250  6.550 32.350 10.350 12.750  8.450 10.550  5.250 24.400
+[371]  6.500 11.350 12.400 25.950  6.350  4.300  6.300 12.250 23.050 13.300
+[381] 24.150 29.900  9.050 14.550  8.250 19.600  8.250  9.750 17.550 10.250
+[391] 17.250  7.900 24.250  3.750  7.650 31.850 32.200 16.650 13.950  4.700
+[401]  5.650 14.950 23.350 15.800 10.600 24.200 15.750  9.450 32.750 43.000
+[411] 26.250  4.550  3.950 16.550  3.650  2.650 14.950  4.900 23.500  8.750
+[421] 11.900 12.250 10.350  9.700 12.200  9.800  8.550 23.350 15.800 10.600
+[431] 24.200 15.750  9.450 32.750 42.500 13.650 13.225 21.700  4.650 16.175
+[441] 10.025 24.500 16.000 12.500 12.500 13.500 11.500 20.500 25.000 32.000
+[451] 14.500 34.500 14.500 11.000 13.000  7.350 22.500 14.000 29.000 20.500
+[461]  6.350
+
+$diffs
+  [1]  -1.85  -1.25  -2.55  -1.45  -1.10  -0.80  -1.05  -2.20  -0.90  -0.60
+ [11]  -0.65  -1.20   0.25  -0.30  -1.49  -1.50  -2.00  -2.55  -0.90  -2.25
+ [21]  -2.40   0.30  -0.30  -0.25  -0.45   0.00  -5.30  -1.00  -1.30   0.35
+ [31]  -0.85  -0.55  -6.05  -0.20  -0.80  -0.20   0.40  -0.27  -1.80  -4.90
+ [41]  -1.30  -0.79  -1.20  -1.19  -0.70  -0.07   0.12  -0.05  -1.00   0.00
+ [51]  -1.10  -6.10  -1.80  -1.15  -2.60  -4.05  -0.30  -4.55  -0.10   0.30
+ [61]   0.70   0.00  -0.50   0.25   0.50   1.00  -2.20   0.00   0.30   1.60
+ [71]   0.85  -0.40  -2.30   2.20   2.80   0.57   2.00   0.80   0.80  -0.40
+ [81]   1.80  -1.90   1.30  -0.80  -0.25   2.10   0.85  -0.50  -2.00  -4.50
+ [91]  -2.90  -3.80  -0.30  -0.20  -0.40  -1.90  -1.00  -3.00  -2.50   0.00
+[101]   0.00  -0.80  -0.60  -0.60   0.50  -1.60  -1.00  -2.00   0.40   0.50
+[111]  -0.40  -1.50  -1.00   0.20   0.00  -3.50  -4.00  -0.20  -3.00  -5.40
+[121]  -0.70   0.40   0.90  -1.50  -1.00  -0.40  -1.70  -2.00  -0.10  -0.50
+[131]  -2.00   2.50  -1.00  -2.00  -3.85  -0.65   1.45   0.85  -1.85  -3.05
+[141]  -0.40   0.35   0.10  -0.80   0.80  -0.25   0.55   0.25  -0.15  -2.55
+[151]   0.50   0.60  -2.00  -2.75   2.50  -1.90  -5.30   0.45  -1.35  -1.20
+[161]  -1.60  -3.95   1.10  -1.90  -2.00  -0.65  -0.70  -2.85  -4.05  -0.85
+[171]  -0.75  -2.20   0.85   0.00  -3.00  -2.25  -4.00  -0.20  -1.60  -1.30
+[181]   2.55  -1.15   0.25   0.00  -2.20   1.15   9.05  -1.00   0.65  -0.20
+[191]  -0.15  -1.70   0.45  -0.80   0.25   1.03   0.00  -0.25   0.55  -2.20
+[201]  -0.45  -0.20  -0.35  -0.85  -0.90  -2.00  -1.65  -0.40   1.15   1.15
+[211]  -3.10  -1.10  -0.35  -0.80   0.70  -2.15   0.95   1.85   0.75   0.85
+[221]  -0.50  -0.30   0.90  -0.80  -1.10  -0.95  -2.25   0.70  -0.05  -0.05
+[231]   6.55  -1.00  -3.35   0.75   0.10   0.48  -1.75  -0.10   0.00  -0.75
+[241]  -1.64  -1.20  -0.80   0.80  -7.20  -3.10  -3.07  -1.45  -4.60   2.65
+[251]  -0.80  -3.10  -2.55  -0.60  -2.55  -2.95  -0.47   2.40  -6.10   0.70
+[261]  -2.40  -1.17  -0.50  -2.60   0.65  -0.05  -2.95  -2.95  -2.40  -0.60
+[271]   0.10  -2.75  -0.90  -0.20  -0.14  -2.65  -2.45   1.80  -0.20   0.95
+[281]   0.20  -1.95  -0.85  -1.50  -2.70  -0.70  -0.10  -2.10   0.25  -1.60
+[291]  -1.90  -4.00   0.05  -2.15  -0.10  -0.65  -1.25  -3.05  -3.50  -1.70
+[301]  -0.50  -0.95  -3.00  -2.50  -1.10 -11.75  -2.65  -0.65   0.17  -1.80
+[311]   0.90  -4.15  -5.30  -2.32  -0.43  -0.10   0.40   0.70   0.50  -1.10
+[321]   0.25  -2.00  -0.15   4.40  -4.35   8.30  -0.05   1.30   0.50   1.10
+[331]  -1.10   0.20  -5.00   1.00  -2.00  -2.00  -1.00  -1.00  -0.50  -1.20
+[341]   0.60  -1.40   0.30  -1.00   3.20  -1.00  -0.50  -2.70  -0.80  -3.50
+[351]  -2.50  -2.70  -1.00  -3.60   0.40  -0.40  -0.50  -1.20   1.30  -2.50
+[361]  -1.30   4.50  -0.90   0.70  -1.30  -0.50   0.90  -0.90   0.50   0.80
+[371]  -1.00  -1.30   0.80  -0.10   0.70  -1.40  -0.40  -1.50  -5.90  -1.40
+[381]   0.30   3.80  -1.90   1.10  -1.50   1.20  -1.50   1.50  -0.90  -1.50
+[391]   0.50  -0.20  -3.50  -0.10  -0.70  -4.30  -3.60  -0.70  -0.10  -0.60
+[401]  -0.70  -2.10  -1.30  -0.40  -0.80   0.40   1.50   0.90   1.50   4.00
+[411]  -3.50   0.10  -0.10  -2.90  -0.30   0.30  -2.10  -0.20  -1.00  -2.50
+[421]  -2.20  -1.50   0.70  -0.60  -1.60  -0.40  -2.90  -1.30  -0.40  -0.80
+[431]   0.40   1.50   0.90   1.50   3.00  -0.70  -1.55  -4.60   1.30  -1.65
+[441]  -1.95  -3.00  -2.00  -1.00   1.00   1.00  -1.00   1.00  -2.00   0.00
+[451]   1.00  -1.00   3.00   0.00   0.00  -2.30 -11.00   0.00  -2.00   1.00
+[461]   0.70
+
+$groups
+    group1 group2
+1    22.15   24.0
+2    15.75   17.0
+3    11.45   14.0
+4    17.55   19.0
+5     6.40    7.5
+6    11.20   12.0
+7     9.95   11.0
+8    10.80   13.0
+9     8.10    9.0
+10    7.90    8.5
+11    2.85    3.5
+12    8.30    9.5
+13    8.75    8.5
+14   16.70   17.0
+15   10.51   12.0
+16   12.50   14.0
+17   11.00   13.0
+18   33.45   36.0
+19    9.10   10.0
+20    8.75   11.0
+21   30.60   33.0
+22   17.30   17.0
+23   17.70   18.0
+24   19.75   20.0
+25    9.55   10.0
+26   14.00   14.0
+27   22.70   28.0
+28    8.00    9.0
+29   36.70   38.0
+30   28.35   28.0
+31   34.15   35.0
+32   14.45   15.0
+33   25.95   32.0
+34   15.30   15.5
+35   14.20   15.0
+36    5.80    6.0
+37   14.40   14.0
+38   14.73   15.0
+39    7.20    9.0
+40   29.10   34.0
+41   28.70   30.0
+42    7.71    8.5
+43    9.80   11.0
+44   22.81   24.0
+45    7.80    8.5
+46    8.43    8.5
+47    5.12    5.0
+48   11.95   12.0
+49    6.50    7.5
+50   11.00   11.0
+51    7.40    8.5
+52   29.90   36.0
+53   22.20   24.0
+54   19.85   21.0
+55   25.40   28.0
+56   18.45   22.5
+57   18.70   19.0
+58   29.45   34.0
+59   17.90   18.0
+60    5.80    5.5
+61   11.70   11.0
+62    3.50    3.5
+63   27.50   28.0
+64    6.25    6.0
+65    8.00    7.5
+66    7.00    6.0
+67   25.80   28.0
+68   18.00   18.0
+69    7.80    7.5
+70   18.60   17.0
+71   30.85   30.0
+72   13.60   14.0
+73    6.70    9.0
+74   13.20   11.0
+75   30.80   28.0
+76   16.57   16.0
+77   36.00   34.0
+78   16.80   16.0
+79   16.80   16.0
+80    6.20    6.6
+81   16.80   15.0
+82    5.10    7.0
+83   17.30   16.0
+84    9.20   10.0
+85    9.75   10.0
+86   60.10   58.0
+87   14.85   14.0
+88   18.50   19.0
+89   10.00   12.0
+90   25.50   30.0
+91    7.10   10.0
+92   15.20   19.0
+93    8.70    9.0
+94   11.80   12.0
+95   14.60   15.0
+96    8.10   10.0
+97   10.00   11.0
+98   30.00   33.0
+99   10.50   13.0
+100  35.00   35.0
+101  35.00   35.0
+102   9.20   10.0
+103  20.40   21.0
+104   6.40    7.0
+105  18.50   18.0
+106  28.40   30.0
+107   5.00    6.0
+108  19.00   21.0
+109  36.40   36.0
+110   8.00    7.5
+111   7.10    7.5
+112  28.50   30.0
+113  14.00   15.0
+114  28.20   28.0
+115  28.00   28.0
+116  22.50   26.0
+117  34.00   38.0
+118  27.80   28.0
+119  30.00   33.0
+120  30.60   36.0
+121   7.80    8.5
+122   6.90    6.5
+123  12.90   12.0
+124  20.50   22.0
+125  25.00   26.0
+126   9.60   10.0
+127   5.30    7.0
+128  23.00   25.0
+129  11.90   12.0
+130  11.50   12.0
+131  32.00   34.0
+132  32.50   30.0
+133  25.00   26.0
+134  21.00   23.0
+135  30.15   34.0
+136   9.35   10.0
+137  27.45   26.0
+138  17.85   17.0
+139  43.15   45.0
+140  19.95   23.0
+141  11.60   12.0
+142  10.35   10.0
+143  14.10   14.0
+144  10.20   11.0
+145  14.80   14.0
+146  29.75   30.0
+147  17.55   17.0
+148  30.25   30.0
+149  17.85   18.0
+150  16.45   19.0
+151   4.30    3.8
+152   8.60    8.0
+153  12.00   14.0
+154  10.25   13.0
+155  10.00    7.5
+156  10.10   12.0
+157  34.70   40.0
+158  16.45   16.0
+159  12.65   14.0
+160   9.80   11.0
+161  19.40   21.0
+162  34.05   38.0
+163  14.10   13.0
+164   5.60    7.5
+165  11.00   13.0
+166   7.85    8.5
+167  13.30   14.0
+168   7.15   10.0
+169  25.95   30.0
+170  25.15   26.0
+171  12.25   13.0
+172  18.80   21.0
+173  11.85   11.0
+174  13.00   13.0
+175  18.00   21.0
+176   7.25    9.5
+177  28.00   32.0
+178  22.80   23.0
+179  19.40   21.0
+180  20.70   22.0
+181  21.55   19.0
+182  17.85   19.0
+183  19.25   19.0
+184  14.00   14.0
+185  25.80   28.0
+186  22.15   21.0
+187  49.05   40.0
+188  10.00   11.0
+189  11.65   11.0
+190  13.80   14.0
+191  20.85   21.0
+192  10.30   12.0
+193  18.45   18.0
+194   8.20    9.0
+195  19.25   19.0
+196   7.03    6.0
+197  14.00   14.0
+198  14.75   15.0
+199   9.55    9.0
+200  18.80   21.0
+201  11.55   12.0
+202  10.80   11.0
+203  35.65   36.0
+204   8.15    9.0
+205   9.10   10.0
+206  20.00   22.0
+207  13.35   15.0
+208  21.60   22.0
+209  12.15   11.0
+210  12.15   11.0
+211   6.90   10.0
+212  10.90   12.0
+213   9.65   10.0
+214   6.20    7.0
+215  11.00   10.3
+216  18.85   21.0
+217  14.95   14.0
+218  33.85   32.0
+219  24.75   24.0
+220   6.85    6.0
+221  19.50   20.0
+222   9.70   10.0
+223   6.40    5.5
+224   9.20   10.0
+225   8.90   10.0
+226  10.05   11.0
+227  11.75   14.0
+228  28.70   28.0
+229  13.95   14.0
+230  13.95   14.0
+231  34.55   28.0
+232   9.00   10.0
+233  20.65   24.0
+234  10.75   10.0
+235  14.10   14.0
+236   9.98    9.5
+237  32.25   34.0
+238  17.90   18.0
+239   5.00    5.0
+240  14.25   15.0
+241   9.36   11.0
+242  11.80   13.0
+243   6.70    7.5
+244   4.80    4.0
+245  20.80   28.0
+246  30.90   34.0
+247   8.93   12.0
+248  10.55   12.0
+249  27.40   32.0
+250  16.65   14.0
+251  12.20   13.0
+252  12.90   16.0
+253  27.45   30.0
+254  11.40   12.0
+255  30.45   33.0
+256  35.05   38.0
+257   3.33    3.8
+258  14.40   12.0
+259  23.90   30.0
+260  14.70   14.0
+261  29.60   32.0
+262   7.33    8.5
+263  12.50   13.0
+264   9.40   12.0
+265  16.65   16.0
+266  25.95   26.0
+267  29.05   32.0
+268  31.05   34.0
+269   6.60    9.0
+270  15.40   16.0
+271  12.10   12.0
+272  15.25   18.0
+273  15.10   16.0
+274  13.80   14.0
+275   3.86    4.0
+276  19.35   22.0
+277  31.55   34.0
+278  18.80   17.0
+279  18.80   19.0
+280  14.95   14.0
+281  16.20   16.0
+282   9.05   11.0
+283  10.15   11.0
+284   8.50   10.0
+285   5.30    8.0
+286   7.30    8.0
+287   5.90    6.0
+288  10.90   13.0
+289  11.25   11.0
+290  16.40   18.0
+291  10.10   12.0
+292  22.00   26.0
+293  12.05   12.0
+294  15.85   18.0
+295   9.90   10.0
+296  12.35   13.0
+297  14.75   16.0
+298  20.95   24.0
+299  32.50   36.0
+300  15.30   17.0
+301   8.50    9.0
+302  12.05   13.0
+303  52.00   55.0
+304  19.50   22.0
+305   8.40    9.5
+306  38.25   50.0
+307   5.85    8.5
+308  42.35   43.0
+309   4.17    4.0
+310  14.20   16.0
+311  24.90   24.0
+312  25.85   30.0
+313  32.70   38.0
+314   8.68   11.0
+315   7.07    7.5
+316  12.90   13.0
+317  16.40   16.0
+318  15.70   15.0
+319   8.50    8.0
+320   8.90   10.0
+321  17.25   17.0
+322   8.00   10.0
+323  12.85   13.0
+324  59.40   55.0
+325  23.65   28.0
+326  58.30   50.0
+327  13.95   14.0
+328   5.10    3.8
+329   6.50    6.0
+330   7.10    6.0
+331   6.40    7.5
+332  24.20   24.0
+333  29.00   34.0
+334  19.00   18.0
+335   9.00   11.0
+336  26.00   28.0
+337  15.00   16.0
+338  35.00   36.0
+339  27.50   28.0
+340   6.80    8.0
+341  32.60   32.0
+342  10.60   12.0
+343  13.30   13.0
+344  16.00   17.0
+345   8.20    5.0
+346   8.00    9.0
+347  13.50   14.0
+348  13.30   16.0
+349  17.20   18.0
+350  18.50   22.0
+351  19.50   22.0
+352   7.30   10.0
+353   2.00    3.0
+354  34.40   38.0
+355   5.40    5.0
+356  12.60   13.0
+357   7.50    8.0
+358  10.80   12.0
+359  20.30   19.0
+360   7.50   10.0
+361  17.70   19.0
+362  40.50   36.0
+363   6.10    7.0
+364  32.70   32.0
+365   9.70   11.0
+366  12.50   13.0
+367   8.90    8.0
+368  10.10   11.0
+369   5.50    5.0
+370  24.80   24.0
+371   6.00    7.0
+372  10.70   12.0
+373  12.80   12.0
+374  25.90   26.0
+375   6.70    6.0
+376   3.60    5.0
+377   6.10    6.5
+378  11.50   13.0
+379  20.10   26.0
+380  12.60   14.0
+381  24.30   24.0
+382  31.80   28.0
+383   8.10   10.0
+384  15.10   14.0
+385   7.50    9.0
+386  20.20   19.0
+387   7.50    9.0
+388  10.50    9.0
+389  17.10   18.0
+390   9.50   11.0
+391  17.50   17.0
+392   7.80    8.0
+393  22.50   26.0
+394   3.70    3.8
+395   7.30    8.0
+396  29.70   34.0
+397  30.40   34.0
+398  16.30   17.0
+399  13.90   14.0
+400   4.40    5.0
+401   5.30    6.0
+402  13.90   16.0
+403  22.70   24.0
+404  15.60   16.0
+405  10.20   11.0
+406  24.40   24.0
+407  16.50   15.0
+408   9.90    9.0
+409  33.50   32.0
+410  45.00   41.0
+411  24.50   28.0
+412   4.60    4.5
+413   3.90    4.0
+414  15.10   18.0
+415   3.50    3.8
+416   2.80    2.5
+417  13.90   16.0
+418   4.80    5.0
+419  23.00   24.0
+420   7.50   10.0
+421  10.80   13.0
+422  11.50   13.0
+423  10.70   10.0
+424   9.40   10.0
+425  11.40   13.0
+426   9.60   10.0
+427   7.10   10.0
+428  22.70   24.0
+429  15.60   16.0
+430  10.20   11.0
+431  24.40   24.0
+432  16.50   15.0
+433   9.90    9.0
+434  33.50   32.0
+435  44.00   41.0
+436  13.30   14.0
+437  12.45   14.0
+438  19.40   24.0
+439   5.30    4.0
+440  15.35   17.0
+441   9.05   11.0
+442  23.00   26.0
+443  15.00   17.0
+444  12.00   13.0
+445  13.00   12.0
+446  14.00   13.0
+447  11.00   12.0
+448  21.00   20.0
+449  24.00   26.0
+450  32.00   32.0
+451  15.00   14.0
+452  34.00   35.0
+453  16.00   13.0
+454  11.00   11.0
+455  13.00   13.0
+456   6.20    8.5
+457  17.00   28.0
+458  14.00   14.0
+459  28.00   30.0
+460  21.00   20.0
+461   6.70    6.0
+
+$based.on
+[1] 461
+
+$lower.limit
+[1] -4.65569
+
+$mean.diffs
+[1] -0.8345553
+
+$upper.limit
+[1] 2.986579
+
+$lines
+lower.limit  mean.diffs upper.limit 
+ -4.6556898  -0.8345553   2.9865791 
+
+$CI.lines
+lower.limit.ci.lower lower.limit.ci.upper   mean.diff.ci.lower 
+          -4.9647468           -4.3466327           -1.0129895 
+  mean.diff.ci.upper upper.limit.ci.lower upper.limit.ci.upper 
+          -0.6561211            2.6775221            3.2956362 
+
+$two
+[1] 1.96
+
+$critical.diff
+[1] 3.821134</code></pre>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./roc-analysis.html" class="pagination-link" aria-label="ROC Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ROC Analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./correlation.html" class="pagination-link" aria-label="Correlation">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Correlation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Compiled by: Dr Samuel Blay Nguah</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -34,8 +34,11 @@ book:
     - normality.qmd
     - hypothesis-testing.qmd
     - confounding-and-interaction.qmd
-    - diagnostic-tests.qmd
-    - roc-analysis.qmd
+    - part: "<span style='font-weight:bold; color: black;'>Diagnostic Tests</span>"
+      chapters: 
+        - diagnostic-tests.qmd
+        - roc-analysis.qmd
+        - bland-altman.qmd
     - part: "<span style='font-weight:bold; color: black;'>Correlation</span>"
       chapters: 
         - correlation.qmd
@@ -83,7 +86,7 @@ book:
         - poly-single-categorical.qmd
         - poly-single-continuous.qmd
         - poly-multivariate.qmd
-    - part: "<span style='font-weight:bold; color: black;'>GQuantile Regression</span>"
+    - part: "<span style='font-weight:bold; color: black;'>Quantile Regression</span>"
       chapters: 
         - qr-single-categorical.qmd
         - qr-single-continuous.qmd
@@ -95,6 +98,8 @@ book:
         - pkg-nlme.qmd
     - part: "<span style='font-weight:bold; color: black;'>Sample Size</span>"
       chapters: 
+        - ss-survey-proportion.qmd
+        - ss-survey-mean.qmd
         - ss-matched-case-control.qmd
         - ss-comparing-two-means.qmd
         - ss-single-mean-to-reference-value.qmd
@@ -106,12 +111,14 @@ book:
         - gr-barplot.qmd
         - gr-scatter.qmd
         - gr-line-plot.qmd
+        - gr-dot-chart.qmd
         - gr-curvelinear-plot.qmd
-        - gr-forest-plot.qmd
+        - gr-error-plot.qmd
         - gr-followup-plot.qmd
         - gr-venn-diagram.qmd
         - gr-population-pyramid.qmd
         - gr-lollipop.qmd
+        - gr-dumbell-plot.qmd
         - gr-miscellaneous.qmd
     - references.qmd
 

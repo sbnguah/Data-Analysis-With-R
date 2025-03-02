@@ -1,0 +1,78 @@
+---
+title: "Dumbell Plot"
+---
+
+In this chapter, we draw a dumbell plot using `ggplot`. We do this using the first 10 record of
+systolic blood pressures measured 6 months apart for a group of hypertensive patients.
+
+```{r}
+#| include: false
+library(tidyverse)
+```
+
+```{r}
+df_dbl <- 
+    readxl::read_xlsx("C:/Dataset/SBPDATA.xlsx") %>% 
+    janitor::clean_names() %>% 
+    select(sid, sbp_0, sbp_6) %>% 
+    drop_na() %>% 
+    mutate(
+        sid = paste0("GHA-", sid),
+        mean_bp = (sbp_0 + sbp_6)/2,
+        diff_sbp = (sbp_6 - sbp_0),
+        diff_sbp_cat = case_when(
+            diff_sbp < 0 ~ "red", diff_sbp >= 0 ~ "black")) %>% 
+    head(n=10)
+
+df_dbl_long <-  
+    df_dbl %>% 
+    pivot_longer(
+        cols = starts_with("sbp"), 
+        names_to = "Month", 
+        values_to = "SBP")
+
+```
+
+Next, we visualise the data
+
+```{r}
+df_dbl %>% head() %>% kableExtra::kable()
+df_dbl_long %>% head() %>% kableExtra::kable()
+```
+
+Then, we plot the diagram
+
+```{r}
+#| label: fig-one
+#| fig-cap: Dumbell showing change in blood pressure
+
+df_dbl_long %>% 
+    ggplot(aes(x = SBP, y = sid, fill = Month))+
+    
+    labs(y = NULL)+
+    geom_segment(
+        data = df_dbl, 
+        aes(x = sbp_0, xend = sbp_6, y = sid, color = diff_sbp_cat), 
+        inherit.aes = F)+
+    geom_point(size = 5, color = "black", shape = 21)+
+    annotate(
+        geom = "text",
+        x = df_dbl$mean_bp, 
+        y = df_dbl$sid, 
+        label = df_dbl$diff_sbp,
+        color = df_dbl$diff_sbp_cat,
+        size = 3.5, vjust = -0.3)+
+    theme_bw()+
+    scale_color_discrete(
+        breaks = c("sbp_0", "sbp_6"),
+        labels = c("Month 0", "Month 6"))+
+    scale_fill_manual(
+        breaks = c("sbp_0", "sbp_6"),
+        labels = c("Month 0", "Month 6"),
+        values = c("white", "#75AADB"))+
+    scale_color_identity()+
+    theme(
+        legend.position = "top", 
+        legend.title = element_blank(), 
+        legend.box.background  = element_rect(color = "black"))
+```

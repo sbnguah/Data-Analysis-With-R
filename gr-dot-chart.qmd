@@ -1,0 +1,151 @@
+---
+title: "Dot Chart"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(ggtext)
+library(patchwork)
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+
+df_sbp <- 
+    readxl::read_xlsx("C:/Dataset/SBPDATA.xlsx") %>% 
+    janitor::clean_names() %>% 
+    drop_na() %>% 
+    select(disease_class, sbp_0:sbp_18) %>% 
+    group_by(disease_class) %>% 
+    summarize(across(sbp_0:sbp_18, ~mean(.))) %>% 
+    ungroup() %>% 
+    pivot_longer(cols = sbp_0:sbp_18) %>% 
+    mutate(
+        name = factor(
+            name, 
+            levels = c(
+                "sbp_0", "sbp_2", "sbp_4", "sbp_6", "sbp_8", "sbp_10",
+                "sbp_12", "sbp_14", "sbp_16", "sbp_18"),
+            labels = c(
+                "Month Zero", "Month Two", "Month Four", "Month Six",
+                "Month Eight", "Month Ten", "Month Twelve", "Month Fourten",
+                "Month Sixteen", "Month Eighteen" )),
+        disease_class = factor(
+            disease_class, levels = c("DM", "HPT", "DM+HPT")))
+
+
+df_sbp %>% 
+    ggplot(
+        aes(
+            x = value, 
+            y = name, 
+            color = disease_class, 
+            fill = disease_class)) + 
+    geom_dotplot(dotsize = 0.5, binwidth = 0.75) +
+    labs(
+        x = "Systolic Blood Pressure (mmHg)", 
+        y = NULL,
+        title = "Distribution of Systolic Blood Pressures for  the various Diagnosis")+
+    facet_wrap(
+        facets = "disease_class", 
+        ncol = 1, 
+        labeller = as_labeller(
+            c("DM" = "Diabetes Mellitus Only", 
+            "HPT" = "Hypertension Only",
+            "DM+HPT" = "Diabetes Mellitus & Hypertension")))+
+    theme_minimal()+
+    theme(
+        text = element_text(family = "serif"),
+        legend.position = "none",
+        axis.text.y = element_markdown(
+            hjust = 0, size = 10),
+        axis.title.x = element_text(size = 12),
+        strip.background = element_blank(),
+        strip.text = element_text(
+            hjust=0, 
+            face = "bold", 
+            margin = margin(l = -70, b = 2, unit = "pt"),
+            size = 12))+
+    coord_cartesian(clip="off")
+
+```
+
+```{r}
+#| fig-width: 6
+#| fig-height: 6
+
+x_range <- 
+    df_sbp %>% 
+    pull(value) %>% 
+    range()
+
+
+A <- 
+    df_sbp %>% 
+    filter(disease_class=="DM") %>% 
+    ggplot(aes(x = value, y = name))+
+    geom_dotplot(color = "blue", binwidth = 0.3, fill = "blue")+
+    scale_x_continuous(limits = x_range)+
+    labs(x = NULL, y = NULL)+
+    annotate(
+        geom = "text", x = 122.3, y = 12, color = "blue",
+        label = "Diabetes Mellitus Only", hjust = 0.75, fontface = "bold")+
+    theme_minimal()+
+    theme(
+        text = element_text(family = "serif"),
+        axis.text.y = element_text(color = "blue", hjust = 0),
+        axis.text.x = element_blank(),
+        title = element_text(
+            size = 10, color = "blue", hjust = 1, face = "bold",
+            margin = margin(l = -60, unit = "pt")))+
+    coord_cartesian(clip = "off")
+
+B <- 
+    df_sbp %>% 
+    filter(disease_class=="HPT") %>% 
+    ggplot(aes(x = value, y = name))+
+    geom_dotplot(color = "red", binwidth = 0.3, fill = "red")+
+    scale_x_continuous(limits = x_range)+
+    labs(x = NULL, y = NULL)+
+    annotate(
+        geom = "text", x = 122.3, y = 12, color = "red",
+        label = "Hypertension Only", hjust = 0.9, fontface = "bold")+
+    theme_minimal()+
+    theme(
+        text = element_text(family = "serif"),
+        axis.text.y = element_text(color = "red", hjust = 0),
+        axis.text.x = element_blank(),
+        title = element_text(
+            size = 10, color = "red", hjust = 1, face = "bold",
+            margin = margin(l = -60, unit = "pt")))+
+    coord_cartesian(clip = "off")
+
+C <- 
+    df_sbp %>% 
+    filter(disease_class=="DM+HPT") %>% 
+    ggplot(aes(x = value, y = name))+
+    geom_dotplot(color = "#25D366", binwidth = 0.3, fill = "#25D366")+
+    scale_x_continuous(limits = x_range)+
+    labs(x = "Systemic Blood Pressure (mmHg)", y = NULL)+
+    annotate(
+        geom = "text", x = 122.3, y = 12, color = "#25D366",
+        label = "Diabetes Mellitus & Hypertension", 
+        hjust = 0.5, fontface = "bold")+
+    theme_minimal()+
+    theme(
+        text = element_text(family = "serif"),
+        axis.text.y = element_text(color = "#25D366", hjust = 0),
+        axis.text.x = element_text(color = "black", size = 12),
+        axis.title.x = element_text(color = 'black', size = 12, hjust = 0.5),
+        title = element_text(
+            size = 10, color = "#25D366", hjust = 1, face = "bold",
+            margin = margin(l = -60, unit = "pt")))+
+    coord_cartesian(clip = "off")
+
+A/B/C +
+    plot_annotation(
+        title = "Distribution of Systolic Blood Pressures for  the various Diagnosis",
+    theme = theme(plot.title = element_text(size = 11, hjust = .5, face = "bold")))
+```

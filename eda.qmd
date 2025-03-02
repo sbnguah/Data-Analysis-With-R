@@ -9,26 +9,63 @@ We begin by importing the babies data.
 #| message: false
 #| include: false
 
-
 library(tidyverse)
 ```
+
+Note that the following are very useful functions that will not be executed in this page
+
+`DataExplorer::create_report()`
+
+`summarytools::dfSummary() %>% summarytools::stview()`
+
+`SmartEDA::ExpReport()`
+
+We begin by reading in the data and retaining
 
 ```{r}
 df_schisto <- 
     readxl::read_xlsx("C:/Dataset/Schisto.xlsx") %>%
-    janitor::clean_names() %>% 
+    janitor::clean_names() %>%
+    rename(
+        weight = q35weight,
+        height = q36height,
+        sex = q4sex,
+        religion = q6religion, 
+        schisto = sh,
+        educ_status = educationalstatus,
+        ageyrs = q3age) %>% 
     mutate(
-        across(where(is.character), as.factor),
-        mcv = as.numeric(mcv)) %>% 
-    select(-c(q5tribe, q1date, serial_no))
+        across(where(is.character), as.factor), 
+        schisto = case_when(
+            schisto == "+" ~ "+", schisto == "++" ~ "++",
+            schisto == "+++" ~ "+++", schisto == "++++" ~ "++++", 
+            TRUE ~ "nil") %>% 
+            factor(levels = c("nil", "+", "++", "+++", "++++"))) %>% 
+    select(
+        serial_no, ageyrs, sex, religion, educ_status, 
+        height, weight, hb, wbc, schisto) 
 ```
+
+## General overview
 
 We begin with a general overview of the data
 
 ```{r}
+df_schisto %>% glimpse()
+```
+
+And then
+
+```{r}
+df_schisto %>% summary()
+```
+
+And the use the psych package
+
+```{r}
 df_schisto %>% 
-    DataExplorer::introduce() %>% 
-    t()
+    psych::describe() %>% 
+    gt::gt()
 ```
 
 And then plot this overview
@@ -40,7 +77,20 @@ df_schisto %>%
 
 ```{r}
 df_schisto %>% 
+    summarytools::dfSummary()
+```
+
+```{r}
+df_schisto %>% 
     dlookr::describe() %>% 
+    flextable::flextable()
+```
+
+And using the `psych` package
+
+```{r}
+df_schisto %>% 
+    psych::describe()%>% 
     flextable::flextable()
 ```
 
@@ -54,10 +104,16 @@ df_schisto %>%
     DataExplorer::plot_missing()
 ```
 
+Also,
+
 ```{r}
-# df_schisto %>% dlookr::plot_na_hclust()
-# df_schisto %>% dlookr::plot_na_pareto()
-# df_schisto %>% dlookr::plot_na_intersect()
+df_schisto %>% inspectdf::inspect_na()
+```
+
+```{r}
+df_schisto %>% 
+    inspectdf::inspect_na() %>% 
+    inspectdf::show_plot()
 ```
 
 ## Categorical variables
@@ -94,7 +150,7 @@ df_schisto %>%
 
 ```{r}
 df_schisto %>% 
-    DataExplorer::plot_boxplot(by = "q4sex")
+    DataExplorer::plot_boxplot(by = "sex")
 ```
 
 ```{r}
@@ -109,7 +165,7 @@ df_schisto %>%
 
 ```{r}
 df_schisto %>% 
-    DataExplorer::plot_qq( by = "q4sex", )
+    DataExplorer::plot_qq( by = "sex", )
 ```
 
 ## Outliers
@@ -118,10 +174,6 @@ df_schisto %>%
 df_schisto %>% 
     dlookr::diagnose_outlier() %>% 
     flextable::flextable()
-```
-
-```{r}
-# df_schisto %>% dlookr::plot_outlier()
 ```
 
 ## Correlation
@@ -134,11 +186,35 @@ df_schisto %>%
     DataExplorer::plot_correlation(type = "continuous")
 ```
 
+```{r}
+df_schisto %>% 
+    inspectdf::inspect_cor() %>% 
+    gt::gt()
+```
+
+```{r}
+df_schisto %>% 
+    inspectdf::inspect_cor() %>%
+    inspectdf::show_plot()
+```
+
+```{r}
+numeric_df <- 
+    df_schisto %>%
+    select(where(is.numeric)) 
+
+PerformanceAnalytics::chart.Correlation(
+    numeric_df,
+    histogram = T,
+    pch = 12
+)
+```
+
 ## Scatterplots
 
 Next is scatterplots
 
 ```{r}
 df_schisto %>% 
-    DataExplorer::plot_scatterplot(by = "q35weight")
+    DataExplorer::plot_scatterplot(by = "weight")
 ```

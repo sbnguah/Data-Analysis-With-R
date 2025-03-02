@@ -3,6 +3,7 @@ title: "Machine Learning"
 ---
 
 ## Loading packages
+
 We begin by loading required packages, importing the data and summarizing it
 
 ```{r}
@@ -34,7 +35,7 @@ df_hpt %>%
     summarytools::dfSummary(graph.col = F)
 ```
 
-Next we inspect the data graphically 
+Next we inspect the data graphically
 
 ```{r}
 df_hpt %>% 
@@ -49,6 +50,7 @@ df_hpt %>%
 ```
 
 Next we plot the categorical variables
+
 ```{r}
 #| fig-height: 5
 #| fig-width: 8
@@ -75,10 +77,7 @@ df_hpt_train <- testing(df_hpt_split)
 ```
 
 ## Create cross validation folds
+
 ```{r}
 df_cv_fold <- vfold_cv(df_hpt_train)
 ```
-
-
-
-

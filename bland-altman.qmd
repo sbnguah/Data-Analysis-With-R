@@ -1,0 +1,220 @@
+---
+title: "Bland and Altman Analysis"
+---
+
+## Introduction
+
+Correlation quantifies the degree to which two variables are related. However, a high correlation
+does not automatically imply good agreement between the two methods. The correlation coefficient and
+regression technique are sometimes inadequate and can be misleading when assessing agreement because
+they evaluate only the linear association of two sets of observations. The r measures the strength
+of a relation between two variables, not their agreement. Similarly, r2, named the coefficient of
+determination, only tells us the proportion of variance the two variables have in common. Finally,
+the significance test may show that the two methods are related, but it is evident that two methods
+designed to measure the same variable are related.
+
+## Case scenario
+
+A Bland-Altman analysis, also known as a Bland-Altman plot or Tukey mean-difference plot compares
+two different measurement techniques or instruments. It's commonly used in analytical chemistry and
+biomedicine to assess the agreement between two assays or measurement methods.
+
+Key Components: X-Axis: Displays the average of the measurements from the two methods.
+
+Y-Axis: Displays the difference between the measurements from the two methods.
+
+Mean Difference (Bias): A horizontal line representing the average difference between the two
+methods.
+
+Limits of Agreement: Lines representing the upper and lower limits of the differences, typically
+calculated as the mean difference ± 1.96 times the standard deviation of the differences.
+
+Interpretation: Bias: Indicates if there is a systematic difference between the two methods.
+
+Limits of Agreement: Provides an estimate of the range in which 95% of the differences between the
+two methods fall.
+
+This analysis helps identify any systematic bias between the methods and assesses the typical range
+of agreement. It's beneficial for determining if two measurement techniques can be used
+interchangeably.
+
+```{r}
+#| include: false
+library(tidyverse)
+```
+
+```{r}
+df_poap <- 
+    readxl::read_xlsx("C:/Dataset/pawper.xlsx") %>% 
+    mutate(
+        weight = parse_number(weight), 
+        id = row_number()) %>% 
+    filter(id != 343) %>% 
+    select(-id)
+
+```
+
+Exploration
+
+```{r}
+#| fig-height: 4
+#| fig-width: 7
+df_poap %>% 
+    DataExplorer::plot_histogram(
+        ggtheme = theme_bw(),
+        geom_histogram_args = list(
+            fill = "steelblue", 
+            color = "blue", 
+            bins = 12)) 
+```
+
+```{r}
+#| fig-height: 4
+#| fig-width: 6
+
+df_poap %>% 
+    ggplot(aes(x = weight, y = pxl_wgt))+
+    geom_point()+
+    labs(x = "Actual weight (kgs)", y = "Pawper-XL weight (kgs)")+
+    theme_bw()
+```
+
+```{r}
+#| fig-height: 4
+#| fig-width: 6
+
+df_temp <- 
+    df_poap %>% 
+    select(pxl_wgt, weight) %>% 
+    drop_na() %>% 
+    mutate(
+        means = (pxl_wgt + weight)/2,
+        diffs = (pxl_wgt - weight),
+        bias = mean(diffs),
+        sd_diffs = sd(diffs),
+        upper_loa = bias + 1.96 * sd_diffs,
+        lower_loa = bias - 1.96 * sd_diffs) 
+ula = mean(df_temp$upper_loa)
+lla = mean(df_temp$lower_loa)
+mn = mean(df_temp$bias)
+xx = max(df_temp$means)
+
+df_temp %>% 
+    ggplot(aes(x = means, y = diffs)) +
+    geom_point()+
+    geom_hline(
+        aes(yintercept = upper_loa),
+        linetype = 2, color = "#2369BD")+
+     geom_hline(aes(yintercept = lower_loa),
+        linetype = 2, color = "#2369BD") +
+    geom_hline(aes(yintercept = bias),
+        linetype = 2, color = "#2369BD") +
+    annotate(
+        geom = 'text', 
+        label = 'mean+1.96*SD', 
+        x = xx, y = ula, hjust = 1, vjust = -1, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = str_glue({round(ula, 2)}), 
+        x = xx, y = ula, hjust = 1, vjust = 1.2, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = 'mean-1.96*SD', 
+        x = xx, y = lla, hjust = 1, vjust = -1, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = str_glue({round(lla, 2)}), 
+        x = xx, y = lla, hjust = 1, vjust = 1.2, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = 'Bias', 
+        x = xx, y = mn, hjust = 1, vjust = -1, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = str_glue({round(mn, 2)}), 
+        x = xx, y = mn, hjust = 1, vjust = 1.2, 
+        color = "#2369BD", size = 4, family = "serif")+
+    labs(
+        x = "Mean of Pawper-XL and actual weight (kgs)",
+        y = "Difference")+
+    theme_classic()
+```
+
+```{r}
+#| fig-height: 4
+#| fig-width: 6
+
+
+df_temp <- 
+    df_poap %>% 
+    select(pxl_wgt, weight) %>% 
+    drop_na() %>% 
+    mutate(
+        means = (pxl_wgt + weight)/2,
+        diffs = (pxl_wgt - weight)/weight*100,
+        bias = mean(diffs),
+        sd_diffs = sd(diffs),
+        upper_loa = bias + 1.96 * sd_diffs,
+        lower_loa = bias - 1.96 * sd_diffs) 
+ula = mean(df_temp$upper_loa)
+lla = mean(df_temp$lower_loa)
+mn = mean(df_temp$bias)
+xx = max(df_temp$means)
+
+df_temp %>% 
+    ggplot(aes(x = means, y = diffs)) +
+    geom_point()+
+    geom_hline(
+        aes(yintercept = upper_loa),
+        linetype = 2, color = "#2369BD")+
+     geom_hline(aes(yintercept = lower_loa),
+        linetype = 2, color = "#2369BD") +
+    geom_hline(aes(yintercept = bias),
+        linetype = 2, color = "#2369BD") +
+    annotate(
+        geom = 'text', 
+        label = 'mean+1.96*SD', 
+        x = xx, y = ula, hjust = 1, vjust = -1, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = str_glue({round(ula, 2)}), 
+        x = xx, y = ula, hjust = 1, vjust = 1.2, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = 'mean-1.96*SD', 
+        x = xx, y = lla, hjust = 1, vjust = -1, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = str_glue({round(lla, 2)}), 
+        x = xx, y = lla, hjust = 1, vjust = 1.2, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = 'Bias', 
+        x = xx, y = mn, hjust = 1, vjust = -1, 
+        color = "#2369BD", size = 4, family = "serif")+
+    annotate(
+        geom = 'text', 
+        label = str_glue({round(mn, 2)}), 
+        x = xx, y = mn, hjust = 1, vjust = 1.2, 
+        color = "#2369BD", size = 4, family = "serif")+
+    labs(
+        x = "Mean of Pawper-XL and actual weight (kgs)",
+        y = "Percentage Difference")+
+    theme_classic()
+```
+
+```{r}
+library(magrittr)
+df_poap %$% 
+    BlandAltmanLeh::bland.altman.stats(
+        group1 = weight, group2 = pxl_wgt)
+```

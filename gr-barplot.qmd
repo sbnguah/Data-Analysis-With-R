@@ -13,7 +13,7 @@ dataF <-
     readstata13::read.dta13("C:/Dataset/olivia_data_wide.dta")
 ```
 
-To start we create a fictitious data
+To start, we create fictitious data
 
 ```{r comment = NA}
 df <- 
@@ -32,7 +32,14 @@ p <-
   df %>% 
   ggplot(aes(x = dose, y = len)) 
 
-p + geom_bar(stat="identity")
+p + 
+    geom_bar(stat = "identity")+
+    labs(
+        x = "Dose (mg)", 
+        y = 'Tooth Length (mm)',
+        title = "Distribution of Tooth Lenghts for the variuos dosee")+
+    theme_classic()+
+    coord_cartesian(expand = FALSE)
 ```
 
 Next we flip the barplot horizontal, change the size of the bar width and change the theme
@@ -64,12 +71,8 @@ Next we put labels on the bars at the outside and inside
 
 ```{r comment = NA}
 p +
-    geom_bar(stat="identity", fill="steelblue")+
-    geom_text(
-        aes(label=len), 
-        vjust=-0.5, 
-        size=4, 
-        col = "black")+
+    geom_bar(stat = "identity", fill = "steelblue")+
+    geom_text(aes(label=len), vjust=-0.5, size = 4, col = "black")+
     theme_minimal()
 ```
 
@@ -111,7 +114,8 @@ p
 Use custom color palettes
 
 ```{r comment = NA}
-p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
+p + 
+    scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9"))
 ```
 
 ```{r comment = NA}
@@ -135,10 +139,16 @@ ggplot(df, aes(x=dose, y=len, fill=dose))+
 Change bar fill colors to blues
 
 ```{r comment = TRUE}
-p + scale_fill_brewer(palette="Blues")
-	p + theme(legend.position="top")
-	p + theme(legend.position="bottom")
-	p + theme(legend.position="none")
+p + 
+    scale_fill_brewer(palette = "Blues") + 
+    labs(
+        fill = NULL,
+        y = "Length (cm)")+
+    theme(
+        legend.position = "inside",
+        legend.position.inside = c(0.2,.8),
+        legend.direction = "horizontal",
+        legend.background = element_rect(color = "gray45"))
 ```
 
 Change position of bars
@@ -346,37 +356,45 @@ tibble(
 
 ```{r}
 dataF %>% 
-    mutate(avehb_cat = case_when(avehb < median(avehb) ~ "Low HB",
-                                 avehb >= median(avehb) ~ "High HB") %>% 
-               factor(levels = c("Low HB", "High HB"))) %>% 
+    mutate(
+        avehb_cat = case_when(
+            avehb < median(avehb) ~ "Low HB", 
+            avehb >= median(avehb) ~ "High HB") %>% 
+            factor(levels = c("Low HB", "High HB"))) %>% 
     select(starts_with("mcv"), avehb_cat) %>% 
-    pivot_longer(cols = c(mcv1:mcv5), values_to = "mcv", names_to = "measure") %>% 
+    pivot_longer(
+        cols = c(mcv1:mcv5), 
+        values_to = "mcv", 
+        names_to = "measure") %>% 
     group_by(avehb_cat, measure) %>% 
-    mutate(mean_mcv = mean(mcv), 
-           low_mcv = mean_mcv - 1.96*sd(mcv)/sqrt(n()),
-           high_mcv = mean_mcv + 1.96*sd(mcv)/sqrt(n())) %>% 
+    mutate(
+        mean_mcv = mean(mcv), 
+        low_mcv = mean_mcv - 1.96*sd(mcv)/sqrt(n()),
+        high_mcv = mean_mcv + 1.96*sd(mcv)/sqrt(n())) %>% 
     ggplot(aes(y = mean_mcv, x = measure, fill = avehb_cat)) +
     geom_bar(stat = "identity", position = position_dodge(0.9)) +
-    geom_errorbar(aes(ymin = low_mcv, ymax = high_mcv), size = 0.8, 
-                  width = 0.3, 
-                  position = position_dodge(0.9)) +
+    geom_errorbar(
+        aes(ymin = low_mcv, ymax = high_mcv), size = 0.8, 
+            width = 0.3, position = position_dodge(0.9)) +
     labs(y = "Mean Corpuscular Volume",
          x = NULL,
          title = "Variation in MCV per review period (95%CI)",
          caption = "Source: Data One")+
-    scale_fill_manual(name = "HGB Status", values = c("grey", "grey45"))+
-    scale_x_discrete(labels = toupper(c("First", "Second", "Third", "Fourth", "Fifth")))+
+    scale_fill_manual(name = "Hemoglobin \n Status", values = c("grey", "grey45"))+
+    scale_x_discrete(
+        labels = toupper(c("First", "Second", "Third", "Fourth", "Fifth")))+
     scale_y_continuous(limits = c(0,130), breaks = seq(0, 130, 10))+
     theme(
         panel.background = element_rect(colour = "black", fill = "white"),
         plot.background  = element_rect(fill = "grey"),
-        plot.title = element_text(face = "bold", hjust = 0.5, family = "serif"),
+        plot.title = element_text(
+            face = "bold", hjust = 0.5, family = "serif"),
         axis.text = element_text(face = "bold", family = "serif"),
         axis.title = element_text(family = "serif", face = "bold"),
         plot.caption = element_text(family = "serif", face = "bold"),
         legend.text = element_text(family = "serif", face = "bold"),
-        legend.title = element_text(family = "serif", face = "bold")
-        )
+        legend.title = element_text(
+            family = "serif", face = "bold", hjust = 0))
 ```
 
 ```{r}
@@ -393,10 +411,65 @@ dataF %>%
     ggplot(aes(x = anemia1, y=hb1_Mean, fill = agecat)) +  
     geom_errorbar(aes(ymin = hb1_Mean - 1.96*hb1_SD, ymax = hb1_Mean + 1.96*hb1_SD),
                   position = position_dodge(0.9), width = 0.2, size = 0.8) + 
-    geom_bar(stat = "identity", position = position_dodge(0.9), col = "black") +
-    labs(x = "First Anemia Present", y = "Mean of First HgB (mg/dL)",
-         title = "Average initial HgB for first anemia and Age Categories") +
+    geom_bar(
+        stat = "identity", position = position_dodge(0.9), col = "black") +
+    labs(
+        x = "First Anemia Present", y = "Mean of First HgB (mg/dL)",
+        title = "Average initial HgB for first anemia and Age Categories") +
     theme_bw()+
     scale_fill_brewer(name = "Age Group", palette = "Dark2",
                       labels= c("10-19 yrs", "20-29 yrs", "30-39 yrs", "40-49 yrs"))
+```
+
+```{r}
+#| fig-width: 8
+#| fig-height: 5
+
+# df_sbp <- 
+    readxl::read_xlsx("C:/Dataset/SBPDATA.xlsx") %>% 
+    janitor::clean_names() %>% 
+    drop_na() %>% 
+    select(disease_class, sbp_0:sbp_18) %>% 
+    pivot_longer(cols = sbp_0:sbp_18) %>%
+    group_by(disease_class, name) %>% 
+    summarize(across(value, ~epiDisplay::ci(.)), .groups = "drop") %>% 
+    unnest(cols = c(value)) %>%
+    mutate(
+        name = factor(
+            name, 
+            levels = c(
+                "sbp_0", "sbp_2", "sbp_4", "sbp_6", "sbp_8", 
+                "sbp_10", "sbp_12", "sbp_14", "sbp_16", "sbp_18"),
+            labels = c(
+                "Month Zero", "Month Two", "Month Four",
+                "Month Six", "Month Eight", "Month Ten",
+                "Month Twelve", "Month Fourten",
+                "Month Sixteen", "Month Eighteen" )),
+        disease_class = factor(
+            disease_class, levels = c("DM", "HPT", "DM+HPT"))) %>% 
+    ggplot(aes(x = disease_class, y = mean, fill = name), col = "black") + 
+    geom_col(position = position_dodge(0.9), col = "gray45", alpha = 0.4)+
+    geom_errorbar(aes(ymax = mean+se, ymin = mean-se),position = position_dodge(0.9), width = 0.3)+
+    labs(fill = NULL, x = NULL, y = "Systolic Blood Pressure (mmHg)")+
+    scale_fill_manual(
+        values = c("#FF5733","#33FF57","#3357FF","#FFD700","#7D33FF",
+                   "#FF33C1", "#33FFF5","#FF8C33","#8CFF33", 
+                   "#F533FF"))+
+    scale_y_continuous(limits = c(0, 150))+
+    scale_x_discrete(
+            limits = c("DM", "HPT", "DM+HPT"),
+            label = c(
+                "Diabetes Mellitus",
+                "Hypertension",
+                "Diabetes mellitus and \n Hypertension"))+
+    coord_cartesian(ylim = c(100, 150), expand = F)+
+        theme_bw()+
+    theme(
+        legend.position = "bottom", 
+        axis.title.y = element_text(face = "bold"),
+        axis.text.x = element_text(face = "bold", size = 11))
+        
+     
+    
+
 ```

@@ -82,7 +82,7 @@ lm(hb1 ~ hb2 + hb3 + hb4 + hb5, data=dataF) %>%
          title = "Distribution of coefficient estimates (95% CI)")
 ```
 
-## Correlation plot  
+## Correlation plot
 
 ```{r}
 dataF %>% 
@@ -91,5 +91,3 @@ dataF %>%
               ggtheme = theme_bw(),
               matrix.type = "lower")
 ```
-
-## 

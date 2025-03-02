@@ -1,3 +1,11 @@
 ---
 title: "Single Categorical"
 ---
+
+Quantile regression has the advantage of being robust, as such, and not particularly susceptible to
+some of the conditions that need to be present for a linear regression to be valid. By default, it
+regresses the median, compared to linear regression, which regresses the mean of the dependent
+variable. The added advantage of quantile regression is that one can regress any dependent variable
+quantile. This will be illustrated further below:
+
+We begin by importing the data on

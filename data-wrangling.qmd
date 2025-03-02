@@ -21,9 +21,8 @@ mytheme <- function(ht){
 options(huxtable.knit_print_df_theme = mytheme)
 ```
 
-In this chapter, we begin to delve into the manipulation of data in the form of a data frame or
-tibble. In so doing, we will introduce the `tidyverse` package and the various verbs (function) it
-provides.
+In this chapter, we delve into the manipulation of data in the form of a data frame or tibble. In so
+doing, we will introduce the `tidyverse` package and the various verbs (function) it provides.
 
 The `tidyverse` package is not just a single package but a composite of a group of packages. These
 include among others the `dplyr` package. Most of the function we will be employing in this chapter
@@ -282,7 +281,15 @@ dataF %>%
 
 ```{r comment = NA}
 dataF %>% 
-    reframe(across(sbp_2:sbp_8, ~mean(.x, na.rm=T)))
+    drop_na(dxs_class) %>% 
+    reframe(
+        across(
+            sbp_2:sbp_8, 
+            list(
+                "Average" = ~mean(.x, na.rm=T),
+                "Std" = ~sd(.x, na.rm=T)),
+            .names = "{.fn}_{.col}"), 
+        .by = dxs_class)
 
 ```
 
