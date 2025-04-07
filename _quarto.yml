@@ -119,6 +119,7 @@ book:
         - gr-population-pyramid.qmd
         - gr-lollipop.qmd
         - gr-dumbell-plot.qmd
+        - gr-riffomonas.qmd
         - gr-miscellaneous.qmd
     - references.qmd
 

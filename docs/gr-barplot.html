@@ -752,6 +752,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#basic-barplot" id="toc-basic-barplot" class="nav-link active" data-scroll-target="#basic-barplot"><span class="header-section-number">62.1</span> Basic barplot</a></li>
   <li><a href="#use-custom-color-palettes" id="toc-use-custom-color-palettes" class="nav-link" data-scroll-target="#use-custom-color-palettes"><span class="header-section-number">62.2</span> Use custom color palettes</a></li>
   <li><a href="#plotting-raw-data" id="toc-plotting-raw-data" class="nav-link" data-scroll-target="#plotting-raw-data"><span class="header-section-number">62.3</span> Plotting raw data</a></li>
+  <li><a href="#advanced-barplot" id="toc-advanced-barplot" class="nav-link" data-scroll-target="#advanced-barplot"><span class="header-section-number">62.4</span> Advanced Barplot</a></li>
   </ul>
 </nav>
     </div>
@@ -1527,6 +1528,115 @@ Figure&nbsp;62.1: Percentage of Allo-Allergens (95%CI)
 </figure>
 </div>
 </div>
+</div>
+</section>
+<section id="advanced-barplot" class="level2" data-number="62.4">
+<h2 data-number="62.4" class="anchored" data-anchor-id="advanced-barplot"><span class="header-section-number">62.4</span> Advanced Barplot</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(showtext)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggtext)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Libre Franklin"</span>, <span class="st">"franklin"</span>)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">font_add_google</span>(<span class="st">"Gelasio"</span>, <span class="st">"gelasio"</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_opts</span>(<span class="at">dpi =</span> <span class="dv">300</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">showtext_auto</span>()</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>  <span class="sc">~</span>category,<span class="sc">~</span>gain,<span class="sc">~</span>none,<span class="sc">~</span>lose,<span class="sc">~</span>group,</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Total"</span>,<span class="dv">21</span>,<span class="dv">37</span>,<span class="dv">41</span>,<span class="st">"total"</span>,</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Men"</span>,<span class="dv">24</span>,<span class="dv">42</span>,<span class="dv">34</span>,<span class="st">"gender"</span>,</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Women"</span>,<span class="dv">18</span>,<span class="dv">34</span>,<span class="dv">47</span>,<span class="st">"gender"</span>,</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>  <span class="st">"White"</span>,<span class="dv">24</span>,<span class="dv">43</span>,<span class="dv">33</span>,<span class="st">"race"</span>,</span>
+<span id="cb42-15"><a href="#cb42-15" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Black"</span>,<span class="dv">11</span>,<span class="dv">20</span>,<span class="dv">66</span>,<span class="st">"race"</span>,</span>
+<span id="cb42-16"><a href="#cb42-16" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Hispanic"</span>,<span class="dv">17</span>,<span class="dv">29</span>,<span class="dv">52</span>,<span class="st">"race"</span>,</span>
+<span id="cb42-17"><a href="#cb42-17" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Asian*"</span>,<span class="dv">15</span>,<span class="dv">38</span>,<span class="dv">47</span>,<span class="st">"race"</span>,</span>
+<span id="cb42-18"><a href="#cb42-18" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Ages 18-29"</span>,<span class="dv">22</span>,<span class="dv">30</span>,<span class="dv">47</span>,<span class="st">"age"</span>,</span>
+<span id="cb42-19"><a href="#cb42-19" aria-hidden="true" tabindex="-1"></a>  <span class="st">"30-49"</span>,<span class="dv">22</span>,<span class="dv">34</span>,<span class="dv">42</span>,<span class="st">"age"</span>,</span>
+<span id="cb42-20"><a href="#cb42-20" aria-hidden="true" tabindex="-1"></a>  <span class="st">"50-64"</span>,<span class="dv">21</span>,<span class="dv">42</span>,<span class="dv">37</span>,<span class="st">"age"</span>,</span>
+<span id="cb42-21"><a href="#cb42-21" aria-hidden="true" tabindex="-1"></a>  <span class="st">"65+"</span>,<span class="dv">17</span>,<span class="dv">43</span>,<span class="dv">39</span>,<span class="st">"age"</span>,</span>
+<span id="cb42-22"><a href="#cb42-22" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Postgrad"</span>,<span class="dv">17</span>,<span class="dv">38</span>,<span class="dv">45</span>,<span class="st">"education"</span>,</span>
+<span id="cb42-23"><a href="#cb42-23" aria-hidden="true" tabindex="-1"></a>  <span class="st">"College grad"</span>,<span class="dv">17</span>,<span class="dv">43</span>,<span class="dv">39</span>,<span class="st">"education"</span>,</span>
+<span id="cb42-24"><a href="#cb42-24" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Some college"</span>,<span class="dv">22</span>,<span class="dv">33</span>,<span class="dv">43</span>,<span class="st">"education"</span>,</span>
+<span id="cb42-25"><a href="#cb42-25" aria-hidden="true" tabindex="-1"></a>  <span class="st">"HS or less"</span>,<span class="dv">23</span>,<span class="dv">37</span>,<span class="dv">40</span>,<span class="st">"education"</span>,</span>
+<span id="cb42-26"><a href="#cb42-26" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Rep/Lean Rep"</span>,<span class="dv">35</span>,<span class="dv">51</span>,<span class="dv">13</span>,<span class="st">"politics"</span>,</span>
+<span id="cb42-27"><a href="#cb42-27" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&lt;span style='color:gray50'&gt;Conserv&lt;/span&gt;"</span>,<span class="dv">39</span>,<span class="dv">54</span>,<span class="dv">6</span>,<span class="st">"politics"</span>,</span>
+<span id="cb42-28"><a href="#cb42-28" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&lt;span style='color:gray50'&gt;Mod/Lib&lt;/span&gt;"</span>,<span class="dv">29</span>,<span class="dv">47</span>,<span class="dv">23</span>,<span class="st">"politics"</span>,</span>
+<span id="cb42-29"><a href="#cb42-29" aria-hidden="true" tabindex="-1"></a>  <span class="st">"Dem/Lean Dem"</span>,<span class="dv">7</span>,<span class="dv">23</span>,<span class="dv">69</span>,<span class="st">"politics"</span>,</span>
+<span id="cb42-30"><a href="#cb42-30" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&lt;span style='color:gray50'&gt;Cons/Mod&lt;/span&gt;"</span>,<span class="dv">8</span>,<span class="dv">25</span>,<span class="dv">66</span>,<span class="st">"politics"</span>,</span>
+<span id="cb42-31"><a href="#cb42-31" aria-hidden="true" tabindex="-1"></a>  <span class="st">"&lt;span style='color:gray50'&gt;Liberal&lt;/span&gt;"</span>,<span class="dv">6</span>,<span class="dv">20</span>,<span class="dv">74</span>,<span class="st">"politics"</span></span>
+<span id="cb42-32"><a href="#cb42-32" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-33"><a href="#cb42-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">factor</span>(</span>
+<span id="cb42-34"><a href="#cb42-34" aria-hidden="true" tabindex="-1"></a>      group,</span>
+<span id="cb42-35"><a href="#cb42-35" aria-hidden="true" tabindex="-1"></a>      <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"total"</span>, <span class="st">"gender"</span>, <span class="st">"race"</span>,<span class="st">"age"</span>, <span class="st">"education"</span>, <span class="st">"politics"</span>)),</span>
+<span id="cb42-36"><a href="#cb42-36" aria-hidden="true" tabindex="-1"></a>      <span class="at">category =</span> <span class="fu">factor</span>(category, <span class="at">levels =</span> <span class="fu">rev</span>(category)))</span>
+<span id="cb42-37"><a href="#cb42-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-38"><a href="#cb42-38" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span></span>
+<span id="cb42-39"><a href="#cb42-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb42-40"><a href="#cb42-40" aria-hidden="true" tabindex="-1"></a>      <span class="sc">-</span><span class="fu">c</span>(category, group),</span>
+<span id="cb42-41"><a href="#cb42-41" aria-hidden="true" tabindex="-1"></a>      <span class="at">names_to =</span> <span class="st">"effect"</span>, </span>
+<span id="cb42-42"><a href="#cb42-42" aria-hidden="true" tabindex="-1"></a>      <span class="at">values_to =</span> <span class="st">"percent"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb42-43"><a href="#cb42-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb42-44"><a href="#cb42-44" aria-hidden="true" tabindex="-1"></a>      <span class="at">effect =</span> <span class="fu">factor</span>(effect, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"lose"</span>, <span class="st">"none"</span>, <span class="st">"gain"</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb42-45"><a href="#cb42-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> percent, <span class="at">y =</span> category, <span class="at">fill =</span> effect, <span class="at">label =</span> percent)) <span class="sc">+</span></span>
+<span id="cb42-46"><a href="#cb42-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb42-47"><a href="#cb42-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb42-48"><a href="#cb42-48" aria-hidden="true" tabindex="-1"></a>      <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb42-49"><a href="#cb42-49" aria-hidden="true" tabindex="-1"></a>      <span class="at">family =</span> <span class="st">"franklin"</span>, <span class="at">size =</span> <span class="dv">6</span>, <span class="at">size.unit =</span> <span class="st">"pt"</span>) <span class="sc">+</span></span>
+<span id="cb42-50"><a href="#cb42-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(group<span class="sc">~</span>., <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">space =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb42-51"><a href="#cb42-51" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>, <span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span></span>
+<span id="cb42-52"><a href="#cb42-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(</span>
+<span id="cb42-53"><a href="#cb42-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>,</span>
+<span id="cb42-54"><a href="#cb42-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> <span class="fu">c</span>(<span class="st">"gain"</span>, <span class="st">"none"</span>, <span class="st">"lose"</span>),</span>
+<span id="cb42-55"><a href="#cb42-55" aria-hidden="true" tabindex="-1"></a>    <span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#D0A62D"</span>, <span class="st">"#DBD9C6"</span>, <span class="st">"#E3CA83"</span>),</span>
+<span id="cb42-56"><a href="#cb42-56" aria-hidden="true" tabindex="-1"></a>    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Gain influence"</span>, <span class="st">"Not be affected"</span>, <span class="st">"Lose influence"</span>)) <span class="sc">+</span></span>
+<span id="cb42-57"><a href="#cb42-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb42-58"><a href="#cb42-58" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"How Americans feel people like them&lt;br&gt;will fare under the Trump administration"</span>,</span>
+<span id="cb42-59"><a href="#cb42-59" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"*% who say **people like yourself** will in&lt;br&gt;Washington with Donald Trump taking office*"</span>,</span>
+<span id="cb42-60"><a href="#cb42-60" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"</span><span class="sc">\\</span><span class="st">* Estimates for Asian adults are representative of English speakers&lt;br&gt;only.&lt;br&gt;Note: No answer responses are not shown.&lt;br&gt;Source: Survey of U.S. adults conducted Jan. 27-Feb. 2, 2025.&lt;br&gt;&lt;br&gt;**&lt;span style='color:black'&gt;PEW RESEARCH CENTER&lt;/span&gt;**"</span>,</span>
+<span id="cb42-61"><a href="#cb42-61" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb42-62"><a href="#cb42-62" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb42-63"><a href="#cb42-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb42-64"><a href="#cb42-64" aria-hidden="true" tabindex="-1"></a>    <span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"franklin"</span>),</span>
+<span id="cb42-65"><a href="#cb42-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb42-66"><a href="#cb42-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.justification.top =</span> <span class="st">"right"</span>,</span>
+<span id="cb42-67"><a href="#cb42-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">6</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">l =</span> <span class="dv">2</span>)),</span>
+<span id="cb42-68"><a href="#cb42-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="dv">5</span>, <span class="st">"pt"</span>),</span>
+<span id="cb42-69"><a href="#cb42-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.key.spacing.x =</span> <span class="fu">unit</span>(<span class="dv">2</span>, <span class="st">"pt"</span>),</span>
+<span id="cb42-70"><a href="#cb42-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.box.spacing =</span> <span class="fu">unit</span>(<span class="dv">8</span>, <span class="st">"pt"</span>),</span>
+<span id="cb42-71"><a href="#cb42-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.margin =</span> <span class="fu">margin</span>(<span class="at">r =</span> <span class="dv">0</span>),</span>
+<span id="cb42-72"><a href="#cb42-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-73"><a href="#cb42-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-74"><a href="#cb42-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-75"><a href="#cb42-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-76"><a href="#cb42-76" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb42-77"><a href="#cb42-77" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_markdown</span>(<span class="at">size =</span> <span class="dv">6</span>, <span class="at">color =</span> <span class="st">"black"</span>),</span>
+<span id="cb42-78"><a href="#cb42-78" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb42-79"><a href="#cb42-79" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_markdown</span>(</span>
+<span id="cb42-80"><a href="#cb42-80" aria-hidden="true" tabindex="-1"></a>        <span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">lineheight =</span> <span class="fl">1.4</span>),</span>
+<span id="cb42-81"><a href="#cb42-81" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_markdown</span>(</span>
+<span id="cb42-82"><a href="#cb42-82" aria-hidden="true" tabindex="-1"></a>        <span class="at">family =</span> <span class="st">"gelasio"</span>, <span class="at">size =</span> <span class="dv">8</span>,</span>
+<span id="cb42-83"><a href="#cb42-83" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"gray40"</span>, <span class="at">lineheight =</span> <span class="fl">1.2</span>,</span>
+<span id="cb42-84"><a href="#cb42-84" aria-hidden="true" tabindex="-1"></a>        <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">8</span>)),</span>
+<span id="cb42-85"><a href="#cb42-85" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption.position =</span> <span class="st">"plot"</span>,</span>
+<span id="cb42-86"><a href="#cb42-86" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_markdown</span>(</span>
+<span id="cb42-87"><a href="#cb42-87" aria-hidden="true" tabindex="-1"></a>        <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="fl">5.5</span>, <span class="at">lineheight =</span> <span class="fl">1.4</span>,</span>
+<span id="cb42-88"><a href="#cb42-88" aria-hidden="true" tabindex="-1"></a>        <span class="at">color =</span> <span class="st">"gray40"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">16</span>)),</span>
+<span id="cb42-89"><a href="#cb42-89" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">10</span>, <span class="at">r =</span> <span class="dv">8</span>, <span class="at">b =</span> <span class="dv">10</span>, <span class="at">l =</span> <span class="dv">3</span>),</span>
+<span id="cb42-90"><a href="#cb42-90" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.spacing.y =</span> <span class="fu">unit</span>(<span class="dv">15</span>, <span class="st">"pt"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="gr-barplot_files/figure-html/unnamed-chunk-36-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"gainers_losers.png"</span>, <span class="at">width =</span> <span class="fl">2.53</span>, <span class="at">height =</span> <span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 
 
